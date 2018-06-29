@@ -1,15 +1,19 @@
-Co je API?
-==========
+.. include:: README.rst
+
+Obsah
+-----
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
+   foo
+   bar
+   foobar
 
-
-Indices and tables
-==================
+Navigace
+--------
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
+
+.. include:: LICENSE.rst

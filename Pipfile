@@ -4,11 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-sphinx-autobuild = "*"
 sphinx = "*"
-sphinx-rtd-theme = "*"
 
 [dev-packages]
+sphinx-autobuild = "*"
+sphinx-rtd-theme = "*"
+"doc8" = "*"
 
 [requires]
 python_version = "3.6"
