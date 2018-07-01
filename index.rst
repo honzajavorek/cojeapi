@@ -6,12 +6,12 @@ Obsah
 .. toctree::
    :maxdepth: 2
 
-   01-api-vysvetleni
-   02-klient-server
-   03-zakladni-pojmy
-   04-tvorime-klienta
-   05-tvorime-server
-   06-co-dal
+   content/01-api-vysvetleni
+   content/02-klient-server
+   content/03-zakladni-pojmy
+   content/04-tvorime-klienta
+   content/05-tvorime-server
+   content/06-co-dal
    CONTRIBUTING
 
 Navigace
