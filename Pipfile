@@ -10,6 +10,7 @@ sphinx = "*"
 sphinx-autobuild = "*"
 sphinx-rtd-theme = "*"
 "doc8" = "*"
+pylama = "*"
 
 [requires]
 python_version = "3.6"
