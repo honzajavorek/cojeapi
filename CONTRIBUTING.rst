@@ -41,3 +41,17 @@ Závislosti
 ----------
 
 Projekt využívá `pipenv <https://docs.pipenv.org/>`_, ale ReadTheDocs jej zatím nepodporují (`rtfd/readthedocs.org#3181 <https://github.com/rtfd/readthedocs.org/issues/3181>`_). Proto je nutné vždy při změně závislostí zavolat ``pipenv run pipenv_to_requirements -f -o requirements.txt`` a tím vytvořit i soubor ``requirements.txt``, kterému ReadTheDocs rozumí.
+
+Continuous Integration
+----------------------
+
+Na repozitáři je zapojený `Travis CI <http://travis-ci.org/>`_. Zatím pouze
+kontroluje, jestli ``requirements.txt`` odpovídají ``Pipfile.lock`` (viz výše).
+Kontrolka:
+
+.. image:: https://travis-ci.org/honzajavorek/cojeapi.svg?branch=master
+    :target: https://travis-ci.org/honzajavorek/cojeapi
+    :alt: Continuous Integration Status
+
+Travis CI je pouze informativní a nezabrání tomu, aby se ``master`` větev
+dostala do ReadTheDocs.
