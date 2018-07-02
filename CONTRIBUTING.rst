@@ -3,35 +3,28 @@
 Jak přispívat
 =============
 
-Našli jste v materiálech chybu? Chtěli byste je doplnit? Následující odstavce
-popisují, jak můžete materiály upravovat a návrhy na změny posílat autorům.
+Našli jste chybu? Chtěli byste něco doplnit? Následující odstavce
+popisují, jak lze materiály upravovat a návrhy na změny posílat autorům.
 
 Rychlé úpravy bez instalace
 ---------------------------
 
-Abyste něco změnili v textech, nemusíte nic instalovat. Obsah materiálů lze upravovat online přes `repozitář na GitHubu <https://github.com/honzajavorek/cojeapi>`_ pomocí ikony s tužkou v pravém horním rohu u každého souboru.
+Abyste něco změnili v textech, nemusíte nic instalovat. Obsah lze upravovat online přes `repozitář na GitHubu <https://github.com/honzajavorek/cojeapi>`_ pomocí ikony s tužkou v pravém horním rohu u každého souboru.
 
 Instalace
 ---------
 
-Když toho upravujete víc, nebo máte zálusk na jakékoliv složitější kejkle, je lepší mít materiály nainstalované na svém počítači. Projekt využívá Python 3 a `pipenv <https://docs.pipenv.org/>`_.
+Když toho upravujete víc, nebo máte zálusk na nějaké složitější kejkle, je lepší mít materiály nainstalované na svém počítači. Projekt využívá Python 3 a `pipenv <https://docs.pipenv.org/>`_.
 
-#. Na stránce `repozitáře <https://github.com/honzajavorek/cojeapi>`_ vytvoříte svou kopii projektu pomocí tlačítka :kbd:`Fork`
-#. Pomocí ``git clone`` dostanete svou kopii projektu (fork) na svůj počítač
-#. Pomocí ``pipenv install`` nainstalujete závislosti (`co je pipenv? <http://docs.pipenv.org/>`_)
+#. ``git clone ...``
+#. ``pipenv install --dev``
 
 Běžná práce
 -----------
 
-#. Pomocí ``git pull`` apod. zajistíte, že je vaše kopie projektu aktuální vůči tomu, co je ve větvi ``master`` na `github.com/honzajavorek/cojeapi <https://github.com/honzajavorek/cojeapi>`_
-#. Pomocí ``git checkout -b`` vytvoříte větev pro vaše změny
-#. Otevřete si editor
-#. V adresáři ``cojeapi`` spustíte ``pipenv shell``
-#. V shellu spustíte ``sphinx-autobuild . _build/html``
-#. Otevřete si prohlížeč na adrese ``http://127.0.0.1:8000``
-#. V editoru upravujete texty a kontrolujete si je v prohlížeči
-#. Když jste spokojeni, pomocí ``git push`` pošlete svou větev na GitHub
-#. Na GitHubu ze své větve vytvořte Pull Request na `github.com/honzajavorek/cojeapi <https://github.com/honzajavorek/cojeapi>`_
+#. ``pipenv run sphinx-autobuild . _build/html``
+#. Otevřete si v prohlížeči `<http://127.0.0.1:8000>`_
+#. V editoru upravujete texty a v prohlížeči si kontrolujete výsledek
 
 ReadTheDocs
 -----------
@@ -43,3 +36,8 @@ Na GitHubu jsou pouze zdrojové texty. Po každé změně ve větvi ``master`` n
     :alt: Documentation Status
 
 Pokud se něco nepovedlo, podrobnosti lze zjistit na `této stránce  <https://readthedocs.org/projects/cojeapi/builds/>`_, která je ovšem přístupná jen administrátorům.
+
+Závislosti
+----------
+
+Projekt využívá `pipenv <https://docs.pipenv.org/>`_, ale ReadTheDocs jej zatím nepodporují (`rtfd/readthedocs.org#3181 <https://github.com/rtfd/readthedocs.org/issues/3181>`_). Proto je nutné vždy při změně závislostí zavolat ``pipenv run pipenv_to_requirements -f -o requirements.txt`` a tím vytvořit i soubor ``requirements.txt``, kterému ReadTheDocs rozumí.
