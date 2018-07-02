@@ -6,4 +6,4 @@ install:
 before_script:
   - "pipenv run pipenv_to_requirements -f -o ci-requirements.txt"
 script:
-  - "if ! diff requirements.txt ci-requirements.txt > /dev/null; then echo 'The requirements.txt file is not up to date. Read contributing docs.'; fi"
+  - "if ! diff requirements.txt ci-requirements.txt > /dev/null; then echo 'The requirements.txt file is not up to date. Read contributing docs.' && exit 1; fi"
