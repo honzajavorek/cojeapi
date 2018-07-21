@@ -49,7 +49,7 @@ ReadTheDocs
 Na GitHubu jsou pouze zdrojové texty. Po každé změně ve větvi ``master`` na GitHubu se automaticky vygenerují webové stránky na službě `ReadTheDocs <https://cojeapi.readthedocs.io/>`_. Následující kontrolka ukazuje, zda se poslední změny povedlo dostat až do webových stránek (zelená), nebo se to nepovedlo kvůli nějaké chybě (červená):
 
 .. image:: https://readthedocs.org/projects/cojeapi/badge/?version=latest
-    :target: http://cojeapi.readthedocs.org/cs/latest/?badge=latest
+    :target: https://readthedocs.org/projects/cojeapi/builds/
     :alt: Documentation Status
 
 Pokud se něco nepovedlo, podrobnosti lze zjistit na `této stránce  <https://readthedocs.org/projects/cojeapi/builds/>`_, která je ovšem přístupná jen administrátorům.

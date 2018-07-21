@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 sphinx = "*"
+sphinx-tabs = "*"
 
 [dev-packages]
 sphinx-autobuild = "*"
@@ -12,7 +13,6 @@ sphinx-rtd-theme = "*"
 "doc8" = "*"
 pylama = "*"
 pipenv-to-requirements = "*"
-sphinx-tabs = "*"
 
 [requires]
 python_version = "3.6"
