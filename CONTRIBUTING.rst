@@ -14,10 +14,19 @@ Abyste něco změnili v textech, nemusíte nic instalovat. Obsah lze upravovat o
 Instalace
 ---------
 
-Když toho upravujete víc, nebo máte zálusk na nějaké složitější kejkle, je lepší mít materiály nainstalované na svém počítači. Projekt využívá Python 3 a `pipenv <https://docs.pipenv.org/>`_.
+Když toho upravujete víc, nebo máte zálusk na nějaké složitější kejkle, je lepší mít materiály nainstalované na svém počítači. Projekt využívá Python 3.6 a `pipenv <https://docs.pipenv.org/>`_.
 
 #. ``git clone ...``
 #. ``pipenv install --dev``
+
+Instalace na macOS
+^^^^^^^^^^^^^^^^^^
+
+Pokud používáte macOS a `Homebrew <http://homebrew.sh/>`_, tak vám ``brew install python3`` nainstaluje novější verzi, než je 3.6. Proto je potřeba použít ``pyenv``:
+
+#. ``brew install pyenv``
+#. ``pyenv install 3.6.6``
+#. ``pipenv install --dev --python="$(pyenv root)/versions/3.6.6/bin/python"``
 
 Běžná práce
 -----------
@@ -41,6 +50,9 @@ Závislosti
 ----------
 
 Projekt využívá `pipenv <https://docs.pipenv.org/>`_, ale ReadTheDocs jej zatím nepodporují (`rtfd/readthedocs.org#3181 <https://github.com/rtfd/readthedocs.org/issues/3181>`_). Proto je nutné vždy při změně závislostí zavolat ``pipenv run pipenv_to_requirements -f -o requirements.txt`` a tím vytvořit i soubor ``requirements.txt``, kterému ReadTheDocs rozumí.
+
+Nejnovější verze Pythonu, jakou ReadTheDocs podporují, je 3.6. Z toho důvodu
+ji vyžaduje i tento projekt.
 
 Continuous Integration
 ----------------------
