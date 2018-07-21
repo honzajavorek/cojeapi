@@ -12,11 +12,16 @@ Obsah
    content/04-tvorime-klienta
    content/05-tvorime-server
    content/06-co-dal
+
+.. toctree::
+   :hidden:
+
    CONTRIBUTING
 
 Navigace
 --------
 
+* :ref:`contributing`
 * :ref:`genindex`
 * :ref:`search`
 
