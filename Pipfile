@@ -12,6 +12,7 @@ sphinx-rtd-theme = "*"
 "doc8" = "*"
 pylama = "*"
 pipenv-to-requirements = "*"
+sphinx-tabs = "*"
 
 [requires]
 python_version = "3.6"

@@ -1,9 +1,7 @@
 Základní pojmy
 ==============
 
-.. todo::
-    V úvodu vysvětlit, že od teď už to začíná být trochu programátorské
-    a doporučuje se mít základy, alespoň naučse.python.cz atd.
+Než se ponoříme do samotné tvorby klienta nebo serveru, je dobré pochopit některé základní pojmy kolem API.
 
 Na čem to celé běží: HTTP
 -------------------------

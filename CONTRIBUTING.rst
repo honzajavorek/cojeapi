@@ -16,17 +16,25 @@ Instalace
 
 Když toho upravujete víc, nebo máte zálusk na nějaké složitější kejkle, je lepší mít materiály nainstalované na svém počítači. Projekt využívá Python 3.6 a `pipenv <https://docs.pipenv.org/>`_.
 
-#. ``git clone ...``
-#. ``pipenv install --dev``
+.. tabs::
 
-Instalace na macOS
-^^^^^^^^^^^^^^^^^^
+    .. group-tab:: Standardní instalace
 
-Pokud používáte macOS a `Homebrew <http://homebrew.sh/>`_, tak vám ``brew install python3`` nainstaluje novější verzi, než je 3.6. Proto je potřeba použít ``pyenv``:
+        #. Nainstalujte si Python 3.6
+        #. ``git clone ...``
+        #. ``pipenv install --dev``
 
-#. ``brew install pyenv``
-#. ``pyenv install 3.6.6``
-#. ``pipenv install --dev --python="$(pyenv root)/versions/3.6.6/bin/python"``
+    .. group-tab:: macOS
+
+        Na macOS je problém sehnat Python 3.6, `Homebrew <https://brew.sh/>`_ vám totiž pomocí ``brew install python3`` nainstaluje novější verzi. Použijte `pyenv <https://github.com/pyenv/pyenv>`_:
+
+        1. ``brew install pyenv``
+        2. ``pyenv install 3.6.6``
+
+        Potom pokračujte jako ve standardní instalaci, akorát je třeba napovědět, který Python chcete použít:
+
+        3. ``git clone ...``
+        4. ``pipenv install --dev --python="$(pyenv root)/versions/3.6.6/bin/python"``
 
 Běžná práce
 -----------
