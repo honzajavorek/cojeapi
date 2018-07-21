@@ -49,7 +49,7 @@ Jelikož se bude *curl* vyskytovat v následujících příkladech, je potřeba 
 
         .. note::
 
-            Ano, vím, že je tento instalační návod příliš stručný pro úplné začátečníky, ale snad si většina lidí nějak poradí. Můžete mi také :ref:`pomoci návod rozšířit <contributing>`.
+            Tento instalační návod je pro úplné začátečníky příliš stručný, ale snad si většina lidí nějak poradí. Můžete mi také :ref:`pomoci návod rozšířit <contributing>`.
 
 Ověrte, že vám program funguje:
 
