@@ -6,7 +6,7 @@ Obsah
 .. toctree::
    :maxdepth: 2
 
-   content/01-api-vysvetleni
+   content/01-uvod-do-api
    content/02-klient-server
    content/03-zakladni-pojmy
    content/04-tvorime-klienta

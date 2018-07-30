@@ -11,15 +11,24 @@ Klient a server
 Klient v terminálu: curl
 ------------------------
 
-Nejznámějším klientem z hlediska uživatele webu je prohlížeč. Program `curl <https://curl.haxx.se/>`_ je zase nejznámějším klientem, který můžete spouštět v terminálu. Je tak používaný a významný, že za něj jeho autor `dostal v roce 2017 ocenění z rukou švédského krále <https://daniel.haxx.se/blog/2017/10/20/my-night-at-the-museum/>`_.
+Prohlížeč je nejznámějším klientem pro běžného uživatele. Program `curl <https://curl.haxx.se/>`_ je zase nejznámějším klientem, který můžete spouštět v terminálu. Je tak používaný a významný, že za něj jeho autor `dostal v roce 2017 ocenění z rukou švédského krále <https://daniel.haxx.se/blog/2017/10/20/my-night-at-the-museum/>`_.
 
-Jelikož se bude *curl* vyskytovat v následujících příkladech, je potřeba abyste jej měli nainstalovaný.
+Jelikož se bude *curl* vyskytovat v následujících příkladech, je potřeba, abyste jej měli nainstalovaný.
 
 .. tabs::
 
     .. group-tab:: Linux
 
-        Je dost možné, že *curl* máte již přímo v systému a není potřeba nic instalovat. Jinak jej nainstalujte standardní cestou přes svého správce balíčků. V distribucích Debian nebo Ubuntu takto:
+        Je dost možné, že *curl* máte již přímo v systému a není potřeba nic instalovat. Zkuste nechat program vypsat svou verzi, čímž ověříte, jestli je k dispozici:
+
+        .. code-block:: shell
+
+            $ curl --version
+            curl x.x.x (...) ...
+            Protocols: ...
+            Features: ...
+
+        Pokud se místo verze vypíše něco v tom smyslu, že příkaz ani program toho jména neexistuje, nainstalujte *curl* standardní cestou přes svého správce balíčků. V distribucích Debian nebo Ubuntu takto:
 
         .. code-block:: shell
 
@@ -47,15 +56,15 @@ Jelikož se bude *curl* vyskytovat v následujících příkladech, je potřeba 
 
         Jinak musíte *curl* stáhnout a nainstalovat ručně. `Zde <https://curl.haxx.se/dlwiz/?type=bin&os=Win64&flav=-&ver=*&cpu=x86_64>`_ vyberte tu verzi, která má v popisku *SSL enabled* a *file is packaged using zip*. Klikněte na :kbd:`Download`. Rozbalte stáhnutý zip, najděte ``curl.exe`` a přidejte jej do systémové cesty.
 
+        Nakonec nechte program vypsat svou verzi, čímž ověříte, jestli funguje:
+
+        .. code-block:: shell
+
+            $ curl --version
+            curl x.x.x (...) ...
+            Protocols: ...
+            Features: ...
+
         .. note::
 
             Tento instalační návod je pro úplné začátečníky příliš stručný, ale snad si většina lidí nějak poradí. Můžete mi také :ref:`pomoci návod rozšířit <contributing>`.
-
-Ověrte, že vám program funguje:
-
-.. code-block:: shell
-
-    $ curl --version
-    curl x.x.x (...) ...
-    Protocols: ...
-    Features: ...
