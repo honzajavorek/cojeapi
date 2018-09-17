@@ -16,31 +16,62 @@ Váš mobil potřebuje mít možnost **zjistit si předpověď automaticky**. Ú
 
 Aplikace ve vašem mobilu pak může z adresy ``https://chmi.cz/predpoved.xslx`` každou hodinu tabulku stáhnout, rozluštit její řádky a sloupce, poskládat z toho aktuální předpověď počasí a zobrazit vám ji jako mráčky. No a tomuto mechanismu, kdy **jedna strana něco na stabilní adrese poskytne ve strojově čitelné formě, a druhá je schopna to kdykoliv strojově číst a něco užitečného s tím dělat**, se říká webové API.
 
-Kurzy měn
----------
+Příklad: Kurzy měn
+------------------
 
-.. todo::
-    https://github.com/honzajavorek/cs-apis/wiki/Kurzy-devizov%C3%A9ho-trhu-%C4%8CNB#form%C3%A1tovan%C3%BD-txt-soubor-s-aktu%C3%A1ln%C3%ADmi-kurzy-devizov%C3%A9ho-trhu
+Jako příklad API se pojďme podívat na kurzovní lístek České národní banky. Jděte na stránku `Kurzy devizového trhu <http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.jsp>`_, kde ČNB vypisuje tabulku kurzů.
+
+.. image:: ../_static/images/cnb.png
+    :alt: ČNB - kurzovní lístek
+    :align: center
+
+Pokud bychom chtěli mít e-shop, na kterém bude možné kromě korun platit i eurem, nebo pokud bychom tvořili mobilní appku na převod měn, bude se nám tento kurzovní lístek určitě hodit.
+
+Jenže zatímco se takovýto lístek čte velmi pěkně lidem, strojově je čitelný mizerně. Není to sice nemožné, ale není to příjemné a především to není vůbec spolehlivé.
+
+ČNB proto poskytuje jednoduché API. Pod tabulkou je odkaz `Stažení v textovém formátu <http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt>`_, který vede na tu samou tabulku, ale v textovém formátu, který lze snadněji a především spolehlivě strojově přečíst.
+
+.. image:: ../_static/images/cnb-api.png
+    :alt: ČNB - kurzovní lístek v textovém formátu
+    :align: center
 
 Webová API, která možná znáte
 -----------------------------
 
-.. todo::
-    https://github.com/honzajavorek/cojeapi/issues/8
+Mobilní aplikace
+^^^^^^^^^^^^^^^^
 
-Jsou i jiná API než webová?
----------------------------
+Skoro všechny aplikace na vašem mobilním telefonu za sebou mají API, pomocí kterého komunikují se službou na pozadí. Když si na mobilu spustíte přehrávač hudby `Spotify <http://spotify.com/>`_ a označíte si `Futuretro <https://cs.wikipedia.org/wiki/Futuretro>`_ od `Tata Bojs <https://cs.wikipedia.org/wiki/Tata_Bojs>`_ jako oblíbené album, mobilní appka tuto informaci okamžitě pošle přes API na :ref:`server <server>` do centrály Spotify. Když potom půjdete k počítači a otevřete si na něm program Spotify, ten si zase přes API všechno zjistí a uvidíte, že Futuretro se i tam zobrazuje ve vašich oblíbených albech.
 
-.. todo::
-    zmínit něco o programátorských API v programátorštině
+Srovnávače zboží
+^^^^^^^^^^^^^^^^
+
+Pokud máte e-shop, možná byste chtěli, aby byly vaše produkty k nalezení na `Heureka.cz <https://www.heureka.cz/>`_. Jak to funguje? Je potřeba informace o produktech vystavit do souboru ve formátu :ref:`XML <xml>`. Heureka přímo `předepisuje, jak má takový soubor vypadat <https://sluzby.heureka.cz/napoveda/xml-feed/>`_. Pokud jej vystavíte, vystavujete tím API pro Heureku. Na její straně potom může nějaký robot přes takováto jednotlivá API automaticky načítat informace o produktech z e-shopů.
+
+Nové články
+^^^^^^^^^^^
+
+Říká vám něco `RSS <https://cs.wikipedia.org/wiki/RSS>`_? Dnes je tato technologie mírně za zenitem, ale dříve jí byl plný internet. Je to způsob, jak může váš blog nebo zpravodajský server dávat najevo, že na něm vyšly nové články.
+
+.. image:: ../_static/images/rss.png
+    :alt: Ikona RSS
+    :scale: 10%
+    :align: center
+
+Funguje to tak, že váš blog vystaví do souboru ve formátu :ref:`XML <xml>` informace o publikovaných článcích. Kdokoliv jiný pak může tento soubor stáhnout a strojově přečíst. To dělaly RSS čtečky, jako například `Google Reader <https://cs.wikipedia.org/wiki/Google_Reader>`_. Dnes tak funguje `Feedly <https://feedly.com/>`_. Běžný uživatel se dnes již s RSS tak často nesetká, protože jeho funkci nahradily sociální sítě, ale weby jej stále poskytují - například časopis `Respekt <https://www.respekt.cz/>`_ má hned `několik RSS pro každou rubriku <https://www.respekt.cz/rss>`_.
+
+Existují i jiná API než webová?
+-------------------------------
+
+Termín API je ve skutečnosti obecnější. Původně označuje dohodu o tom, jak si spolu mají povídat různé ucelené kusy jednoho programu. Často se v tomto smyslu používá jen slovo *interface*, česky *rozhraní*, které ve zkratce API představuje písmeno I.
+
+Webové API je také takovou dohodou, akorát ne mezi kusy jednoho programu, spíše mezi celými samostatnými programy a celými informačními systémy (firmami, institucemi), zařízeními (mobil, počítač), apod.
+
+Když se tedy lidé baví o programování, je dobré myslet i na onen širší význam a nenechat se vyvést z míry, pokud jako API označí i jiné věci, než jsou webová API. Mezi běžnými smrtelníky a všude v tomto textu však platí to, že API vždy znamená webové API.
 
 Kam dál?
 --------
 
-.. todo::
-    Vysvětlit co se nachází ve zbytku návodu a upozornit na prg zkušenost
+Zatímco tato kapitola by měla být srozumitelná každému, všechny následující již vyžadují základní programátorské dovednosti. Ty lze získat například na `Nauč se Python! <https://naucse.python.cz/>`_
 
-.. note::
-    Zatímco tato kapitola by měla být srozumitelná každému, všechny
-    následující již vyžadují základní programátorské dovednosti. Ty lze získat
-    například na `Nauč se Python! <https://naucse.python.cz/>`_
+V dalších kapitolách si vysvětlíme některé základní pojmy, naučíme se jak cizí API využít v našem programu a vytvoříme si i svoje vlastní malé API.
