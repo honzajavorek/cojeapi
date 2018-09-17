@@ -44,6 +44,10 @@ Knihovny pro tvorbu serveru
 .. todo::
     DRF, Flask-Restful, eve
 
+.. _xml:
+.. _json:
+.. _formaty:
+
 Formáty: XML, JSON
 ------------------
 

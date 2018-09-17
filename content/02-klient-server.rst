@@ -1,3 +1,7 @@
+.. _klient:
+.. _server:
+.. _klient-server:
+
 Klient a server
 ===============
 
