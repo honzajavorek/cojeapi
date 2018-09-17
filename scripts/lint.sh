@@ -13,3 +13,6 @@ then
     "See ${help_url} for more info."
   exit 1
 fi
+
+# Check external links
+pipenv run sphinx-build -nW -b linkcheck . _build
