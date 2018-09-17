@@ -39,7 +39,7 @@ Když toho upravujete víc, nebo máte zálusk na nějaké složitější kejkle
 Běžná práce
 -----------
 
-#. ``pipenv run sphinx-autobuild . _build/html``
+#. ``pipenv run serve``
 #. Otevřete si v prohlížeči `<http://127.0.0.1:8000>`_
 #. V editoru upravujete texty a v prohlížeči si kontrolujete výsledek
 
@@ -57,7 +57,7 @@ Pokud se něco nepovedlo, podrobnosti lze zjistit na `této stránce  <https://r
 Závislosti
 ----------
 
-Projekt využívá `pipenv <https://docs.pipenv.org/>`_, ale ReadTheDocs jej zatím nepodporují (`rtfd/readthedocs.org#3181 <https://github.com/rtfd/readthedocs.org/issues/3181>`_). Proto je nutné vždy při změně závislostí zavolat ``pipenv run pipenv_to_requirements -f -o requirements.txt`` a tím vytvořit i soubor ``requirements.txt``, kterému ReadTheDocs rozumí.
+Projekt využívá `pipenv <https://docs.pipenv.org/>`_, ale ReadTheDocs jej zatím nepodporují (`rtfd/readthedocs.org#3181 <https://github.com/rtfd/readthedocs.org/issues/3181>`_). Proto je nutné vždy při změně závislostí zavolat ``pipenv run requirements`` a tím vytvořit i soubor ``requirements.txt``, kterému ReadTheDocs rozumí.
 
 Nejnovější verze Pythonu, jakou ReadTheDocs podporují, je 3.6. Z toho důvodu
 ji vyžaduje i tento projekt. Nastavení je v souboru ``readthedocs.yml`` (`dokumentace <https://docs.readthedocs.io/en/latest/yaml-config.html>`_).
