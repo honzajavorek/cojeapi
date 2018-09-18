@@ -52,7 +52,7 @@ Na GitHubu jsou pouze zdrojové texty. Po každé změně ve větvi ``master`` n
     :target: https://readthedocs.org/projects/cojeapi/builds/
     :alt: Documentation Status
 
-Pokud se něco nepovedlo, podrobnosti lze zjistit na `této stránce  <https://readthedocs.org/projects/cojeapi/builds/>`_, která je ovšem přístupná jen administrátorům.
+Pokud se něco nepovedlo, podrobnosti lze zjistit na `této stránce <https://readthedocs.org/projects/cojeapi/builds/>`_, která je ovšem přístupná jen administrátorům.
 
 Závislosti
 ----------
@@ -72,4 +72,4 @@ Na repozitáři je zapojený `Travis CI <https://travis-ci.org/>`_. Kontroluje r
     :alt: Continuous Integration Status
 
 Travis CI je pouze informativní a nezabrání tomu, aby se ``master`` větev
-dostala do ReadTheDocs.
+dostala do ReadTheDocs. Pokud se něco nepovedlo, podrobnosti lze zjistit na `této stránce <https://travis-ci.org/honzajavorek/cojeapi/branches>`_.
