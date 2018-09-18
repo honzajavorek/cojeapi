@@ -21,7 +21,7 @@ Příklad: Kurzy měn
 
 Jako příklad API se pojďme podívat na kurzovní lístek České národní banky. Jděte na stránku `Kurzy devizového trhu <http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.jsp>`_, kde ČNB vypisuje tabulku kurzů.
 
-.. image:: ../_static/images/cnb.png
+.. image:: ../images/cnb.png
     :alt: ČNB - kurzovní lístek
     :align: center
 
@@ -31,7 +31,7 @@ Jenže zatímco se takovýto lístek čte velmi pěkně lidem, strojově je čit
 
 ČNB proto poskytuje jednoduché API. Pod tabulkou je odkaz `Stažení v textovém formátu <http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt>`_, který vede na tu samou tabulku, ale v textovém formátu, který lze snadněji a především spolehlivě strojově přečíst.
 
-.. image:: ../_static/images/cnb-api.png
+.. image:: ../images/cnb-api.png
     :alt: ČNB - kurzovní lístek v textovém formátu
     :align: center
 
@@ -53,7 +53,7 @@ Nové články
 
 Říká vám něco `RSS <https://cs.wikipedia.org/wiki/RSS>`_? Dnes je tato technologie mírně za zenitem, ale dříve jí byl plný internet. Je to způsob, jak může váš blog nebo zpravodajský server dávat najevo, že na něm vyšly nové články.
 
-.. image:: ../_static/images/rss.png
+.. image:: ../images/rss.png
     :alt: Ikona RSS
     :scale: 10%
     :align: center

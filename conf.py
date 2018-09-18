@@ -75,7 +75,7 @@ else:
     # emulates the default RTD theme for local development
     html_theme = 'sphinx_rtd_theme'
 
-html_logo = '_static/images/api-i.svg'
+html_logo = 'images/api-i.svg'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
