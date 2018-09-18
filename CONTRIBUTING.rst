@@ -65,9 +65,7 @@ ji vyžaduje i tento projekt. Nastavení je v souboru ``readthedocs.yml`` (`doku
 Continuous Integration
 ----------------------
 
-Na repozitáři je zapojený `Travis CI <https://travis-ci.org/>`_. Zatím pouze
-kontroluje, jestli ``requirements.txt`` odpovídají ``Pipfile.lock`` (viz výše).
-Kontrolka:
+Na repozitáři je zapojený `Travis CI <https://travis-ci.org/>`_. Kontroluje různé věci v rámci projektu. Kontrolka:
 
 .. image:: https://travis-ci.org/honzajavorek/cojeapi.svg?branch=master
     :target: https://travis-ci.org/honzajavorek/cojeapi
