@@ -14,5 +14,8 @@ then
   exit 1
 fi
 
+# doc8
+doc8
+
 # Check external links
 pipenv run sphinx-build -nW -b linkcheck . _build

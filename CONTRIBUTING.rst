@@ -72,4 +72,4 @@ Na repozitáři je zapojený `Travis CI <https://travis-ci.org/>`_. Kontroluje r
     :alt: Continuous Integration Status
 
 Travis CI je pouze informativní a nezabrání tomu, aby se ``master`` větev
-dostala do ReadTheDocs. Pokud se něco nepovedlo, podrobnosti lze zjistit na `této stránce <https://travis-ci.org/honzajavorek/cojeapi/branches>`_.
+dostala do ReadTheDocs. Pokud se něco nepovedlo, podrobnosti lze zjistit `zde <https://travis-ci.org/honzajavorek/cojeapi/>`_.
