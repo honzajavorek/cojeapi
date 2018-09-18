@@ -174,6 +174,13 @@ epub_copyright = copyright
 epub_exclude_files = ['search.html']
 
 
+# -- External links check -------------------------------------------------
+
+linkcheck_ignore = [
+    'http://127.0.0.1:8000',
+]
+
+
 # -- Extension configuration -------------------------------------------------
 
 sphinx_tabs_valid_builders = ['linkcheck']
