@@ -12,7 +12,7 @@ Na jakémkoliv mobilu dnes najdete předpověď počasí. Jak se tam ale dostane
     :align: center
     :width: 60%
 
-Ať už šlo o noviny, rozhlas nebo televizi, dříve redakcím stačilo, aby si předpověď zjistili **jednou denně**. Nevím, jak to přesně probíhalo, ale představuji si, že někdo zavolal do sídla ČHMÚ v Komořanech, kde to zvedli a nadiktovali sluníčka nebo mráčky. Dnes už by to takto fungovat nemohlo. Data o počasí, která ČHMÚ uveřejňuje, je potřeba **okamžitě zobrazovat na tisícovkách míst na internetu**.
+Ať už šlo o noviny, rozhlas nebo televizi, dříve redakcím stačilo, aby si předpověď zjistily **jednou denně**. Nevím, jak to přesně probíhalo, ale představuji si, že někdo zavolal do sídla ČHMÚ v Komořanech, kde to zvedli a nadiktovali sluníčka nebo mráčky. Dnes už by to takto fungovat nemohlo. Data o počasí, která ČHMÚ uveřejňuje, je potřeba **okamžitě zobrazovat na tisícovkách míst na internetu**.
 
 ČHMÚ má svoje webové stránky, kde předpovědi uveřejňuje. Jenže to vyžaduje, aby je na druhé straně **přečetl člověk a někam je přepsal**. Zatímco u redakcí si snad lze představit studenta žurnalistiky na brigádě, jak zoufale nonstop sleduje web ČHMÚ a opisuje povodňová varování na web zpravodajství, pro aplikaci ve vašem mobilu by toto byla nepřekonatelná komplikace.
 
@@ -41,7 +41,7 @@ Jenže zatímco se takovýto lístek čte velmi pěkně lidem, strojově je čit
     :align: center
     :width: 80%
 
-ČNB proto poskytuje jednoduché API. Pod tabulkou je odkaz `Stažení v textovém formátu <http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt>`_, který vede na tu samou tabulku, ale v textovém formátu, který lze snadněji a především spolehlivě strojově přečíst.
+ČNB proto poskytuje jednoduché API. Pod tabulkou je odkaz `Stažení v textovém formátu <http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt>`_, který vede na tu samou tabulku, ale ve formátu, který lze snadněji a především spolehlivě strojově přečíst.
 
 .. image:: ../_static/images/cnb-api.png
     :alt: ČNB - kurzovní lístek v textovém formátu
@@ -62,7 +62,7 @@ Skoro všechny aplikace na vašem mobilním telefonu za sebou mají API, pomocí
 Srovnávače zboží
 ^^^^^^^^^^^^^^^^
 
-Pokud máte e-shop, možná byste chtěli, aby byly vaše produkty k nalezení na `Heureka.cz <https://www.heureka.cz/>`_. Jak to funguje? Je potřeba informace o produktech vystavit do souboru ve formátu :ref:`XML <xml>`. Heureka přímo `předepisuje, jak má takový soubor vypadat <https://sluzby.heureka.cz/napoveda/xml-feed/>`_. Pokud jej vystavíte, vystavujete tím API pro Heureku. Na její straně potom může nějaký robot přes takováto jednotlivá API automaticky načítat informace o produktech z e-shopů.
+Pokud máte e-shop, možná byste chtěli, aby byly vaše produkty k nalezení na `Heureka.cz <https://www.heureka.cz/>`_. Jak to funguje? Je potřeba informace o produktech vystavit do souboru ve formátu :ref:`XML <xml>`. Heureka přímo `předepisuje, jak má takový soubor vypadat <https://sluzby.heureka.cz/napoveda/xml-feed/>`_. Pokud jej dáte k dispozici, vystavujete tím API pro Heureku. Na její straně potom může nějaký robot přes takováto jednotlivá API automaticky načítat informace o produktech z e-shopů.
 
 .. image:: ../_static/images/heureka.png
     :align: center
@@ -71,7 +71,7 @@ Pokud máte e-shop, možná byste chtěli, aby byly vaše produkty k nalezení n
 Nové články
 ^^^^^^^^^^^
 
-Říká vám něco `RSS <https://cs.wikipedia.org/wiki/RSS>`_? Dnes je tato technologie mírně za zenitem, ale dříve jí byl plný internet. Je to způsob, jak může váš blog nebo zpravodajský server dávat najevo, že na něm vyšly nové články.
+Říká vám něco `RSS <https://cs.wikipedia.org/wiki/RSS>`_? Dnes je tato technologie mírně za zenitem, ale dříve jí byl plný internet. Je to způsob, jak může váš blog nebo zpravodajský server dávat ostatním najevo, že na něm vyšly nové články.
 
 .. figure:: ../_static/images/rss-icon.png
     :alt: Ikona RSS
@@ -93,7 +93,7 @@ Termín API je ve skutečnosti obecnější. Původně označuje dohodu o tom, j
 
 Webové API je také takovou dohodou, akorát ne mezi kusy jednoho programu, spíše mezi celými samostatnými programy a celými informačními systémy (firmami, institucemi), zařízeními (mobil, počítač), apod.
 
-Když se tedy lidé baví o programování, je dobré myslet i na onen širší význam a nenechat se vyvést z míry, pokud jako API označí i jiné věci, než jsou webová API. Mezi běžnými smrtelníky a všude v tomto textu však platí to, že API vždy znamená webové API.
+Když se tedy lidé baví o programování, je dobré myslet i na onen širší význam a nenechat se vyvést z míry, pokud někdo jako API označí i jiné věci, než jsou webová API. Mezi běžnými smrtelníky a všude v tomto textu však platí to, že API vždy znamená webové API.
 
 Kam dál?
 --------
