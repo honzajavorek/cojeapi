@@ -11,7 +11,8 @@ Obsah
    content/03-zakladni-pojmy
    content/04-tvorime-klienta
    content/05-tvorime-server
-   content/06-co-dal
+   content/06-web-jako-api
+   content/07-co-dal
 
 .. toctree::
    :hidden:
