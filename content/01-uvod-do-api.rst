@@ -1,7 +1,12 @@
+.. _uvod:
+
 Úvod do API
 ===========
 
 Na API si nelze sáhnout a není možné je vidět, ale přesto dnes nepřímo ovlivňují život každého z nás. Bohužel není snadné zjistit, co ona API vlastně jsou. `Článek na Wikipedii <https://cs.wikipedia.org/wiki/API>`_ začíná tím, že jde o *rozhraní pro programování aplikací*, a pokračuje odborným textem, jímž se běžný smrtelník prokouše jen těžko. Tento text se snaží API **vysvětlit na příkladu a běžnými slovy**.
+
+
+.. _chmu:
 
 Předpověď počasí na mobilu
 --------------------------
@@ -23,6 +28,9 @@ Váš mobil potřebuje mít možnost **zjistit si předpověď automaticky**. Ú
     :width: 60%
 
 Aplikace ve vašem mobilu pak může z adresy ``https://chmi.cz/predpoved.xslx`` každou hodinu tabulku stáhnout, rozluštit její řádky a sloupce, poskládat z toho aktuální předpověď počasí a zobrazit vám ji jako mráčky. No a tomuto mechanismu, kdy **jedna strana něco na stabilní adrese poskytne ve strojově čitelné formě, a druhá je schopna to kdykoliv strojově číst a něco užitečného s tím dělat**, se říká webové API.
+
+
+.. _cnb:
 
 Příklad: Kurzy měn
 ------------------
@@ -47,8 +55,10 @@ Jenže zatímco se takovýto lístek čte velmi pěkně lidem, strojově je čit
     :alt: ČNB - kurzovní lístek v textovém formátu
     :align: center
 
+
 Webová API, která možná znáte
 -----------------------------
+
 
 Mobilní aplikace
 ^^^^^^^^^^^^^^^^
@@ -59,6 +69,9 @@ Skoro všechny aplikace na vašem mobilním telefonu za sebou mají API, pomocí
     :align: center
     :width: 60%
 
+
+.. _heureka:
+
 Srovnávače zboží
 ^^^^^^^^^^^^^^^^
 
@@ -67,6 +80,7 @@ Pokud máte e-shop, možná byste chtěli, aby byly vaše produkty k nalezení n
 .. image:: ../_static/images/heureka.png
     :align: center
     :width: 80%
+
 
 Nové články
 ^^^^^^^^^^^
@@ -86,6 +100,7 @@ Funguje to tak, že váš blog vystaví do souboru ve formátu :ref:`XML <xml>` 
     :align: center
     :width: 80%
 
+
 Existují i jiná API než webová?
 -------------------------------
 
@@ -94,6 +109,7 @@ Termín API je ve skutečnosti obecnější. Původně označuje dohodu o tom, j
 Webové API je také takovou dohodou, akorát ne mezi kusy jednoho programu, spíše mezi celými samostatnými programy a celými informačními systémy (firmami, institucemi), zařízeními (mobil, počítač), apod.
 
 Když se tedy lidé baví o programování, je dobré myslet i na onen širší význam a nenechat se vyvést z míry, pokud někdo jako API označí i jiné věci, než jsou webová API. Mezi běžnými smrtelníky a všude v tomto textu však platí to, že API vždy znamená webové API.
+
 
 Kam dál?
 --------
