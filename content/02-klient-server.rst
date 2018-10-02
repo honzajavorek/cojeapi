@@ -11,6 +11,9 @@ Jak jsme si vysvětlili v :ref:`předešlé kapitole <uvod>`, API je dohoda mezi
 
 **Klient** je program, který posílá dotazy na server a z odpovědí se snaží poskládat něco užitečného. Klient je tedy :ref:`mobilní aplikace s mráčky a sluníčky <cnb>` nebo náš prohlížeč, v němž jsme si :ref:`otevírali kurzovní lístek ČNB <cnb>`. Je to ale i ten :ref:`robot <heureka>`, který za Heureku načítá informace o zboží v e-shopech.
 
+.. todo::
+    obrazek server/klient, jeden server ktery poskytuje data a dva klienti, robot a clovek, jak to ctou, udelat tam jasne request response
+
 
 .. _client-browser:
 
