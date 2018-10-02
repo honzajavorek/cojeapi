@@ -7,6 +7,20 @@ Tvoříme klienta
     základní příklady s requests, GET, POST
     https://github.com/honzajavorek/cojeapi/issues/2
 
+Knihovny pro tvorbu klienta
+---------------------------
+
+.. todo::
+    vysvětlit obecného klienta
+    request(s)
+
+Specializované knihovny (SDK)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. todo::
+    vysvětlit specializovaného klienta
+    příklady
+
 Zabezpečení
 -----------
 

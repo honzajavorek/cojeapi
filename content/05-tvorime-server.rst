@@ -23,3 +23,4 @@ Knihovny pro tvorbu serveru
 .. todo::
     připomenout, zopakovat, nebo odkazat do zakladnich pojmu, ze existuji
     knihovny, ktere tohle cele usnadnuji, i kdyz jede tutorial na cistych fw
+    DRF, Flask-Restful, eve

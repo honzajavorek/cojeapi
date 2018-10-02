@@ -3,10 +3,12 @@ Základní pojmy
 
 Než se ponoříme do samotné tvorby klienta nebo serveru, je dobré pochopit některé základní pojmy kolem API.
 
-Na čem to celé běží: HTTP
--------------------------
+Protokol
+--------
 
 .. todo::
+    na cem to cele bezi
+
     curl jednoduché requesty
     curl -i na response
 
@@ -16,40 +18,35 @@ Na čem to celé běží: HTTP
     method, url (params!), headers, body
     status code, headers, body
 
-Typy API: SOAP, REST, GraphQL
------------------------------
+HTTP
+^^^^
+
+HTTPS
+^^^^^
+
+Typy API
+--------
 
 .. todo::
     vše používá HTTP, příklady
     některé jsou přesně spec, REST je arch styl a vysvětlit jak vznikl a co je hypermedia
     vysvětlit jaká je dnes většina API (jakože REST, "webové"), Zdeňkův článek
 
-Knihovny pro tvorbu klienta
----------------------------
+SOAP
+^^^^
 
-.. todo::
-    vysvětlit obecného klienta
-    request(s)
+REST
+^^^^
 
-Specializované knihovny (SDK)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. todo::
-    vysvětlit specializovaného klienta
-    příklady
-
-Knihovny pro tvorbu serveru
----------------------------
-
-.. todo::
-    DRF, Flask-Restful, eve
+GraphQL
+^^^^^^^
 
 .. _xml:
 .. _json:
 .. _formaty:
 
-Formáty: XML, JSON
-------------------
+Formáty
+-------
 
 .. todo::
     formátů je nesčetně, vysvětlit media types (content types)
@@ -62,6 +59,12 @@ Formáty: XML, JSON
     JSON, příklady, výhody nevýhody, na co se používá (všechno možný)
     rozdíly mezi JSON a Python slovníkem (JS objektem?)
     jakými knihovnami s tím pracovat
+
+XML
+^^^
+
+JSON
+^^^^
 
 Shrnutí
 -------

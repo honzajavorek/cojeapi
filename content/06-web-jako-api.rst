@@ -4,6 +4,7 @@ Web jako API
 .. todo::
     webova API, hm hm
     prohlizec jako klient, hm hm
+    webove frameworky (django) na tvorbu API, hm hm
 
     co ma vlastne api spolecneho s webem?
     web, html stranky, jsou webove api, ktere je ale urceno pro cloveka
