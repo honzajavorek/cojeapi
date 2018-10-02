@@ -12,7 +12,7 @@ Jak jsme si vysvětlili v :ref:`předešlé kapitole <uvod>`, API je dohoda mezi
 **Klient** je program, který posílá dotazy na server a z odpovědí se snaží poskládat něco užitečného. Klient je tedy :ref:`mobilní aplikace s mráčky a sluníčky <cnb>` nebo náš prohlížeč, v němž jsme si :ref:`otevírali kurzovní lístek ČNB <cnb>`. Je to ale i ten :ref:`robot <heureka>`, který za Heureku načítá informace o zboží v e-shopech.
 
 
-.. _browser:
+.. _client-browser:
 
 Obecný klient
 -------------
@@ -24,7 +24,7 @@ Obecný klient
     https://github.com/honzajavorek/cojeapi/issues/2
 
 
-.. _curl:
+.. _client-curl:
 
 Obecný klient v terminálu: curl
 -------------------------------
