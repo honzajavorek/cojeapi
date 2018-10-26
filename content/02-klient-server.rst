@@ -42,7 +42,7 @@ Nyní zkusme v API najít seriál `Westworld <https://www.csfd.cz/film/395723-we
 
 Místo ``abcd123`` má být samozřejmě tajný API klíč, který nám přišel e-mailem. Zkusíme adresu otevřít v prohlížeči:
 
-.. image:: ../_static/images/omdb-westworld.png
+.. image:: ../_static/images/omdb-westworld-browser.png
     :alt: OMDb - Westworld v prohlížeči
     :align: center
 
