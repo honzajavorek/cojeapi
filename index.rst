@@ -22,7 +22,7 @@ Obsah
 Přispějte
 ---------
 
-Materiály jsou tvořeny jako `otevřené <https://cs.wikipedia.org/wiki/Otev%C5%99en%C3%BD_software>`_, do jejich zdrojového kódu a textů :ref:`může kdokoliv navrhovat změny <contributing>`. Texty a obrázky těchto materiálů jsou uvolněny pod licencí `CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0/deed.cs>`_. Původním autorem je :ref:`Honza Javorek <honzajavorek>`.
+Materiály jsou tvořeny jako `otevřené <https://cs.wikipedia.org/wiki/Otev%C5%99en%C3%BD_software>`__, do jejich zdrojového kódu a textů :ref:`může kdokoliv navrhovat změny <contributing>`. Texty a obrázky těchto materiálů jsou uvolněny pod licencí `CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0/deed.cs>`__. Původním autorem je :ref:`Honza Javorek <honzajavorek>`.
 
 .. _honzajavorek:
 
@@ -34,7 +34,7 @@ Autor
     :align: left
     :width: 120px
 
-`Honza Javorek <http://honzajavorek.cz/>`_ je programátor. Od roku 2011 pomáhá budovat českou komunitu kolem jazyka `Python <http://python.cz/>`_. V `Apiary <https://apiary.io/>`_ se stará o `Dredd <https://github.com/apiaryio/dredd>`_, nástroj na testování webových API.
+`Honza Javorek <http://honzajavorek.cz/>`__ je programátor. Od roku 2011 pomáhá budovat českou komunitu kolem jazyka `Python <http://python.cz/>`__. V `Apiary <https://apiary.io/>`__ se stará o `Dredd <https://github.com/apiaryio/dredd>`__, nástroj na testování webových API.
 
 `LinkedIn <https://linkedin.com/in/honzajavorek/>`_
 ・ `GitHub <https://github.com/honzajavorek/>`_

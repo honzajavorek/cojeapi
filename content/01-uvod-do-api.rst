@@ -3,7 +3,7 @@
 Úvod do API
 ===========
 
-Na API si nelze sáhnout a není možné je vidět, ale přesto dnes nepřímo ovlivňují život každého z nás. Bohužel není snadné zjistit, co ona API vlastně jsou. `Článek na Wikipedii <https://cs.wikipedia.org/wiki/API>`_ začíná tím, že jde o *rozhraní pro programování aplikací*, a pokračuje odborným textem, jímž se běžný smrtelník prokouše jen těžko. Tento text se snaží API **vysvětlit na příkladu a běžnými slovy**.
+Na API si nelze sáhnout a není možné je vidět, ale přesto dnes nepřímo ovlivňují život každého z nás. Bohužel není snadné zjistit, co ona API vlastně jsou. `Článek na Wikipedii <https://cs.wikipedia.org/wiki/API>`__ začíná tím, že jde o *rozhraní pro programování aplikací*, a pokračuje odborným textem, jímž se běžný smrtelník prokouše jen těžko. Tento text se snaží API **vysvětlit na příkladu a běžnými slovy**.
 
 
 .. _chmu:
@@ -11,7 +11,7 @@ Na API si nelze sáhnout a není možné je vidět, ale přesto dnes nepřímo o
 Předpověď počasí na mobilu
 --------------------------
 
-Na jakémkoliv mobilu dnes najdete předpověď počasí. Jak se tam ale dostane? Nejspíš tušíte, že předpovědi vznikají v `Českém hydrometeorologickém ústavu <https://cs.wikipedia.org/wiki/%C4%8Cesk%C3%BD_hydrometeorologick%C3%BD_%C3%BAstav>`_. Jak je ale možné, že jakmile se v ČHMÚ shodnou na zítřejší bouřce, objeví se vám to **během sekundy** na displeji?
+Na jakémkoliv mobilu dnes najdete předpověď počasí. Jak se tam ale dostane? Nejspíš tušíte, že předpovědi vznikají v `Českém hydrometeorologickém ústavu <https://cs.wikipedia.org/wiki/%C4%8Cesk%C3%BD_hydrometeorologick%C3%BD_%C3%BAstav>`__. Jak je ale možné, že jakmile se v ČHMÚ shodnou na zítřejší bouřce, objeví se vám to **během sekundy** na displeji?
 
 .. image:: ../_static/images/chmu1.png
     :align: center
@@ -35,7 +35,7 @@ Aplikace ve vašem mobilu pak může z adresy ``https://chmi.cz/predpoved.xslx``
 Příklad: Kurzy měn
 ------------------
 
-Jako příklad API se pojďme podívat na kurzovní lístek České národní banky. Jděte na stránku `Kurzy devizového trhu <http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.jsp>`_, kde ČNB vypisuje tabulku kurzů.
+Jako příklad API se pojďme podívat na kurzovní lístek České národní banky. Půjdeme na stránku `Kurzy devizového trhu <http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.jsp>`__, kde ČNB vypisuje tabulku kurzů.
 
 .. image:: ../_static/images/cnb-website.png
     :alt: ČNB - kurzovní lístek
@@ -49,7 +49,7 @@ Jenže zatímco se takovýto lístek čte velmi pěkně lidem, strojově je čit
     :align: center
     :width: 80%
 
-ČNB proto poskytuje jednoduché API. Pod tabulkou je odkaz `Stažení v textovém formátu <http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt>`_, který vede na tu samou tabulku, ale ve formátu, který lze snadněji a především spolehlivě strojově přečíst.
+ČNB proto poskytuje jednoduché API. Pod tabulkou je odkaz `Stažení v textovém formátu <http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt>`__, který vede na tu samou tabulku, ale ve formátu, který lze snadněji a především spolehlivě strojově přečíst.
 
 .. image:: ../_static/images/cnb-api.png
     :alt: ČNB - kurzovní lístek v textovém formátu
@@ -63,7 +63,7 @@ Webová API, která možná znáte
 Mobilní aplikace
 ^^^^^^^^^^^^^^^^
 
-Skoro všechny aplikace na vašem mobilním telefonu za sebou mají API, pomocí kterého komunikují se službou na pozadí. Když si na mobilu spustíte přehrávač hudby `Spotify <http://spotify.com/>`_ a označíte si `Futuretro <https://cs.wikipedia.org/wiki/Futuretro>`_ od `Tata Bojs <https://cs.wikipedia.org/wiki/Tata_Bojs>`_ jako oblíbené album, mobilní appka tuto informaci okamžitě pošle přes API na :ref:`server <server>` do centrály Spotify. Když potom půjdete k počítači a otevřete si na něm program Spotify, ten si zase přes API všechno zjistí a uvidíte, že Futuretro se i tam zobrazuje ve vašich oblíbených albech.
+Skoro všechny aplikace na našem mobilním telefonu za sebou mají API, pomocí kterého komunikují se službou na pozadí. Když si na mobilu spustíme přehrávač hudby `Spotify <http://spotify.com/>`__ a označíme si `Futuretro <https://cs.wikipedia.org/wiki/Futuretro>`__ od `Tata Bojs <https://cs.wikipedia.org/wiki/Tata_Bojs>`__ jako oblíbené album, mobilní appka tuto informaci okamžitě pošle přes API na :ref:`server <server>` do centrály Spotify. Když potom půjdeme k počítači a otevřeme si na něm program Spotify, ten si zase přes API všechno zjistí a uvidíme, že Futuretro se i tam zobrazuje v našich oblíbených albech.
 
 .. image:: ../_static/images/spotify.png
     :align: center
@@ -75,7 +75,7 @@ Skoro všechny aplikace na vašem mobilním telefonu za sebou mají API, pomocí
 Srovnávače zboží
 ^^^^^^^^^^^^^^^^
 
-Pokud máte e-shop, možná byste chtěli, aby byly vaše produkty k nalezení na `Heureka.cz <https://www.heureka.cz/>`_. Jak to funguje? Je potřeba informace o produktech vystavit do souboru ve formátu :ref:`XML <xml>`. Heureka přímo `předepisuje, jak má takový soubor vypadat <https://sluzby.heureka.cz/napoveda/xml-feed/>`_. Pokud jej dáte k dispozici, vystavujete tím API pro Heureku. Na její straně potom může nějaký robot přes takováto jednotlivá API automaticky načítat informace o produktech z e-shopů.
+Pokud máme e-shop, možná bychom chtěli, aby byly naše produkty k nalezení na `Heureka.cz <https://www.heureka.cz/>`__. Jak to funguje? Je potřeba informace o produktech vystavit do souboru ve formátu :ref:`XML <xml>`. Heureka přímo `předepisuje, jak má takový soubor vypadat <https://sluzby.heureka.cz/napoveda/xml-feed/>`__. Pokud jej dáme k dispozici, vystavujeme tím API pro Heureku. Na její straně potom může nějaký robot přes takováto jednotlivá API automaticky načítat informace o produktech z e-shopů.
 
 .. image:: ../_static/images/heureka.png
     :align: center
@@ -85,7 +85,7 @@ Pokud máte e-shop, možná byste chtěli, aby byly vaše produkty k nalezení n
 Nové články
 ^^^^^^^^^^^
 
-Říká vám něco `RSS <https://cs.wikipedia.org/wiki/RSS>`_? Dnes je tato technologie mírně za zenitem, ale dříve jí byl plný internet. Je to způsob, jak může váš blog nebo zpravodajský server dávat ostatním najevo, že na něm vyšly nové články.
+Říká vám něco `RSS <https://cs.wikipedia.org/wiki/RSS>`__? Dnes je tato technologie mírně za zenitem, ale dříve jí byl plný internet. Je to způsob, jak může váš blog nebo zpravodajský server dávat ostatním najevo, že na něm vyšly nové články.
 
 .. figure:: ../_static/images/rss-icon.png
     :alt: Ikona RSS
@@ -94,7 +94,7 @@ Nové články
 
     Symbol označující RSS
 
-Funguje to tak, že váš blog vystaví do souboru ve formátu :ref:`XML <xml>` informace o publikovaných článcích. Kdokoliv jiný pak může tento soubor stáhnout a strojově přečíst. To dělaly RSS čtečky, jako například `Google Reader <https://cs.wikipedia.org/wiki/Google_Reader>`_. Dnes tak funguje `Feedly <https://feedly.com/>`_. Běžný uživatel se dnes již s RSS tak často nesetká, protože jeho funkci nahradily sociální sítě, ale weby jej stále poskytují - například časopis `Respekt <https://www.respekt.cz/>`_ má hned `několik RSS pro každou rubriku <https://www.respekt.cz/rss>`_.
+Funguje to tak, že váš blog vystaví do souboru ve formátu :ref:`XML <xml>` informace o publikovaných článcích. Kdokoliv jiný pak může tento soubor stáhnout a strojově přečíst. To dělaly RSS čtečky, jako například `Google Reader <https://cs.wikipedia.org/wiki/Google_Reader>`__. Dnes tak funguje `Feedly <https://feedly.com/>`__. Běžný uživatel se dnes již s RSS tak často nesetká, protože jeho funkci nahradily sociální sítě, ale weby jej stále poskytují - například časopis `Respekt <https://www.respekt.cz/>`__ má hned `několik RSS pro každou rubriku <https://www.respekt.cz/rss>`__.
 
 .. image:: ../_static/images/rss.png
     :align: center

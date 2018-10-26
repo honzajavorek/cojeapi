@@ -15,32 +15,55 @@ Jak jsme si vysvětlili v :ref:`předešlé kapitole <uvod>`, API je dohoda mezi
     obrazek server/klient, jeden server ktery poskytuje data a dva klienti, robot a clovek, jak to ctou, udelat tam jasne request response
 
 
-.. _client-browser:
-
 Obecný klient
 -------------
 
-.. todo::
-    browser
-    priklady: browser-server
-    zkusit: browser-banka
-    https://github.com/honzajavorek/cojeapi/issues/2
+Mobilní aplikace na počasí je klient, který někdo vytvořil pro jeden konkrétní úkol. Takový většinou umí pracovat jen s jedním konkrétním API. To je užitečné, pokud chceme akorát vědět jaké je počasí, ale už méně, pokud si chceme zkoušet práci s více API zároveň. Proto existují obecní klienti.
 
 
-.. _client-curl:
+Prohlížeč jako obecný klient
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pokud z API chceme pouze číst a ono nevyžaduje žádné přihlašování, můžeme jej vyzkoušet i v prohlížeči, jako by to byla webová stránka. To jsme si ostatně už dříve předvedli v případě :ref:`kurzovního lístku ČNB <cnb>`. Pokud v prohlížeči přejdeme na odkaz `Stažení v textovém formátu <http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt>`__, uvidíme odpověď z API serveru.
+
+.. image:: ../_static/images/cnb-api.png
+    :alt: ČNB - kurzovní lístek v textovém formátu
+    :align: center
+
+Zkusme jiný příklad. `OMDb <https://www.omdbapi.com/>`_ je API, které poskytuje informace o filmech. Po `registraci <https://www.omdbapi.com/apikey.aspx>`_ nám bude na e-mail zaslán tajný klíč, se kterým můžeme na API zdarma posílat 1000 dotazů denně.
+
+.. image:: ../_static/images/omdb-api-key.png
+    :alt: OMDb registrace
+    :align: center
+
+Nyní zkusme v API najít seriál `Westworld <https://www.csfd.cz/film/395723-westworld/>`_. Podle dokumentace OMDb můžeme složit následující adresu, pokud hledáme slovo ``westworld`` v názvu titulu::
+
+    https://www.omdbapi.com/?t=westworld&apikey=abcd123
+
+Místo ``abcd123`` má být samozřejmě tajný API klíč, který nám přišel e-mailem. Zkusíme adresu otevřít v prohlížeči:
+
+.. image:: ../_static/images/omdb-westworld.png
+    :alt: OMDb - Westworld v prohlížeči
+    :align: center
+
+Smyslem API je vracet odpovědi pro stroje, takže dostaneme změť písmenek, která se člověku nečte zrovna nejlépe. Něco v ní ale vidět lze - není těžké rozluštit, že seriál je drama a hraje v něm `Evan Rachel Wood <https://www.csfd.cz/tvurce/5264-evan-rachel-wood/>`__.
+
 
 Obecný klient v terminálu: curl
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Prohlížeč je nejznámějším obecným klientem pro běžného uživatele. Program `curl <https://curl.haxx.se/>`_ je zase nejznámějším obecným klientem, který můžete spouštět v terminálu. Je tak používaný a významný, že za něj jeho autor `dostal v roce 2017 ocenění z rukou švédského krále <https://daniel.haxx.se/blog/2017/10/20/my-night-at-the-museum/>`_.
+Pokud se k API budeme potřebovat přihlásit nebo s ním zkoušet dělat složitější věci než jen čtení, nebude nám prohlížeč stačit.
 
-Jelikož se bude *curl* vyskytovat v následujících příkladech, je potřeba, abyste jej měli nainstalovaný.
+Proto je dobré se naučit používat program `curl <https://curl.haxx.se/>`__. Spouští se v příkazové řádce a je to švýcarský nůž všech, kteří se pohybují kolem webových API. Je tak používaný a významný, že za něj jeho autor `dostal v roce 2017 ocenění z rukou švédského krále <https://daniel.haxx.se/blog/2017/10/20/my-night-at-the-museum/>`__.
+
+Instalace curl
+^^^^^^^^^^^^^^
 
 .. tabs::
 
     .. group-tab:: Linux
 
-        Je dost možné, že *curl* máte již přímo v systému a není potřeba nic instalovat. Zkuste nechat program vypsat svou verzi, čímž ověříte, jestli je k dispozici:
+        Je dost možné, že curl je již přímo v systému a není potřeba nic instalovat. Zkusíme nechat program vypsat svou verzi, čímž ověříme, jestli je k dispozici:
 
         .. code-block:: shell
 
@@ -49,7 +72,7 @@ Jelikož se bude *curl* vyskytovat v následujících příkladech, je potřeba,
             Protocols: ...
             Features: ...
 
-        Pokud se místo verze vypíše něco v tom smyslu, že příkaz ani program toho jména neexistuje, nainstalujte *curl* standardní cestou přes svého správce balíčků. V distribucích Debian nebo Ubuntu takto:
+        Pokud se místo verze vypíše něco v tom smyslu, že příkaz ani program toho jména neexistuje, nainstalujeme curl standardní cestou přes svého správce balíčků. V distribucích Debian nebo Ubuntu takto:
 
         .. code-block:: shell
 
@@ -63,21 +86,21 @@ Jelikož se bude *curl* vyskytovat v následujících příkladech, je potřeba,
 
     .. group-tab:: macOS
 
-        Program *curl* je k dispozici přímo v systému, není potřeba nic instalovat.
+        Program curl je k dispozici přímo v systému, není potřeba nic instalovat.
 
     .. group-tab:: Windows
 
-        Pokud používáte *Git for Windows* nebo *Cygwin*, je velká šance, že program *curl* už máte, jen jej musíte spouštět ze speciálního terminálu poskytovaného těmito nástroji.
+        Pokud používáme *Git for Windows* nebo *Cygwin*, je velká šance, že curl už máme, jen jej musíme spouštět ze speciálního terminálu poskytovaného těmito nástroji.
 
-        Pokud používáte `Chocolatey <https://chocolatey.org/>`_, mělo by stačit v terminálu spustit následující:
+        Pokud používáme `Chocolatey <https://chocolatey.org/>`__, mělo by stačit v terminálu spustit následující:
 
         .. code-block:: shell
 
             $ choco install curl
 
-        Jinak musíte *curl* stáhnout a nainstalovat ručně. `Zde <https://curl.haxx.se/dlwiz/?type=bin&os=Win64&flav=-&ver=*&cpu=x86_64>`_ vyberte tu verzi, která má v popisku *SSL enabled* a *file is packaged using zip*. Klikněte na :kbd:`Download`. Rozbalte stáhnutý zip, najděte ``curl.exe`` a přidejte jej do systémové cesty.
+        Jinak musíme curl stáhnout a nainstalovat ručně. Na `stránkách programu <https://curl.haxx.se/dlwiz/?type=bin&os=Win64&flav=-&ver=*&cpu=x86_64>`__ vybereme tu verzi, která má v popisku *SSL enabled* a *file is packaged using zip*. Klikneme na :kbd:`Download`. Rozbalíme stáhnutý zip, najdeme ``curl.exe`` a přidáme jej do systémové cesty.
 
-        Nakonec nechte program vypsat svou verzi, čímž ověříte, jestli funguje:
+        Nakonec necháme program vypsat svou verzi, čímž ověříme, jestli funguje:
 
         .. code-block:: shell
 
@@ -88,19 +111,47 @@ Jelikož se bude *curl* vyskytovat v následujících příkladech, je potřeba,
 
         .. note::
 
-            Tento instalační návod je pro úplné začátečníky příliš stručný, ale snad si většina lidí nějak poradí. Můžete mi také :ref:`pomoci návod rozšířit <contributing>`.
+            Tento instalační návod je pro úplné začátečníky příliš stručný, ale snad si většina lidí nějak poradí. Můžete také :ref:`pomoci návod rozšířit <contributing>`.
 
-.. todo::
-    priklady: curl-server
-    zkusit: curl-banka
-    https://github.com/honzajavorek/cojeapi/issues/2
+Příklady s curl
+^^^^^^^^^^^^^^^
+
+Nyní můžeme curl vyzkoušet::
+
+    $ curl 'http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt'
+
+Když příkaz zadáme a spustíme, říkáme tím programu curl, že má poslat požadavek na uvedenou adresu a vypsat to, co mu ČNB pošle zpět.
+
+.. image:: ../_static/images/cnb-api-curl.png
+    :alt: ČNB - kurzovní lístek v příkazové řádce
+    :align: center
+
+Totéž můžeme udělat i s adresou, která nám vracela informace z OMDb.
+
+.. image:: ../_static/images/omdb-westworld-curl.png
+    :alt: OMDb - Westworld v příkazové řádce
+    :align: center
+
+Program curl toho samozřejmě umí více a proto je tak užitečný, ale to si ukážeme později.
+
+
+Obecný klient jako aplikace
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Příkazová řádka je sice velmi mocný a univerzální nástroj, ale není vždy nejpříjemnější na každodenní používání. Následující programy jsou obecní klienti, na které se dá normálně klikat:
+
+- `Postman <https://www.getpostman.com/>`__ - zdarma, pro všechny operační systémy
+- `RESTClient <https://addons.mozilla.org/en-US/firefox/addon/restclient/>`__ - zdarma, pro všechny operační systémy, doplněk do prohlížeče `Firefox <https://www.mozilla.org/firefox/>`__
+- `Paw <https://paw.cloud/>`__ - dražší, ale velmi vyladěný profesionální nástroj pro macOS
+
+Stejně jako v případě práce s `Gitem <https://git-scm.com/>`__ i zde platí, že si můžeme nainstalovat sebekrásnější program, ale pokud budeme potřebovat vyřešit nějaký problém, dostaneme rady většinou v podobě curl příkazu.
+
+Stejně jako u Gitu i curl má velmi složitý systém paramterů a přepínátek, stejně jako u Gitu jim málokdo dokonale rozumí, ale stejně jako u Gitu je to přesně to, co lidé nakonec používají jako společný *jazyk*, do kterého zapisují a přes který sdílí řešení problémů - například na `StackOverflow <https://stackoverflow.com/questions/tagged/curl>`__.
 
 
 Klient pro konkrétní úkol
 -------------------------
 
-.. todo::
-    tohle byli obecni klienti, ktere ovlada clovek
-    chceme aby nas program mohl pracovat s API automaticky, chceme konkretniho klienta
+Obecného klienta musí ovládat člověk. To je přesně to, co potřebujeme, když si chceme nějaké API vyzkoušet, ale celý smysl API je v tom, aby je programy mohly využívat automaticky.
 
-    Aby to mohlo fungovat automaticky, mají přicházející dotazy i odchozí odpovědi nějaký předem dohodnutý formát. A o tom je dalsi kapitola.
+K tomu slouží klienti, které někdo vytvořil pro konkrétní úkol. Jak už jsme si řekli, je to třeba ona aplikace pro zobrazování počasí, která je schopna si data z API přečíst úplně sama. Aby to ale mohla udělat, musí odpověď ze serveru přijít ve formátu, kterému bude rozumět. A o tom, jak to celé funguje, bude následující kapitola.
