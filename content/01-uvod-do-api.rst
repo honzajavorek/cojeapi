@@ -35,7 +35,7 @@ Aplikace ve vašem mobilu pak může z adresy ``https://chmi.cz/predpoved.xslx``
 Příklad: Kurzy měn
 ------------------
 
-Jako příklad API se pojďme podívat na kurzovní lístek České národní banky. Půjdeme na stránku `Kurzy devizového trhu <http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.jsp>`__, kde ČNB vypisuje tabulku kurzů.
+Jako příklad API se pojďme podívat na kurzovní lístek České národní banky. Půjdeme na stránku `Kurzy devizového trhu <https://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.jsp>`__, kde ČNB vypisuje tabulku kurzů.
 
 .. image:: ../_static/images/cnb-website.png
     :alt: ČNB - kurzovní lístek
@@ -49,7 +49,7 @@ Jenže zatímco se takovýto lístek čte velmi pěkně lidem, strojově je čit
     :align: center
     :width: 80%
 
-ČNB proto poskytuje jednoduché API. Pod tabulkou je odkaz `Stažení v textovém formátu <http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt>`__, který vede na tu samou tabulku, ale ve formátu, který lze snadněji a především spolehlivě strojově přečíst.
+ČNB proto poskytuje jednoduché API. Pod tabulkou je odkaz `Stažení v textovém formátu <https://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt>`__, který vede na tu samou tabulku, ale ve formátu, který lze snadněji a především spolehlivě strojově přečíst.
 
 .. image:: ../_static/images/cnb-api.png
     :alt: ČNB - kurzovní lístek v textovém formátu
@@ -63,7 +63,7 @@ Webová API, která možná znáte
 Mobilní aplikace
 ^^^^^^^^^^^^^^^^
 
-Skoro všechny aplikace na našem mobilním telefonu za sebou mají API, pomocí kterého komunikují se službou na pozadí. Když si na mobilu spustíme přehrávač hudby `Spotify <http://spotify.com/>`__ a označíme si `Futuretro <https://cs.wikipedia.org/wiki/Futuretro>`__ od `Tata Bojs <https://cs.wikipedia.org/wiki/Tata_Bojs>`__ jako oblíbené album, mobilní appka tuto informaci okamžitě pošle přes API na :ref:`server <server>` do centrály Spotify. Když potom půjdeme k počítači a otevřeme si na něm program Spotify, ten si zase přes API všechno zjistí a uvidíme, že Futuretro se i tam zobrazuje v našich oblíbených albech.
+Skoro všechny aplikace na našem mobilním telefonu za sebou mají API, pomocí kterého komunikují se službou na pozadí. Když si na mobilu spustíme přehrávač hudby `Spotify <https://spotify.com/>`__ a označíme si `Futuretro <https://cs.wikipedia.org/wiki/Futuretro>`__ od `Tata Bojs <https://cs.wikipedia.org/wiki/Tata_Bojs>`__ jako oblíbené album, mobilní appka tuto informaci okamžitě pošle přes API na :ref:`server <server>` do centrály Spotify. Když potom půjdeme k počítači a otevřeme si na něm program Spotify, ten si zase přes API všechno zjistí a uvidíme, že Futuretro se i tam zobrazuje v našich oblíbených albech.
 
 .. image:: ../_static/images/spotify.png
     :align: center

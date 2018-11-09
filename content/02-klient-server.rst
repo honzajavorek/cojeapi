@@ -24,7 +24,7 @@ Mobilní aplikace na počasí je klient, který někdo vytvořil pro jeden konkr
 Prohlížeč jako obecný klient
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Pokud z API chceme pouze číst a ono nevyžaduje žádné přihlašování, můžeme jej vyzkoušet i v prohlížeči, jako by to byla webová stránka. To jsme si ostatně už dříve předvedli v případě :ref:`kurzovního lístku ČNB <cnb>`. Pokud v prohlížeči přejdeme na odkaz `Stažení v textovém formátu <http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt>`__, uvidíme odpověď z API serveru.
+Pokud z API chceme pouze číst a ono nevyžaduje žádné přihlašování, můžeme jej vyzkoušet i v prohlížeči, jako by to byla webová stránka. To jsme si ostatně už dříve předvedli v případě :ref:`kurzovního lístku ČNB <cnb>`. Pokud v prohlížeči přejdeme na odkaz `Stažení v textovém formátu <https://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt>`__, uvidíme odpověď z API serveru.
 
 .. image:: ../_static/images/cnb-api.png
     :alt: ČNB - kurzovní lístek v textovém formátu
@@ -65,7 +65,7 @@ Instalace curl
 
         Je dost možné, že curl je již přímo v systému a není potřeba nic instalovat. Zkusíme nechat program vypsat svou verzi, čímž ověříme, jestli je k dispozici:
 
-        .. code-block:: shell
+        .. code-block:: text
 
             $ curl --version
             curl x.x.x (...) ...
@@ -74,13 +74,13 @@ Instalace curl
 
         Pokud se místo verze vypíše něco v tom smyslu, že příkaz ani program toho jména neexistuje, nainstalujeme curl standardní cestou přes svého správce balíčků. V distribucích Debian nebo Ubuntu takto:
 
-        .. code-block:: shell
+        .. code-block:: text
 
             $ sudo apt-get install curl
 
         V distribuci Fedora takto:
 
-        .. code-block:: shell
+        .. code-block:: text
 
             $ sudo dnf install curl
 
@@ -94,7 +94,7 @@ Instalace curl
 
         Pokud používáme `Chocolatey <https://chocolatey.org/>`__, mělo by stačit v terminálu spustit následující:
 
-        .. code-block:: shell
+        .. code-block:: text
 
             $ choco install curl
 
@@ -102,7 +102,7 @@ Instalace curl
 
         Nakonec necháme program vypsat svou verzi, čímž ověříme, jestli funguje:
 
-        .. code-block:: shell
+        .. code-block:: text
 
             $ curl --version
             curl x.x.x (...) ...
@@ -118,7 +118,7 @@ Příklady s curl
 
 Nyní můžeme curl vyzkoušet::
 
-    $ curl 'http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt'
+    $ curl 'https://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt'
 
 Když příkaz zadáme a spustíme, říkáme tím programu curl, že má poslat požadavek na uvedenou adresu a vypsat to, co mu ČNB pošle zpět.
 
