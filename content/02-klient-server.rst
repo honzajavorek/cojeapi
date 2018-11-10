@@ -30,7 +30,9 @@ Pokud z API chceme pouze číst a ono nevyžaduje žádné přihlašování, mů
     :alt: ČNB - kurzovní lístek v textovém formátu
     :align: center
 
-Zkusme jiný příklad. `OMDb <https://www.omdbapi.com/>`_ je API, které poskytuje informace o filmech. Po `registraci <https://www.omdbapi.com/apikey.aspx>`_ nám bude na e-mail zaslán tajný klíč, se kterým můžeme na API zdarma posílat 1000 dotazů denně.
+.. _omdb-api:
+
+Zkusme jiný příklad. `OMDb <https://www.omdbapi.com/>`__ je API, které poskytuje informace o filmech. Po `registraci <https://www.omdbapi.com/apikey.aspx>`__ nám bude na e-mail zaslán tajný klíč, se kterým můžeme na API zdarma posílat 1000 dotazů denně.
 
 .. image:: ../_static/images/omdb-api-key.png
     :alt: OMDb registrace

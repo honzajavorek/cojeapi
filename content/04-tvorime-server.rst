@@ -28,7 +28,7 @@ Nyní můžeme začít s tvorbou API. Je to podobné, jako bychom ve Flasku děl
 
 Hned pod příkladem nám stránky frameworku radí jak můžeme aplikaci spustit. Uděláme to tedy:
 
-.. code-block:: python
+.. code-block:: text
 
     $ FLASK_APP=hello.py flask run
      * Serving Flask app "hello.py"
@@ -76,7 +76,7 @@ Přejmenujme si soubor ``hello.py`` na ``api.py``, ať pojmenování odráží n
 
 Na adrese ``/`` naší webové aplikace stále vracíme text, ale nyní už se v něm místo pozdravu snažíme poskytnout základní údaje, a to v nějaké strukturované podobě. Do své aplikace samozřejmě nikdo nepíšeme ``Honza``, ale vlastní údaje dle libosti. Zkusíme nyní program opět spustit:
 
-.. code-block:: python
+.. code-block:: text
 
     $ FLASK_APP=api.py flask run
      * ...
@@ -691,8 +691,85 @@ Aby změny přežily restartování programu, museli bychom stav ukládat do sou
 Mažeme
 ^^^^^^
 
-.. warning::
-    Tato kapitola nebyla zatím připravena.
+Pokud bychom chtěli uživatelům našeho API umožnit kusy oblečení i odebírat, můžeme k tomu použít metodu ``DELETE`` na endpointu pro jednotlivé svršky. Ta funguje tak, že pokud ji klient pošle na nějakou adresu, je to instrukce pro API server, že má věc, kterou ta adresa reprezentuje, smazat.
+
+Jenže co vrátit za odpověď? Pokud něco smažeme a ono už to neexistuje, asi to nebudeme chtít vracet v těle odpovědi. Pokud nemáme co do těla odpovědi dát, můžeme v HTTP použít tzv. prázdnou odpověď. Má kód ``204 No Content`` a dává klientovi najevo, že nemá v odpovědi už očekávat žádné tělo. Použijeme opět `Response <http://flask.pocoo.org/docs/1.0/api/#response-objects>`__ objekt.
+
+.. code-block:: python
+    :emphasize-lines: 1, 8-11
+
+    from flask import Flask, jsonify, request, abort, Response
+
+    ...
+
+    @app.route("/clothes/<name>", methods=["GET", "DELETE"])
+    def garment(name):
+        try:
+            if request.method == "DELETE":
+                del clothes_state[name]
+                return Response(status=204)
+            else:
+                color = clothes_state[name]
+                return jsonify({"name": name, "color": color})
+        except KeyError:
+            abort(404)
+
+Když použijeme curl, abychom smazali například ponožky (opět využijeme ``-x`` pro nastavení metody), dostaneme pouze status kód a hlavičky.
+
+.. code-block:: text
+
+    $ curl -i -X DELETE 'http://127.0.0.1:5000/clothes/socks'
+    HTTP/1.0 204 NO CONTENT
+    Content-Type: text/html; charset=utf-8
+    Server: Werkzeug/0.14.1 Python/3.7.1
+    Date: Sat, 10 Nov 2018 10:01:17 GMT
+
+Pokud bychom chtěli zamezit tomu, aby nám bylo odebráno veškeré oblečení, můžeme doprogramovat jednoduché zabezpečení. Jestliže nechceme něco v API povolit, můžeme to dát druhé straně najevo například pomocí kódu ``403 Forbidden``:
+
+.. code-block:: python
+    :emphasize-lines: 9-11
+
+    from flask import Flask, jsonify, request, abort, Response
+
+    ...
+
+    @app.route("/clothes/<name>", methods=["GET", "DELETE"])
+    def garment(name):
+        try:
+            if request.method == "DELETE":
+                if name == 'underwear':
+                    return Response(status=403)  # nic takového!
+                else:
+                    del clothes_state[name]
+                    return Response(status=204)
+            else:
+                color = clothes_state[name]
+                return jsonify({"name": name, "color": color})
+        except KeyError:
+            abort(404)
+
+Když zkusíme smazat spodní prádlo, API nám to nyní nedovolí.
+
+.. code-block:: text
+
+    $ curl -i -X DELETE 'http://127.0.0.1:5000/clothes/underwear'
+    HTTP/1.0 403 FORBIDDEN
+    Content-Type: text/html; charset=utf-8
+    Content-Length: 0
+    Server: Werkzeug/0.14.1 Python/3.7.1
+    Date: Sat, 10 Nov 2018 10:01:23 GMT
+
+Podobným způsobem bylo zabezpečeno API od :ref:`OMDb <omdb-api>`. Dokud jsme neudělali dotaz s API klíčem, nedostali jsme jinou odpověď než chybu:
+
+.. code-block:: text
+
+    $ curl -i 'https://www.omdbapi.com/?t=westworld'
+    HTTP/2 401
+    ...
+
+    {"Response":"False","Error":"No API key provided."}
+
+Jediným rozdílem je to, že v jejich API byl použit kód ``401 Unauthorized``. Ten se má poslat ve chvíli, kdy má klient šanci oprávnění získat a dotaz provést znovu. V případě OMDb bylo potřeba se zaregistrovat, obdržet API klíč a poslat ho jako parametr. V našem případě oprávnění nijak dostat nelze. Abychom mohli vracet ``401 Unauthorized``, museli bychom doprogramovat nějaký přístup pro ty, s nimiž chceme strávit romantický večer.
 
 Uveřejňujeme API
 ----------------
@@ -700,7 +777,7 @@ Uveřejňujeme API
 Zatím jsme naši aplikaci spouštěli pouze na svém počítači a neměl k ní přístup nikdo jiný, než my sami. Nebylo by lepší, kdyby naše API bylo veřejné a naši kamarádi k němu mohli psát své klienty?
 
 .. warning::
-    Tato kapitola nebyla zatím připravena. V plánu bylo využít `now.sh <https://zeit.co/download#now-cli>`__, ale mají limit na upload 5MB a nepovedlo se mi ve 2 ráno před workshopem udělat Flask appku pod 7MB.
+    Tato kapitola nebyla zatím připravena.
 
 .. todo::
     - https://zeit.co/download#now-cli
