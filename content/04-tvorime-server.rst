@@ -831,7 +831,7 @@ Můžeme se na naše API dotazovat samozřejmě i pomocí curl:
 
 A co je ještě lepší, na rozdíl od všech předchozích případů, nyní může na naše API posílat dotazy i někdo jiný! Pošlete tuto adresu kamarádce/kamarádovi nebo kolegyni/kolegovi, ať zkusí se svým prohlížečem a s curl posílat dotazy na vaše API. Vy zase můžete zkoušet jejich API. Nebojme se experimentovat, třeba přidat oblečení, nebo nějaké smazat.
 
-Pokud budeme chtít udělat v našem API změny a ty opět promítnout veřejně, budeme muset znova spustit příkaz ``now``. Změní se ovšem adresa, na které naše změněné API bude.
+Pokud budeme chtít udělat v našem API změny a ty opět promítnout veřejně, budeme muset znova spustit příkaz ``now --docker --public``. Změní se ovšem adresa, na které naše změněné API bude.
 
 Knihovny pro tvorbu serveru
 ---------------------------
