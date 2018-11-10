@@ -786,17 +786,52 @@ Uveřejňujeme API
 
 Zatím jsme naši aplikaci spouštěli pouze na svém počítači a neměl k ní přístup nikdo jiný, než my sami. Nebylo by lepší, kdyby naše API bylo veřejné a naši kamarádi k němu mohli psát své klienty?
 
-.. warning::
-    Tato kapitola nebyla zatím připravena.
+Můžeme k tomu využít službu `now.sh <https://now.sh>`__. Ta nám umožní naše API uveřejnit tak, aby nebylo jen na našem počítači, ale mohl na něj přistupovat kdokoliv. Nejdříve potřebujeme nainstalovat program ``now``:
 
-.. todo::
-    - https://zeit.co/download#now-cli
-    - now.json
-    - requirements.txt
-    - now
-    - email
-    - go to email, verify
-    - now (again)
+#.  Půjdeme na https://zeit.co/download a nainstalujeme si ``now`` pro náš systém
+#.  Otevřeme si příkazovou řádku a zkusíme napsat ``now --version``, abychom ověřili, zda vše funguje, jak má
+#.  V témže adresáři, ve kterém máme ``api.py``, vytvoříme nový soubor ``now.json`` s následujícím obsahem:
+
+    .. code-block:: json
+
+        {"version": 1}
+
+#.  V témže adresáři, ve kterém máme ``api.py``, vytvoříme nový soubor ``Dockerfile`` s následujícím obsahem:
+
+    .. code-block:: Dockerfile
+
+        FROM python:3.7-alpine
+        RUN python3 -m pip install flask gunicorn
+        COPY api.py .
+        EXPOSE 8000
+        CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "api:app"]
+
+#.  Nyní zkusíme na příkazové řádce, v našem adresáři s aplikací, spustit příkaz ``now``
+#.  Je pravděpodobné, že ``now`` po nás bude chtít e-mailovou adresu. Zadáme ji a ověříme v naší e-mailové schránce
+#.  Když nyní spustíme ``now --docker --public``, nahraje se naše aplikace na internet (bude to nejspíše chvíli trvat)
+#.  Po nějaké době bychom měli dostat adresu, na které můžeme naše API najít - něco ve tvaru ``https://cojeapi-abcd-rdfzhwecwv.now.sh``
+
+Když na tuto adresu půjdeme v prohlížeči, měli bychom vidět HTTP odpověď na endpoint ``/``:
+
+.. image:: ../_static/images/now.png
+    :alt: now.sh v prohlížeči
+    :align: center
+
+Můžeme se na naše API dotazovat samozřejmě i pomocí curl:
+
+.. code-block:: text
+
+    $ curl -i https://cojeapi-server-rdfzhwecwv.now.sh
+    HTTP/2 200
+    date: Sat, 10 Nov 2018 11:12:32 GMT
+    ...
+    content-type: application/json
+
+    {"eyes_color":"brown","eyes_count":2,"hair_color":"brown","hands_count":2,"legs_count":2,"mood":"grumpy","name":"Honza","surname":"Javorek"}
+
+A co je ještě lepší, na rozdíl od všech předchozích případů, nyní může na naše API posílat dotazy i někdo jiný! Pošlete tuto adresu kamarádce/kamarádovi nebo kolegyni/kolegovi, ať zkusí se svým prohlížečem a s curl posílat dotazy na vaše API. Vy zase můžete zkoušet jejich API. Nebojme se experimentovat, třeba přidat oblečení, nebo nějaké smazat.
+
+Pokud budeme chtít udělat v našem API změny a ty opět promítnout veřejně, budeme muset znova spustit příkaz ``now``. Změní se ovšem adresa, na které naše změněné API bude.
 
 Knihovny pro tvorbu serveru
 ---------------------------
