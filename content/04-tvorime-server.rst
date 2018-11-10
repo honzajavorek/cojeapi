@@ -1,9 +1,6 @@
 Tvoříme server
 ==============
 
-.. todo::
-    cely to predelat do flask debug modu :((((
-
 Konec teorie, pojďme si vyzkoušet nabyté znalosti v praxi. Začneme tím, že zkusíme vyrobit jednoduché API. Použijeme jazyk Python 3 a framework `Flask <http://flask.pocoo.org/>`__, který se hodí na webové aplikace malého rozsahu.
 
 Základ aplikace
@@ -37,6 +34,14 @@ Hned pod příkladem nám stránky frameworku radí jak můžeme aplikaci spusti
      Use a production WSGI server instead.
      * Debug mode: off
      * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+
+.. note::
+    Pozor, na Windows musíme Flask spouštět následovně:
+
+    .. code-block:: text
+
+        C:\nějaká\cesta> set FLASK_APP=hello.py
+        C:\nějaká\cesta> python -m flask run
 
 Když nyní v prohlížeči půjdeme na adresu ``http://127.0.0.1:5000/``, měli bychom vidět text ``Hello World!``:
 
@@ -83,7 +88,12 @@ Na adrese ``/`` naší webové aplikace stále vracíme text, ale nyní už se v
      * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 
 .. warning::
-    Přejmenovali jsme soubor z ``hello.py`` na ``api.py``. Všimněte si, že je podle toho potřeba změnit i příkaz ke spuštění webové aplikace!
+    Přejmenovali jsme soubor z ``hello.py`` na ``api.py``. Všimněte si, že je podle toho potřeba změnit i příkaz ke spuštění webové aplikace! Na Windows budeme muset znova použít příkaz ``set``:
+
+    .. code-block:: text
+
+        C:\nějaká\cesta> set FLASK_APP=api.py
+        C:\nějaká\cesta> python -m flask run
 
 Nyní bychom měli v prohlížeči vidět následující:
 
