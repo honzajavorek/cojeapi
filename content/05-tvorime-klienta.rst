@@ -107,22 +107,87 @@ Protože je nálada proměnlivá, měl by program pokaždé vypsat jinou:
     $ python client.py
     Honza Javorek is cheerful
 
+Zkoušíme veřejné API
+--------------------
 
-Specializované knihovny (SDK)
------------------------------
+Stejným způsobem můžeme dotazovat i :ref:`naše veřejné API <nowsh>` (stačí vyměnit ``http://127.0.0.1:5000/`` za adresu, kterou vám přidělilo ``now``), ale nejspíš to nebude o moc zajímavější, protože jsme ho vytvořili my a vychází z toho samého kódu, jaký je u nás na počítači.
+
+Pokud ale máte kamarádku/kamaráda nebo kolegyni/kolegu, kteří těmito materiály také procházejí, můžete si vzít adresu na jejich API uveřejněné pomocí ``now``, a zjistit, jakou mají náladu:
+
+.. code-block:: python
+    :emphasize-lines: 3
+
+    import requests
+
+    response = requests.get("https://cojeapi-server-rdfzhwecwv.now.sh")
+    data = response.json()
+    print("{name} {surname} is {mood}".format(**data))
+
+.. code-block:: text
+
+    $ python client.py
+    Zuzana Válková is cheerful
+
+Pokud bychom chtěli zkoušet různá API a nebavilo by nás kód stále přepisovat, můžeme do našeho programu brát adresu jako CLI argument:
+
+.. code-block:: python
+    :emphasize-lines: 4-7
+
+    import sys
+    import requests
+
+    try:
+        url = sys.argv[1]
+    except IndexError:
+        url = "http://127.0.0.1:5000/"
+
+    response = requests.get(url)
+    data = response.json()
+    print("{name} {surname} is {mood}".format(**data))
+
+Teď můžeme spouštět program následovně:
+
+.. code-block:: text
+
+    $ python client.py "https://cojeapi-server-rdfzhwecwv.now.sh"
+    Zuzana Válková is cheerful
+
+To nám umožňuje snadno a rychle našeho klienta nasměrovat na jakékoliv API budeme chtít - a to se může hodit, především pokud kolem sebe máme hodně lidí, kteří prošli těmito materiály a mají své osobní API na https://now.sh.
+
+Pokud adresu neuvedeme, použije se automaticky ``http://127.0.0.1:5000/`` pro API puštěné lokálně na našem počítači:
+
+.. code-block:: text
+
+    $ python client.py
+    Honza Javorek is cheerful
+
+Chyby
+-----
+
+.. warning::
+    Tato kapitola není ještě připravena.
+
+Zapisujeme
+----------
+
+.. warning::
+    Tato kapitola není ještě připravena.
+
+Mažeme
+------
+
+.. warning::
+    Tato kapitola není ještě připravena.
+
+Kódování parametrů
+------------------
 
 .. warning::
     Tato kapitola není ještě připravena.
 
 .. todo::
-    vysvětlit specializovaného klienta
-    příklady
-
-.. todo::
-    připomenout, že než jdeme psát klienta na zelené louce, měli bychom ověřit, že už není nějaká hotová SDK knihovna (příklady z pypi)
-
-    základní příklady s requests, GET, POST
-    https://github.com/honzajavorek/cojeapi/issues/2
+    co dáváme do parametrů se musí prohnat nějakym urlencoding
+    příklady s nějakým (reverse) geocoding api (google, seznam?)
 
 Zabezpečení
 -----------
@@ -139,13 +204,18 @@ Zabezpečení
 
     příklad s GitHubem, vygenerujeme token, dáme do ENV, nasosáme v programu a můžeme použít
 
-Kódování parametrů
-------------------
+Specializované knihovny (SDK)
+-----------------------------
 
 .. warning::
     Tato kapitola není ještě připravena.
 
 .. todo::
-    co dáváme do parametrů se musí prohnat nějakym urlencoding
-    příklady s nějakým (reverse) geocoding api (google, seznam?)
+    vysvětlit specializovaného klienta
+    příklady
 
+.. todo::
+    připomenout, že než jdeme psát klienta na zelené louce, měli bychom ověřit, že už není nějaká hotová SDK knihovna (příklady z pypi)
+
+    základní příklady s requests, GET, POST
+    https://github.com/honzajavorek/cojeapi/issues/2
