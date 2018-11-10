@@ -1,6 +1,9 @@
 Tvoříme klienta
 ===============
 
+.. warning::
+    Tato kapitola nebyla zatím připravena.
+
 .. todo::
     připomenout, že než jdeme psát klienta na zelené louce, měli bychom ověřit, že už není nějaká hotová SDK knihovna (příklady z pypi)
 

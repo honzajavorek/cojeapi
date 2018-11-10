@@ -74,6 +74,8 @@ tělo (*body*)
 Když chceme poslat dotaz, musíme nejdříve vyčíst z dokumentace API, jak jej máme správně položit tak, aby API vrátilo co chceme.
 
 
+.. _http-response:
+
 Součásti odpovědi
 ^^^^^^^^^^^^^^^^^
 

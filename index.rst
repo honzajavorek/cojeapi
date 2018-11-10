@@ -9,8 +9,8 @@ Obsah
    content/01-uvod-do-api
    content/02-klient-server
    content/03-zakladni-pojmy
-   content/04-tvorime-klienta
-   content/05-tvorime-server
+   content/04-tvorime-server
+   content/05-tvorime-klienta
    content/06-web-jako-api
    content/07-co-dal
 

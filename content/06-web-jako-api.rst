@@ -1,6 +1,9 @@
 Web jako API
 ============
 
+.. warning::
+    Tato kapitola nebyla zatím připravena.
+
 .. todo::
     webova API, hm hm
     prohlizec jako klient, hm hm
