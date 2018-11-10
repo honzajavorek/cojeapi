@@ -59,7 +59,7 @@ Přejmenujme si soubor ``hello.py`` na ``api.py``, ať pojmenování odráží n
 
     app = Flask(__name__)
 
-    about_me = """
+    about_me_data = """
     name: Honza
     surname: Javorek
     eyes count: 2
@@ -72,7 +72,7 @@ Přejmenujme si soubor ``hello.py`` na ``api.py``, ať pojmenování odráží n
 
     @app.route("/")
     def about_me():
-        return about_me
+        return about_me_data
 
 Na adrese ``/`` naší webové aplikace stále vracíme text, ale nyní už se v něm místo pozdravu snažíme poskytnout základní údaje, a to v nějaké strukturované podobě. Do své aplikace samozřejmě nikdo nepíšeme ``Honza``, ale vlastní údaje dle libosti. Zkusíme nyní program opět spustit:
 
@@ -126,7 +126,7 @@ Když z funkce vrátíme řetězec, Flask si domyslí, že chceme poslat HTTP od
 
     app = Flask(__name__)
 
-    about_me = """
+    about_me_data = """
     name: Honza
     surname: Javorek
     eyes count: 2
@@ -139,7 +139,7 @@ Když z funkce vrátíme řetězec, Flask si domyslí, že chceme poslat HTTP od
 
     @app.route("/")
     def about_me():
-        return Response(about_me, headers={"Content-Type": "text/plain"})
+        return Response(about_me_data, headers={"Content-Type": "text/plain"})
 
 Nyní by mělo API vracet správnou hlavičku:
 
@@ -178,7 +178,7 @@ Naše data nyní vypadají následovně:
 
 .. code-block:: python
 
-    about_me = """
+    about_me_data = """
     name: Honza
     surname: Javorek
     eyes count: 2
@@ -193,7 +193,7 @@ Co si budeme povídat, takto data běžně nevypadají. Většinou přijdou odn�
 
 .. code-block:: python
 
-    about_me = {
+    about_me_data = {
         "name": "Honza",
         "surname": "Javorek",
         "eyes_count": 2,
@@ -210,7 +210,7 @@ Výhodou nyní je, že k datům můžeme přidat i nějaké chování. Asi to m�
 
     import random
 
-    about_me = {
+    about_me_data = {
         "name": "Honza",
         "surname": "Javorek",
         "eyes_count": 2,
@@ -228,7 +228,7 @@ Použili jsme `random.choice <https://docs.python.org/3/library/random.html#rand
     @app.route("/")
     def about_me():
         body = ""
-        for key, value in about_me.items():
+        for key, value in about_me_data.items():
             body += "{0}: {1}\n".format(key, value)
         return Response(body, headers={"Content-Type": "text/plain"})
 
@@ -241,7 +241,7 @@ Celý program bude nyní vypadat takto:
 
     app = Flask(__name__)
 
-    about_me = {
+    about_me_data = {
         "name": "Honza",
         "surname": "Javorek",
         "eyes_count": 2,
@@ -255,7 +255,7 @@ Celý program bude nyní vypadat takto:
     @app.route("/")
     def about_me():
         body = ""
-        for key, value in about_me.items():
+        for key, value in about_me_data.items():
             body += "{0}: {1}\n".format(key, value)
         return Response(body, headers={"Content-Type": "text/plain"})
 
