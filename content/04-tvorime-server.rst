@@ -714,10 +714,8 @@ Zatím jsme naši aplikaci spouštěli pouze na svém počítači a neměl k ní
 Knihovny pro tvorbu serveru
 ---------------------------
 
-.. warning::
-    Tato kapitola nebyla zatím připravena.
+V tomto návodu jsme si ukázali, jak vyrobit jednoduché API s pomocí frameworku Flask. Ten je ale, podobně jako např. `Django <https://www.djangoproject.com/>`__, připravený spíše obecně na tvorbu webových stránek.
 
-.. todo::
-    připomenout, zopakovat, nebo odkazat do zakladnich pojmu, ze existuji
-    knihovny, ktere tohle cele usnadnuji, i kdyz jede tutorial na cistych fw
-    DRF, Flask-Restful, eve
+Pokud bychom tvořili složitější API, brzy by nám přišlo, že s frameworkem spíše bojujeme, než aby nám pomáhal. Např. jsme si mohli všimnout, že chyby jsou posílány jako HTML, přitom by bylo lepší, kdyby byly také naformátovány jako JSON. Museli bychom ručně doplnit kód, který upraví výchozí chování Flasku a bude chyby posílat tak, jak se v JSON API sluší a patří.
+
+Z tohoto a dalších důvodů je tedy výhodnější se časem poohlédnout po doplňku do Flasku, popřípadě Djanga, jenž nám tvorbu API usnadní. To jsou např. `Django REST Framework <https://www.django-rest-framework.org/>`__, `Flask-Restful <https://flask-restful.readthedocs.io/>`__, `Eve <http://docs.python-eve.org/>`__, a další.
