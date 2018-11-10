@@ -1,3 +1,5 @@
+.. _creating-server:
+
 Tvoříme server
 ==============
 
@@ -6,7 +8,7 @@ Konec teorie, pojďme si vyzkoušet nabyté znalosti v praxi. Začneme tím, že
 Základ aplikace
 ---------------
 
-Vytvoříme si pro náš projekt adresář ``server`` a v něm `virtuální prostředí <https://naucse.python.cz/course/pyladies/beginners/venv-setup/>`__, které si aktivujeme. Poté nainstalujeme Flask:
+Vytvoříme si pro náš projekt nový adresář ``cojeapi-server`` a v něm `virtuální prostředí <https://naucse.python.cz/course/pyladies/beginners/venv-setup/>`__, které si aktivujeme. Poté nainstalujeme Flask:
 
 .. code-block:: shell
 
@@ -27,7 +29,7 @@ Hned pod příkladem nám stránky frameworku radí jak můžeme aplikaci spusti
 
 .. code-block:: text
 
-    $ FLASK_APP=hello.py flask run
+    (venv)$ FLASK_APP=hello.py flask run
      * Serving Flask app "hello.py"
      * Environment: production
      WARNING: Do not use the development server in a production environment.
@@ -83,7 +85,7 @@ Na adrese ``/`` naší webové aplikace stále vracíme text, ale nyní už se v
 
 .. code-block:: text
 
-    $ FLASK_APP=api.py flask run
+    (venv)$ FLASK_APP=api.py flask run
      * ...
      * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 
