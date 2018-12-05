@@ -204,6 +204,15 @@ Zabezpečení
 
     příklad s GitHubem, vygenerujeme token, dáme do ENV, nasosáme v programu a můžeme použít
 
+Pracujeme s veřejnými API
+-------------------------
+
+OMDb
+^^^^
+
+GitHub
+^^^^^^
+
 Specializované knihovny (SDK)
 -----------------------------
 
