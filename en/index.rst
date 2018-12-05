@@ -19,7 +19,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   01-intro-to-apis
+   01-api-intro
 
 .. toctree::
    :hidden:
