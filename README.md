@@ -1,8 +1,9 @@
 <h1 align="center">Co je API?</h1>
 <h3 align="center">Materiály, díky kterým pochopíte API</h3>
-<p align="center">
-    Když si jako laik na Wikipedii najdete <a href="https://cs.wikipedia.org/wiki/API">článek o API</a>, nejspíš z něj moudří nebudete. Tyto materiály, nazvané <a href="http://cojeapi.cz">Co je API?</a>, se snaží API vysvětlit běžným lidem a zároveň umožnit začátečníkům v programování, aby se s API naučili pracovat.
-</p>
+
+Když si jako laik na Wikipedii najdete [článek o API](https://cs.wikipedia.org/wiki/API), nejspíš z něj moudří nebudete. Tyto materiály, nazvané [Co je API?](http://cojeapi.cz), se snaží API vysvětlit běžným lidem a zároveň umožnit začátečníkům v programování, aby se s API naučili pracovat.
+
+------
 
 #### 🚧 Upozornění
 
