@@ -65,11 +65,11 @@ ji vyžaduje i tento projekt. Nastavení je v souboru ``readthedocs.yml`` (`doku
 Continuous Integration
 ----------------------
 
-Na repozitáři je zapojený `Travis CI <https://travis-ci.org/>`__. Kontroluje různé věci v rámci projektu. Kontrolka:
+Na repozitáři je zapojeno `CircleCI <https://circleci.com>`__. Kontroluje různé věci v rámci projektu. Kontrolka:
 
 .. image:: https://circleci.com/gh/honzajavorek/cojeapi/tree/master.svg?style=svg
     :target: https://circleci.com/gh/honzajavorek/cojeapi/tree/master
     :alt: Continuous Integration Status
 
-Travis CI je pouze informativní a nezabrání tomu, aby se ``master`` větev
-dostala do ReadTheDocs. Pokud se něco nepovedlo, podrobnosti lze zjistit `zde <https://travis-ci.org/honzajavorek/cojeapi/>`__.
+CircleCI je pouze informativní a nezabrání tomu, aby se ``master`` větev
+dostala do ReadTheDocs. Pokud se něco nepovedlo, podrobnosti lze zjistit `zde <https://circleci.com/gh/honzajavorek/cojeapi>`__.
