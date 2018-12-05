@@ -113,7 +113,7 @@ Instalace curl
 
         .. note::
 
-            Tento instalační návod je pro úplné začátečníky příliš stručný, ale snad si většina lidí nějak poradí. Můžete také :ref:`pomoci návod rozšířit <contributing>`.
+            Tento instalační návod je pro úplné začátečníky příliš stručný, ale snad si většina lidí nějak poradí. Můžete také :ref:`pomoci návod rozšířit <jak-prispivat>`.
 
 Příklady s curl
 ^^^^^^^^^^^^^^^

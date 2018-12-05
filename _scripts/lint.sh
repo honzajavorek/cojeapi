@@ -6,7 +6,7 @@ pipenv run pipenv_to_requirements -f -o ci-requirements.txt
 if ! diff requirements.txt ci-requirements.txt > /dev/null
 then
   rm ci-requirements.txt
-  help_url='https://cojeapi.readthedocs.io/cs/latest/CONTRIBUTING.html#zavislosti'
+  help_url='https://cojeapi.readthedocs.io/cs/latest/contributing.html#zavislosti'
   echo ""
   echo ""
   echo "The requirements.txt file is not up to date. Run" \
@@ -21,4 +21,5 @@ fi
 doc8
 
 # Check external links
+pipenv run sphinx-build -nW -b linkcheck en _build
 pipenv run sphinx-build -nW -b linkcheck cs _build

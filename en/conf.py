@@ -10,7 +10,7 @@ IS_READTHEDOCS = os.environ.get('READTHEDOCS') == 'True'
 
 # -- Project information -----------------------------------------------------
 
-project = 'Co je API?'
+project = 'What is an API?'
 copyright = '2018, Honza Javorek'
 author = 'Honza Javorek'
 
@@ -52,7 +52,7 @@ master_doc = 'index'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = 'cs'
+language = 'en'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -101,7 +101,7 @@ html_static_path = ['../_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'cojeapi-doc'
+htmlhelp_basename = 'whatisapi-doc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -128,7 +128,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'cojeapi.tex', project, author, 'manual'),
+    (master_doc, 'whatisapi.tex', project, author, 'manual'),
 ]
 
 
@@ -137,7 +137,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'cojeapi', project, [author], 1)
+    (master_doc, 'whatisapi', project, [author], 1)
 ]
 
 
@@ -147,8 +147,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'cojeapi', project, author, 'cojeapi',
-     'Materiály, díky kterým pochopíte API', 'Miscellaneous'),
+    (master_doc, 'whatisapi', project, author, 'whatisapi',
+     'Learning materials to let you understand APIs', 'Miscellaneous'),
 ]
 
 

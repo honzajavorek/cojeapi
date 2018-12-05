@@ -488,7 +488,7 @@ Která API se učíme?
 
 **Co je API?** je primárně o těch API, která se běžně označují jako :ref:`REST`. Vzhledem k historii a komplikovanosti termínu REST API se mu ale záměrně vyhýbám a raději tato API označuji jako webová. Přijde mi to tak i přesnější a srozumitelnější.
 
-V těchto materiálech se nebudeme zabývat :ref:`SOAP` ani RPC. Zatím zde není nic ani o :ref:`GraphQL`. Pokud vás to mrzí a o GraphQL něco víte, budu rád, když do materiálů :ref:`přispějete <contributing>`.
+V těchto materiálech se nebudeme zabývat :ref:`SOAP` ani RPC. Zatím zde není nic ani o :ref:`GraphQL`. Pokud vás to mrzí a o GraphQL něco víte, budu rád, když do materiálů :ref:`přispějete <jak-prispivat>`.
 
 
 Shrnutí
