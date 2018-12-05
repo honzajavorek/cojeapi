@@ -5,6 +5,7 @@ set -e
 pipenv run pipenv_to_requirements -f -o ci-requirements.txt
 if ! diff requirements.txt ci-requirements.txt > /dev/null
 then
+  rm ci-requirements.txt
   help_url='https://cojeapi.readthedocs.io/cs/latest/CONTRIBUTING.html#zavislosti'
   echo ""
   echo ""
@@ -12,10 +13,12 @@ then
     "'pipenv run requirements' and commit the changes." \
     "See ${help_url} for more info."
   exit 1
+else
+  rm ci-requirements.txt
 fi
 
-# doc8
+# Check reStructuredText markup quality
 doc8
 
 # Check external links
-pipenv run sphinx-build -nW -b linkcheck . _build
+pipenv run sphinx-build -nW -b linkcheck cs _build
