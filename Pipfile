@@ -20,6 +20,5 @@ python_version = "3.6"
 [scripts]
 "serve:en" = "sphinx-autobuild en _build"
 "serve:cs" = "sphinx-autobuild cs _build"
-
 requirements = "pipenv run pipenv_to_requirements -f -o requirements.txt"
 lint = "_scripts/lint.sh"
