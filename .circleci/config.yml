@@ -1,0 +1,31 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: "circleci/python:3.6"
+    working_directory: "~/repo"
+    steps:
+      - "checkout"
+
+      - run: "sudo chown -R circleci:circleci /usr/local/bin"
+      - run: "sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages"
+      - restore_cache:
+          key: "deps-{{ .Branch }}-{{ checksum 'Pipfile.lock' }}"
+
+      - run:
+          name: install dependencies
+          command: |
+            sudo pip install pip pipenv --upgrade
+            pipenv install --dev
+
+      - save_cache:
+          key: "deps-{{ .Branch }}-{{ checksum 'Pipfile.lock' }}"
+          paths:
+            - ".venv"
+            - "/usr/local/bin"
+            - "/usr/local/lib/python3.6/site-packages"
+
+      - run:
+          name: run tests
+          command: |
+            pipenv run lint
