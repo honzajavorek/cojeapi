@@ -67,8 +67,8 @@ Continuous Integration
 
 Na repozitáři je zapojený `Travis CI <https://travis-ci.org/>`__. Kontroluje různé věci v rámci projektu. Kontrolka:
 
-.. image:: https://travis-ci.org/honzajavorek/cojeapi.svg?branch=master
-    :target: https://travis-ci.org/honzajavorek/cojeapi
+.. image:: https://circleci.com/gh/honzajavorek/cojeapi/tree/master.svg?style=svg
+    :target: https://circleci.com/gh/honzajavorek/cojeapi/tree/master
     :alt: Continuous Integration Status
 
 Travis CI je pouze informativní a nezabrání tomu, aby se ``master`` větev
