@@ -17,9 +17,6 @@ else
   rm ci-requirements.txt
 fi
 
-# Check reStructuredText markup quality
-doc8
-
 # Check external links
 pipenv run sphinx-build -nW -b linkcheck en _build
 pipenv run sphinx-build -nW -b linkcheck cs _build

@@ -10,7 +10,6 @@ sphinx-tabs = "*"
 [dev-packages]
 sphinx-autobuild = "*"
 sphinx-rtd-theme = "*"
-"doc8" = "*"
 pylama = "*"
 pipenv-to-requirements = "*"
 
