@@ -480,7 +480,7 @@ Podle odborníků to ale nevypadá, že by GraphQL mělo REST nahradit. Spíše 
 ^^^^^^^^^^^^^^^^^^^
 
 - `Phil Sturgeon: GraphQL vs REST: Overview <https://philsturgeon.uk/api/2017/01/24/graphql-vs-rest-overview/>`__
-- `Zdeněk Němec: REST vs. GraphQL: A Critical Review <https://blog.goodapi.co/rest-vs-graphql-a-critical-review-5f77392658e7>`__
+- `Zdeněk Němec: REST vs. GraphQL: A Critical Review <https://goodapi.co/blog/rest-vs-graphql>`__
 
 
 Která API se učíme?
