@@ -175,7 +175,11 @@ epub_exclude_files = ['search.html']
 
 # -- External links check -------------------------------------------------
 
-linkcheck_ignore = ['http://127.0.0.1:8000']
+linkcheck_ignore = [
+    'http://127.0.0.1:8000',  # localhost
+    'https://www.heureka.cz',  # heureka.cz blocks requests from CI
+    'https://sluzby.heureka.cz/napoveda/xml-feed/',  # heureka.cz blocks requests from CI
+]
 
 
 # -- Extension configuration -------------------------------------------------
