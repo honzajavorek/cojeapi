@@ -1,4 +1,15 @@
--i https://pypi.org/simple/
+################################################################################
+# This requirements file has been automatically generated from `Pipfile` with
+# `pipenv-to-requirements`
+#
+#
+# This has been done to maintain backward compatibility with tools and services
+# that do not support `Pipfile` yet.
+#
+# Do NOT edit it directly, use `pipenv install [-d]` to modify `Pipfile` and
+# `Pipfile.lock` and then regenerate `requirements*.txt`.
+################################################################################
+
 alabaster==0.7.12
 babel==2.6.0
 certifi==2019.3.9
@@ -16,10 +27,10 @@ requests==2.21.0
 six==1.12.0
 snowballstemmer==1.2.1
 sphinx-tabs==1.1.10
-sphinx==2.0.0
+sphinx==2.0.1
 sphinxcontrib-applehelp==1.0.1
 sphinxcontrib-devhelp==1.0.1
-sphinxcontrib-htmlhelp==1.0.1
+sphinxcontrib-htmlhelp==1.0.2
 sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-qthelp==1.0.2
 sphinxcontrib-serializinghtml==1.1.3
