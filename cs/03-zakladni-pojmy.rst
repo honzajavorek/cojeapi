@@ -215,7 +215,7 @@ Vidíme, že :ref:`API ČNB <cnb>` vrací obyčejný text, tedy ``text/plain`` (
 
 .. tabs::
 
-    .. group-tab:: Cvičení
+    .. tab:: Cvičení
 
         Jaký ``Content-Type`` má tělo odpovědí z následujících adres?
 
@@ -224,7 +224,7 @@ Vidíme, že :ref:`API ČNB <cnb>` vrací obyčejný text, tedy ``text/plain`` (
         #. ``https://www.omdbapi.com/?t=westworld``
         #. ``https://duckduckgo.com/``
 
-    .. group-tab:: Řešení
+    .. tab:: Řešení
 
         Postupně spouštíme ``curl -I`` (nebo ``curl -i``) pro jednotlivé adresy a ve vypsaných hlavičkách hledáme hodnotu pro ``Content-Type``. Měli bychom dostat následující:
 
