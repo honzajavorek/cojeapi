@@ -93,7 +93,7 @@ Program, který dělá totéž co curl, není popravdě moc užitečný program.
 
     response = requests.get("http://127.0.0.1:5000/")
     data = response.json()
-    print("{name} {surname} is {mood}".format(**data))
+    print("{name} {surname} is {mood}".format_map(data))
 
 .. code-block:: text
 
@@ -121,7 +121,7 @@ Pokud ale máte kamarádku/kamaráda nebo kolegyni/kolegu, kteří těmito mater
 
     response = requests.get("https://cojeapi-server-rdfzhwecwv.now.sh")
     data = response.json()
-    print("{name} {surname} is {mood}".format(**data))
+    print("{name} {surname} is {mood}".format_map(data))
 
 .. code-block:: text
 
@@ -143,7 +143,7 @@ Pokud bychom chtěli zkoušet různá API a nebavilo by nás kód stále přepis
 
     response = requests.get(url)
     data = response.json()
-    print("{name} {surname} is {mood}".format(**data))
+    print("{name} {surname} is {mood}".format_map(data))
 
 Teď můžeme spouštět program následovně:
 
