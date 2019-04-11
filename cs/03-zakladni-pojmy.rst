@@ -329,6 +329,15 @@ Uložíme tento JSON na disk a zkusíme jej zpracovat v jazyce Python:
         Kuma Sushi + Sake (USA)
         Madam Podprsenka (Česká republika)
 
+    .. note::
+        Může se stát, že místo seznamu míst vidíte chybu
+
+        .. code-block:: text
+
+            TypeError: 'encoding' is an invalid keyword argument for this function
+
+        Je to proto, že jste program spustili pomocí Pythonu verze 2 místo Pythonu 3.
+
 Na několika řádcích jsme byli v Pythonu schopni JSON soubor načíst a s daty v něm dále pracovat.
 
 .. note::
