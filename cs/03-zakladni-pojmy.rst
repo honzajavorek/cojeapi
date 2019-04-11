@@ -318,7 +318,7 @@ Uložíme tento JSON na disk a zkusíme jej zpracovat v jazyce Python:
             places = json.load(f)
 
         for place in places:
-            print("{name} ({country})".format(**place))
+            print("{name} ({country})".format_map(place))
 
 #.  Spusťte program:
 
