@@ -4,20 +4,19 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-sphinx = "*"
-sphinx-tabs = "*"
+sphinx = "~=2.0.1"
+sphinx-tabs = "~=1.1.10"
 
 [dev-packages]
-sphinx-autobuild = "*"
-sphinx-rtd-theme = "*"
-pylama = "*"
-pipenv-to-requirements = "*"
+sphinx-autobuild = "==0.7.1"
+sphinx-rtd-theme = "==0.4.3"
+pylama = "~=7.7.1"
 
 [requires]
-python_version = "3.6"
+python_version = "3.6"  # ReadTheDocs runtime
 
 [scripts]
 "serve:en" = "sphinx-autobuild en _build"
 "serve:cs" = "sphinx-autobuild cs _build"
-requirements = "pipenv run pipenv_to_requirements -f -o requirements.txt"
+requirements = "pipenv lock --requirements > requirements.txt"
 lint = "_scripts/lint.sh"
