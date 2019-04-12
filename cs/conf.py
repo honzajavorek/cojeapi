@@ -191,3 +191,9 @@ sphinx_tabs_valid_builders = ['linkcheck']
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
+
+
+# -- Extensions --------------------------------------------------------------
+
+def setup(app):
+    app.add_css_file('css/cojeapi.css')
