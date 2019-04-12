@@ -20,3 +20,10 @@ article ul:last-child {
 .rst-content .tab ul:last-child {
   margin-bottom: 0;
 }
+
+/*
+  Workaround for https://github.com/djungelorm/sphinx-tabs/issues/38
+*/
+.sphinx-tabs .sphinx-menu .item p {
+  margin: 0;
+}
