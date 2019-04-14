@@ -3,192 +3,136 @@
 Tvoříme server
 ==============
 
-Konec teorie, pojďme si vyzkoušet nabyté znalosti v praxi. Začneme tím, že zkusíme vyrobit API. Použijeme k tomu jazyk Python 3 a framework `Falcon <https://falcon.readthedocs.io/>`__, který se pro API skvěle hodí.
+Konec teorie, pojďme si vyzkoušet nabyté znalosti v praxi. Začneme tím, že zkusíme vyrobit API. Použijeme k tomu jazyk `Python <https://python.cz/>`__ verze 3 a framework `Falcon <https://falcon.readthedocs.io/>`__, který se pro API skvěle hodí.
 
 .. note::
 
-    Pokud vám Python není cizí, možná jste už slyšeli o známějších frameworcích `Flask <https://flask.pocoo.org/>`__ nebo `Django <https://www.djangoproject.com/>`__. V těch by šlo API vytvořit také, ale jsou primárně určeny na tvorbu webových stránek, a to by nám nyní spíš překáželo. Mrkněte také na :ref:`frameworky`.
+    Pokud vám Python není cizí, možná jste už slyšeli o známějších frameworcích `Flask <https://flask.pocoo.org/>`__ nebo `Django <https://www.djangoproject.com/>`__. V těch by šlo API vytvořit také, ale jsou primárně určeny na tvorbu webových stránek, a to by nám nyní spíš překáželo. Viz také kapitola :ref:`frameworky`.
 
-Základ aplikace
----------------
-
-Vytvoříme si pro náš projekt nový adresář ``cojeapi-server`` a v něm `virtuální prostředí <https://naucse.python.cz/course/pyladies/beginners/venv-setup/>`__, které si aktivujeme. Poté nainstalujeme Flask:
+Vytvoříme si pro náš projekt nový adresář ``cojeapi-server`` a v něm `virtuální prostředí <https://naucse.python.cz/course/pyladies/beginners/venv-setup/>`__, které si aktivujeme. Poté nainstalujeme Falcon:
 
 .. code-block:: shell
 
-    (venv)$ pip install flask
+    (venv)$ pip install falcon
 
-Nyní můžeme začít s tvorbou API. Je to podobné, jako bychom ve Flasku dělali webové stránky, ale místo HTML budeme vracet JSON. Vytvoříme si soubor ``hello.py`` a do něj zkopírujeme `úvodní příklad ze stránek frameworku <http://flask.pocoo.org/>`__:
+Navrhujeme API
+--------------
 
-.. code-block:: python
+Nyní budeme tvořit API, které bude strojově čitelnou formou zpřístupňovat základní informace o nás samotných. Pokud jsme aktivní na sociálních sítích, tak takové API nejspíš už `existuje <https://developers.facebook.com/docs/graph-api/>`__, ale my si uděláme svoje - roztomilejší, jednodušší, méně `děsivé <https://en.wikipedia.org/wiki/Facebook#Criticisms_and_controversies>`__.
 
-    from flask import Flask
-    app = Flask(__name__)
-
-    @app.route("/")
-    def hello():
-        return "Hello World!"
-
-Hned pod příkladem nám stránky frameworku radí jak můžeme aplikaci spustit. Uděláme to tedy:
+Než začneme cokoliv programovat, rozmyslíme si, jak by naše API mělo vypadat. Řekněme, že kdybychom na něj poslali ``GET`` požadavek pomocí programu ``curl``, chceme, aby naše API odpovědělo zhruba následovně:
 
 .. code-block:: text
 
-    (venv)$ FLASK_APP=hello.py flask run
-     * Serving Flask app "hello.py"
-     * Environment: production
-     WARNING: Do not use the development server in a production environment.
-     Use a production WSGI server instead.
-     * Debug mode: off
-     * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-
-.. note::
-    Pozor, na Windows musíme Flask spouštět následovně:
-
-    .. code-block:: text
-
-        C:\nějaká\cesta> set FLASK_APP=hello.py
-        C:\nějaká\cesta> python -m flask run
-
-Když nyní v prohlížeči půjdeme na adresu ``http://127.0.0.1:5000/``, měli bychom vidět text ``Hello World!``:
-
-.. image:: ../_static/images/hello-world.png
-    :alt: Hello World!
-    :align: center
-
-Server můžeme v terminálu ukončit pomocí :kbd:`Ctrl+C`.
-
-Osobní API
-----------
-
-Máme tedy základ webové aplikace a teď na něm můžeme začít tvořit API. Vytvoříme si takové, které bude strojově čitelnou formou zpřístupňovat informace o nás samotných. Pokud jsme aktivní na sociálních sítích, tak takové API nejspíš už `existuje <https://developers.facebook.com/docs/graph-api/>`__, ale my si uděláme svoje - roztomilejší, jednodušší, méně `děsivé <https://en.wikipedia.org/wiki/Facebook#Criticisms_and_controversies>`__.
-
-Přejmenujme si soubor ``hello.py`` na ``api.py``, ať pojmenování odráží náš záměr. Nyní můžeme změnit kód následovně:
-
-.. code-block:: python
-
-    from flask import Flask
-
-    app = Flask(__name__)
-
-    about_me_data = """
-    name: Honza
-    surname: Javorek
-    eyes count: 2
-    eyes color: brown
-    hands count: 2
-    legs count: 2
-    hair color: brown
-    mood: cheerful
-    """
-
-    @app.route("/")
-    def about_me():
-        return about_me_data
-
-Na adrese ``/`` naší webové aplikace stále vracíme text, ale nyní už se v něm místo pozdravu snažíme poskytnout základní údaje, a to v nějaké strukturované podobě. Do své aplikace samozřejmě nikdo nepíšeme ``Honza``, ale vlastní údaje dle libosti. Zkusíme nyní program opět spustit:
-
-.. code-block:: text
-
-    (venv)$ FLASK_APP=api.py flask run
-     * ...
-     * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-
-.. warning::
-    Přejmenovali jsme soubor z ``hello.py`` na ``api.py``. Všimněte si, že je podle toho potřeba změnit i příkaz ke spuštění webové aplikace! Na Windows budeme muset znova použít příkaz ``set``:
-
-    .. code-block:: text
-
-        C:\nějaká\cesta> set FLASK_APP=api.py
-        C:\nějaká\cesta> python -m flask run
-
-Nyní bychom měli v prohlížeči vidět následující:
-
-.. image:: ../_static/images/me-api-text.png
-    :alt: api.py API, odpověď v textovém formátu
-    :align: center
-
-Co když zkusíme curl?
-
-.. code-block:: text
-
-    $ curl -i 'http://127.0.0.1:5000/'
-    HTTP/1.0 200 OK
-    Content-Type: text/html; charset=utf-8
-    Content-Length: 192
-    Server: Werkzeug/0.14.1 Python/3.7.1
-    Date: Fri, 09 Nov 2018 19:13:34 GMT
-
-
-    name: Honza
-    surname: Javorek
-    eyes count: 2
-    eyes color: brown
-    hands count: 2
-    legs count: 2
-    hair color: brown
-    mood: cheerful
-
-Vidíme, že naše API už vrací status kód 200, nějaké hlavičky a nějaká data v těle odpovědi. Většinu práce za nás vykonal Flask, ale tělo zprávy jsme složili a poslali my. Jak ale vidíme, nemáme správně ``Content-Type``, protože naše zpráva je obyčejný text a ne ``text/html``.
-
-Složitější odpovědi
--------------------
-
-Když z funkce vrátíme řetězec, Flask si domyslí, že chceme poslat HTTP odpověď s kódem ``200 OK`` a výchozími hlavičkami. Je to velmi pohodlné, ale neumožňuje nám to na odpovědi cokoliv měnit. Ve složitějších případech si musíme odpověď sestavit sami. To se ve Flasku dělá pomocí třídy `Response <http://flask.pocoo.org/docs/1.0/api/#response-objects>`__. Když z funkce vrátíme objekt této třídy a ne řetězec, Flask ji použije místo své předpřipravené odpovědi.
-
-.. code-block:: python
-    :emphasize-lines: 1, 18
-
-    from flask import Flask, Response
-
-    app = Flask(__name__)
-
-    about_me_data = """
-    name: Honza
-    surname: Javorek
-    eyes count: 2
-    eyes color: brown
-    hands count: 2
-    legs count: 2
-    hair color: brown
-    mood: cheerful
-    """
-
-    @app.route("/")
-    def about_me():
-        return Response(about_me_data, headers={"Content-Type": "text/plain"})
-
-Nyní by mělo API vracet správnou hlavičku:
-
-.. code-block:: text
-    :emphasize-lines: 3
-
-    $ curl -I 'http://127.0.0.1:5000'
+    $ curl -i 'http://example.com/'
     HTTP/1.0 200 OK
     Content-Type: text/plain
-    Content-Length: 123
-    Server: Werkzeug/0.14.1 Python/3.7.1
-    Date: Fri, 09 Nov 2018 19:33:26 GMT
 
-Podobně můžeme hlavičky nejen přepisovat, ale i přidávat další. Můžeme také změnit status kód. Následuje pouze ukázka, svoje rozpracované API takto měnit nebudeme:
+    name: Honza
+    surname: Javorek
+    socks_size: 42
+
+Jinými slovy, pokud metodou ``GET`` přijde :ref:`dotaz <http-request>` na adresu ``/``, pošleme zpátky :ref:`odpověď <http-response>` se status kódem ``200 OK`` a tělem v textovém :ref:`formátu <formaty>`. V těle zprávy budou tři řádky, v nichž pošleme své jméno, příjmení, a velikost ponožek.
+
+.. note::
+
+    Příklad výše zatím nezkoušejte, je to pouze návrh toho, jak by naše API mělo fungovat.
+
+Programujeme aplikaci
+---------------------
+
+Začneme tím, že vytvoříme soubor ``index.py`` s následujícím obsahem:
 
 .. code-block:: python
 
-    Response(about_me, status=400, headers={
-        "Content-Type": "text/plain",
-        "Call-Me-Maybe": "+420 774 956 148",
-    })
+    import falcon
 
-A k čemu se hodí mít v ``Content-Type`` správnou hlavičku? K tomu, aby API klient na druhé straně věděl, jak má odpověď správně zpracovat. Když nyní posíláme ``text/plain``, prohlížeč odpověď zobrazí takto:
 
-.. image:: ../_static/images/me-api-text-content-type.png
-    :alt: api.py API, odpověď v textovém formátu a se správným Content-Type
+    class PersonalDetailsResource():
+
+        def on_get(self, request, response):
+            response.status = '200 OK'
+            response.set_header('Content-Type', 'text/plain')
+            response.body = (
+                'name: Honza\n' +
+                'surname: Javorek\n' +
+                'socks_size: 42\n'
+            )
+
+
+    app = falcon.API()
+    app.add_route('/', PersonalDetailsResource())
+
+
+V kódu můžeme vidět `třídu <https://naucse.python.cz/course/pyladies/beginners/class/>`__ ``PersonalDetailsResource`` s jednou metodou. Třídu jsme si pojmenovali sami podle toho, že je zodpovědná za naše osobní údaje, akorát jsme podle konvence připojili slovo *resource*.
+
+Název metody ``on_get()`` naznačuje, že se stará o HTTP metodu ``GET``. Bere parametry ``request`` reprezentující právě přicházející :ref:`dotaz <http-request>`, a ``response``, tedy :ref:`odpověď <http-response>`, kterou se chystáme odeslat zpět. Uvnitř metody nastavujeme status kód odpovědi na ``200 OK``, hlavičku ``Content-Type`` na formát těla, a poté tělo na tři řádky řetězců s osobními údaji.
+
+Nakonec do proměnné ``app`` ukládáme naši Falcon aplikaci a na dalším řádku jí říkáme, že pokud někdo bude posílat :ref:`dotazy <http-request>` na adresu ``/``, bude je mít na starost naše třída.
+
+Spouštíme aplikaci na našem počítači
+------------------------------------
+
+Když zkusíme program spustit, zjistíme, že nic nedělá:
+
+.. code-block:: shell
+
+    (venv)$ python index.py
+
+.. note::
+
+    Jestliže vidíte nějakou chybu, třeba ``SyntaxError`` nebo ``NameError``, tak ji opravte. Abyste mohli pokračovat, program se má spustit, nemá nic vypsat, a má se bez chyb hned ukončit.
+
+Falcon se totiž jen tak sám od sebe spustit neumí. Potřebujeme něco, co načte naši aplikaci a bude se chovat jako :ref:`server <server>`. Takových nástrojů je naštěstí hned několik. Pro účely tohoto návodu si vybereme `Waitress <https://docs.pylonsproject.org/projects/waitress/>`__, protože na rozdíl od jiných funguje i pod Windows. Instalujeme standardně:
+
+.. code-block:: shell
+
+    (venv)$ pip install waitress
+
+Nyní můžeme spustit naše API. Stačí spustit ``waitress-serve`` s nápovědou, kde má hledat aplikaci. Ta je v souboru ``index.py`` v proměnné ``app``, takže nápověda pro Waitress bude ``index:app``.
+
+.. code-block:: shell
+
+    (venv)$ waitress-serve index:app
+    Serving on http://0.0.0.0:8080
+
+Waitress nám píše, že na adrese ``http://0.0.0.0:8080`` teď najdeme spuštěné naše API. Bude tam čekat na `dotazy <http-request>`__ tak dlouho, dokud v programu nenastane chyba (potom "spadne"), nebo dokud jej v terminálu neukončíme pomocí :kbd:`Ctrl+C`.
+
+Když nyní v prohlížeči půjdeme na adresu ``http://0.0.0.0:8080``, měli bychom vidět očekávanou `odpověď <http-response>`__:
+
+.. image:: ../_static/images/me-api-text.png
+    :alt: Odpověď v textovém formátu
     :align: center
 
-Díky hlavičce byl schopen zjistit, že mu posíláme obyčejný text a zobrazil ho tedy správně se všemi novými řádky a dokonce za použití `neproporcionálního písma <https://cs.wikipedia.org/wiki/Neproporcion%C3%A1ln%C3%AD_p%C3%ADsmo>`__.
+Co když zkusíme curl? Protože nám spuštěné API blokuje terminál, spustíme si další terminál v novém okně. Z něj nyní můžeme spustit curl:
 
+.. image:: ../_static/images/me-api-curl.png
+    :alt: Spouštění curl v dalším terminálu
+    :align: center
+
+Vidíme, že API se chová tak, jak jsme původně chtěli. Odpověď má status kód ``200 OK``, formát těla odpovědi je v hlavičce ``Content-Type`` nastaven na obyčejný text, a v těle zprávy vidíme jméno, příjmení, i velikost ponožek. Kromě toho Falcon s Waitress přidali i nějaké další hlavičky.
+
+.. code-block:: text
+
+    $ curl -i 'http://0.0.0.0:8080/'
+    HTTP/1.1 200 OK
+    Content-Length: 44
+    Content-Type: text/plain
+    Date: Sun, 14 Apr 2019 20:37:56 GMT
+    Server: waitress
+
+    name: Honza
+    surname: Javorek
+    socks_size: 42
+
+Server nyní můžeme v terminálu ukončit pomocí :kbd:`Ctrl+C` a budeme API rozšiřovat o další funkce.
 
 Data
 ----
+
+.. warning::
+
+    Tato kapitola je právě přepisována z Flasku na Falcon. Přijďte raději později, po krátkou chvíli návod nebude dávat smysl.
 
 Naše data nyní vypadají následovně:
 
@@ -345,6 +289,10 @@ Když aplikaci spustíme teď a budeme se přes curl nebo prohlížeč opakovan�
 Posíláme JSON
 -------------
 
+.. warning::
+
+    Tato kapitola je právě přepisována z Flasku na Falcon. Přijďte raději později, po krátkou chvíli návod nebude dávat smysl.
+
 Jak jsme si :ref:`vysvětlovali <struktura>`, obyčejný text není nejlepší způsob, jak něco udělat strojově čitelné. Zkusíme tedy poslat naše data jako :ref:`JSON`. Flask má pro tento případ připravenou funkci `jsonify <http://flask.pocoo.org/docs/1.0/api/#flask.json.jsonify>`__, která za nás převede slovníky a seznamy do řetězce zformátovaného jako JSON a dokonce vytvoří i celý `Response <http://flask.pocoo.org/docs/1.0/api/#response-objects>`__ objekt se správně nastavenou ``Content-Type`` hlavičkou. Pojďme na to!
 
 .. code-block:: python
@@ -392,6 +340,10 @@ A je to, máme své první JSON API! Už teď jsme se dostali dál, než kam se 
 
 Čteme URL parametry
 -------------------
+
+.. warning::
+
+    Tato kapitola je právě přepisována z Flasku na Falcon. Přijďte raději později, po krátkou chvíli návod nebude dávat smysl.
 
 Naše API má zatím pouze jednu adresu, na kterou se může klient dotazovat. V hantýrce programátorů webů by se řeklo, že má jednu "routu" (z anglického *route*). V hantýrce programátorů API by se zase řeklo, že má jeden *endpoint*. No a API s jedním endpointem není nic moc. Přidáme tedy druhý, který bude světu sdělovat seznam našich oblíbených filmů.
 
@@ -488,6 +440,10 @@ Vidíme, že tentokrát jsme dostali v těle odpovědi jen dva filmy místo čty
 
 Umožňujeme zápis
 ----------------
+
+.. warning::
+
+    Tato kapitola je právě přepisována z Flasku na Falcon. Přijďte raději později, po krátkou chvíli návod nebude dávat smysl.
 
 Nyní máme API, které je pouze ke čtení. Zkusme si naprogramovat endpointy, jež by umožňovaly i zápis. Ti starší z nás možná ještě pamatují `vystřihovací panenky <https://www.fler.cz/zbozi/vystrihovaci-panenka-marinka-2866816>`__, ti mladší možná narazili na `My Octocat <https://myoctocat.com/build-your-octocat/>`__ - tak teď si vytvoříme něco podobného. Začneme tím, že přidáme ``/clothes``, kde bude API vypisovat, co máme zrovna na sobě, a ``/clothes/<název svršku>`` s detaily pro každý svršek.
 
@@ -792,32 +748,39 @@ Jediným rozdílem je to, že v jejich API byl použit kód ``401 Unauthorized``
 Uveřejňujeme API
 ----------------
 
+.. warning::
+
+    Tato kapitola je právě přepisována, aby co nejlépe odrážela současný stav věcí a plně podporovala now 2.0.
+
 Zatím jsme naši aplikaci spouštěli pouze na svém počítači a neměl k ní přístup nikdo jiný, než my sami. Nebylo by lepší, kdyby naše API bylo veřejné a naši kamarádi k němu mohli psát své klienty?
 
 Můžeme k tomu využít službu `now.sh <https://now.sh>`__. Ta nám umožní naše API uveřejnit tak, aby nebylo jen na našem počítači, ale mohl na něj přistupovat kdokoliv. Nejdříve potřebujeme nainstalovat program ``now``:
 
 #.  Půjdeme na https://zeit.co/download a nainstalujeme si ``now`` pro náš systém
 #.  Otevřeme si příkazovou řádku a zkusíme napsat ``now --version``, abychom ověřili, zda vše funguje, jak má
-#.  V témže adresáři, ve kterém máme ``api.py``, vytvoříme nový soubor ``now.json`` s následujícím obsahem:
+#.  V témže adresáři, ve kterém máme ``index.py``, vytvoříme nový soubor ``now.json`` s následujícím obsahem:
 
     .. code-block:: json
 
-        {"version": 1}
+        {
+          "version": 2,
+          "builds": [
+            { "src": "index.py", "use": "@now/python@canary" }
+          ]
+        }
 
-#.  V témže adresáři, ve kterém máme ``api.py``, vytvoříme nový soubor ``Dockerfile`` s následujícím obsahem:
+#.  V témže adresáři, ve kterém máme ``index.py``, vytvoříme nový soubor ``requirements.txt`` s následujícím obsahem:
 
-    .. code-block:: Dockerfile
+    .. code-block:: text
 
-        FROM python:3.7-alpine
-        RUN python3 -m pip install flask gunicorn
-        COPY api.py .
-        EXPOSE 8000
-        CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "api:app"]
+        falcon
+
+    Tím říkáme, že aby naše API fungovalo, bude potřeba mít nainstalovaný Falcon. Waitress do souboru psát nebudeme, ten potřebujeme jen pro spuštění na našem počítači a `now.sh <https://now.sh>`__ si poradí i bez něj.
 
 #.  Nyní zkusíme na příkazové řádce, v našem adresáři s aplikací, spustit příkaz ``now``
 #.  Je pravděpodobné, že ``now`` po nás bude chtít e-mailovou adresu. Zadáme ji a ověříme v naší e-mailové schránce
-#.  Když nyní spustíme ``now --docker --public``, nahraje se naše aplikace na internet (bude to nejspíše chvíli trvat)
-#.  Po nějaké době bychom měli dostat adresu, na které můžeme naše API najít - něco ve tvaru ``https://cojeapi-abcd-rdfzhwecwv.now.sh``
+#.  Když nyní znova spustíme ``now``, nahraje se naše aplikace na internet (bude to nejspíše chvíli trvat)
+#.  Po nějaké době bychom měli dostat adresu, na které můžeme naše API najít - něco ve tvaru ``https://cojeapi-server.honzajavorek.now.sh``
 
 Když na tuto adresu půjdeme v prohlížeči, měli bychom vidět HTTP odpověď na endpoint ``/``:
 
@@ -829,7 +792,7 @@ Můžeme se na naše API dotazovat samozřejmě i pomocí curl:
 
 .. code-block:: text
 
-    $ curl -i https://cojeapi-server-rdfzhwecwv.now.sh
+    $ curl -i 'https://cojeapi-server.honzajavorek.now.sh'
     HTTP/2 200
     date: Sat, 10 Nov 2018 11:12:32 GMT
     ...
@@ -839,7 +802,7 @@ Můžeme se na naše API dotazovat samozřejmě i pomocí curl:
 
 A co je ještě lepší, na rozdíl od všech předchozích případů, nyní může na naše API posílat dotazy i někdo jiný! Pošlete tuto adresu kamarádce/kamarádovi nebo kolegyni/kolegovi, ať zkusí se svým prohlížečem a s curl posílat dotazy na vaše API. Vy zase můžete zkoušet jejich API. Nebojme se experimentovat, třeba přidat oblečení, nebo nějaké smazat.
 
-Pokud budeme chtít udělat v našem API změny a ty opět promítnout veřejně, budeme muset znova spustit příkaz ``now --docker --public``. Změní se ovšem adresa, na které naše změněné API bude.
+Pokud budeme chtít udělat v našem API změny a ty opět promítnout veřejně, budeme muset znova spustit příkaz ``now``.
 
 .. _frameworky:
 
