@@ -3,7 +3,11 @@
 Tvoříme server
 ==============
 
-Konec teorie, pojďme si vyzkoušet nabyté znalosti v praxi. Začneme tím, že zkusíme vyrobit jednoduché API. Použijeme jazyk Python 3 a framework `Flask <http://flask.pocoo.org/>`__, který se hodí na webové aplikace malého rozsahu.
+Konec teorie, pojďme si vyzkoušet nabyté znalosti v praxi. Začneme tím, že zkusíme vyrobit API. Použijeme k tomu jazyk Python 3 a framework `Falcon <https://falcon.readthedocs.io/>`__, který se pro API skvěle hodí.
+
+.. note::
+
+    Pokud vám Python není cizí, možná jste už slyšeli o známějších frameworcích `Flask <https://flask.pocoo.org/>`__ nebo `Django <https://www.djangoproject.com/>`__. V těch by šlo API vytvořit také, ale jsou primárně určeny na tvorbu webových stránek, a to by nám nyní spíš překáželo. Mrkněte také na :ref:`frameworky`.
 
 Základ aplikace
 ---------------
@@ -837,11 +841,15 @@ A co je ještě lepší, na rozdíl od všech předchozích případů, nyní m�
 
 Pokud budeme chtít udělat v našem API změny a ty opět promítnout veřejně, budeme muset znova spustit příkaz ``now --docker --public``. Změní se ovšem adresa, na které naše změněné API bude.
 
-Knihovny pro tvorbu serveru
----------------------------
+.. _frameworky:
 
-V tomto návodu jsme si ukázali, jak vyrobit jednoduché API s pomocí frameworku Flask. Ten je ale, podobně jako např. `Django <https://www.djangoproject.com/>`__, připravený spíše obecně na tvorbu webových stránek.
+Frameworky pro tvorbu serveru
+-----------------------------
 
-Pokud bychom tvořili složitější API, brzy by nám přišlo, že s frameworkem spíše bojujeme, než aby nám pomáhal. Např. jsme si mohli všimnout, že chyby jsou posílány jako HTML, přitom by bylo lepší, kdyby byly také naformátovány jako JSON. Museli bychom ručně doplnit kód, který upraví výchozí chování Flasku a bude chyby posílat tak, jak se v JSON API sluší a patří.
+V tomto návodu jsme si ukázali, jak vyrobit jednoduché API s pomocí frameworku `Falcon <https://falcon.readthedocs.io/>`__, jenž je pro toto použití vyladěný.
 
-Z tohoto a dalších důvodů je tedy výhodnější se časem poohlédnout po doplňku do Flasku, popřípadě Djanga, jenž nám tvorbu API usnadní. To jsou např. `Django REST Framework <https://www.django-rest-framework.org/>`__, `Flask-Restful <https://flask-restful.readthedocs.io/>`__, `Eve <http://docs.python-eve.org/>`__, a další.
+Jelikož jsou webová API založena na podobných principech jako webové stránky, šlo by použít i známější frameworky `Flask <https://flask.pocoo.org/>`__ nebo `Django <https://www.djangoproject.com/>`__. Pokud bychom v nich ale tvořili složitější API, brzy by nám přišlo, že s takovým frameworkem spíše bojujeme, než aby nám pomáhal.
+
+Např. chyby by takový framework standardně posílal jako HTML, přitom by bylo lepší, kdyby byly také naformátovány jako JSON. Museli bychom ručně doplnit kód, který upraví výchozí chování Flasku nebo Djanga a bude chyby posílat tak, jak se v JSON API sluší a patří.
+
+Z tohoto a dalších důvodů je tedy výhodnější buďto pro API využít specializovaný framework, jakým je Falcon, nebo se poohlédnout po doplňcích do Flasku, popřípadě Djanga, které nám tvorbu API usnadní. To jsou např. `Django REST Framework <https://www.django-rest-framework.org/>`__, `Flask-Restful <https://flask-restful.readthedocs.io/>`__, `Eve <http://docs.python-eve.org/>`__, a další.
