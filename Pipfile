@@ -11,6 +11,8 @@ sphinx-tabs = "~=1.1.10"
 sphinx-autobuild = "==0.7.1"
 sphinx-rtd-theme = "==0.4.3"
 pylama = "~=7.7.1"
+falcon = "~=1.4.1"
+waitress = "~=1.2.1"
 
 [requires]
 python_version = "3.6"  # ReadTheDocs runtime

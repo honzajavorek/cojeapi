@@ -1,0 +1,7 @@
+$ curl -i 'http://example.com/'
+HTTP/1.0 200 OK
+Content-Type: text/plain
+
+name: Honza
+surname: Javorek
+socks_size: 42

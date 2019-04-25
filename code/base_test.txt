@@ -1,0 +1,10 @@
+$ curl -i 'http://0.0.0.0:8080/'
+HTTP/1.1 200 OK
+Content-Length: 44
+Content-Type: text/plain
+Date: Sun, 14 Apr 2019 20:37:56 GMT
+Server: waitress
+
+name: Honza
+surname: Javorek
+socks_size: 42
