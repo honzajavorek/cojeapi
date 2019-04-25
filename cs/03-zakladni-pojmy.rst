@@ -456,7 +456,7 @@ Historie
 
 REST se poprvé objevil v roce 2000 v dizertační práci `R. Fieldinga <https://en.wikipedia.org/wiki/Roy_Fielding>`__ (spoluautor HTTP). Ten pozoroval jak funguje web, a snažil se přijít na to, co jej dělá tak úspěšným. Jaké má web zásadní vlastnosti a omezení, a zda jsou za tím nějaké obecné principy, které by šlo využít i jinde. Tyto principy pak popsal a přisoudil jim zkratku REST.
 
-Na REST principech se začala stavět API a ta pak ze scény vytlačovala SOAP. Jenže ze zkratky REST se stal `buzzword <https://cs.wikipedia.org/wiki/Buzzword>`__ a lidé jí začali označovat vše, co používalo HTTP a nebylo to SOAP. Samozřejmě bez ohledu na původní principy.
+Na REST principech se začala stavět API a ta pak ze scény vytlačovala SOAP. Jenže ze zkratky REST se stal buzzword a lidé jí začali označovat vše, co používalo HTTP a nebylo to SOAP. Samozřejmě bez ohledu na původní principy.
 
 Zastánci původních principů se nevzdávali a zkoušeli postupně prorazit s několika termíny, které měly odlišit pravověrnost: RESTful, HATEOAS, hypermedia. Dodnes je ale takovýchto pravověrných API málo. Rozjetý vlak s tím, jak si lidé REST vyložili, už se nepovedlo zastavit.
 
@@ -472,7 +472,7 @@ Zastánci původních principů se nevzdávali a zkoušeli postupně prorazit s 
 GraphQL
 ~~~~~~~
 
-`GraphQL <https://graphql.org/>`__ je nejnovějším typem API a momentálně i nejžhavějším `buzzwordem <https://cs.wikipedia.org/wiki/Buzzword>`__ konferencí. Má přesně danou specifikaci a HTTP používá jenom jako "dopravní prostředek", podobně jako dříve SOAP nebo RPC. Jeho největšími fanoušky jsou vývojáři klientů, a to především v jazyce JavaScript. GraphQL nejvíce připomíná dotazovací jazyk pro databáze a je pevně spjato s formátem :ref:`JSON`.
+`GraphQL <https://graphql.org/>`__ je nejnovějším typem API a momentálně i nejžhavějším buzzwordem konferencí. Má přesně danou specifikaci a HTTP používá jenom jako "dopravní prostředek", podobně jako dříve SOAP nebo RPC. Jeho největšími fanoušky jsou vývojáři klientů, a to především v jazyce JavaScript. GraphQL nejvíce připomíná dotazovací jazyk pro databáze a je pevně spjato s formátem :ref:`JSON`.
 
 
 Historie
