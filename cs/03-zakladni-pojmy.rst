@@ -314,11 +314,11 @@ Uložíme tento JSON na disk a zkusíme jej zpracovat v jazyce Python:
 
         import json
 
-        with open("places.json", encoding="utf-8-sig") as f:
+        with open('places.json', encoding='utf-8-sig') as f:
             places = json.load(f)
 
         for place in places:
-            print("{name} ({country})".format_map(place))
+            print('{name} ({country})'.format_map(place))
 
 #.  Spusťte program:
 

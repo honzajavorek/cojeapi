@@ -22,15 +22,8 @@ Nyní budeme tvořit API, které bude strojově čitelnou formou zpřístupňova
 
 Než začneme cokoliv programovat, rozmyslíme si, jak by naše API mělo vypadat. Řekněme, že kdybychom na něj poslali ``GET`` požadavek pomocí programu ``curl``, chceme, aby naše API odpovědělo zhruba následovně:
 
-.. code-block:: text
-
-    $ curl -i 'http://example.com/'
-    HTTP/1.0 200 OK
-    Content-Type: text/plain
-
-    name: Honza
-    surname: Javorek
-    socks_size: 42
+.. literalinclude:: ../code/base_example.txt
+    :language: text
 
 Jinými slovy, pokud metodou ``GET`` přijde :ref:`dotaz <http-request>` na adresu ``/``, pošleme zpátky :ref:`odpověď <http-response>` se status kódem ``200 OK`` a tělem v textovém :ref:`formátu <formaty>`. V těle zprávy budou tři řádky, v nichž pošleme své jméno, příjmení, a velikost ponožek.
 
@@ -43,26 +36,8 @@ Programujeme aplikaci
 
 Začneme tím, že vytvoříme soubor ``index.py`` s následujícím obsahem:
 
-.. code-block:: python
-
-    import falcon
-
-
-    class PersonalDetailsResource():
-
-        def on_get(self, request, response):
-            response.status = '200 OK'
-            response.set_header('Content-Type', 'text/plain')
-            response.body = (
-                'name: Honza\n' +
-                'surname: Javorek\n' +
-                'socks_size: 42\n'
-            )
-
-
-    app = falcon.API()
-    app.add_route('/', PersonalDetailsResource())
-
+.. literalinclude:: ../code/base.py
+    :language: python
 
 V kódu můžeme vidět `třídu <https://naucse.python.cz/course/pyladies/beginners/class/>`__ ``PersonalDetailsResource`` s jednou metodou. Třídu jsme si pojmenovali sami podle toho, že je zodpovědná za naše osobní údaje, akorát jsme podle konvence připojili slovo *resource*.
 
@@ -96,9 +71,9 @@ Nyní můžeme spustit naše API. Stačí spustit ``waitress-serve`` s nápověd
     (venv)$ waitress-serve index:app
     Serving on http://0.0.0.0:8080
 
-Waitress nám píše, že na adrese ``http://0.0.0.0:8080`` teď najdeme spuštěné naše API. Bude tam čekat na `dotazy <http-request>`__ tak dlouho, dokud v programu nenastane chyba (potom "spadne"), nebo dokud jej v terminálu neukončíme pomocí :kbd:`Ctrl+C`.
+Waitress nám píše, že na adrese ``http://0.0.0.0:8080`` teď najdeme spuštěné naše API. Bude tam čekat na :ref:`dotazy <http-request>` tak dlouho, dokud v programu nenastane chyba (potom "spadne"), nebo dokud jej v terminálu neukončíme pomocí :kbd:`Ctrl+C`.
 
-Když nyní v prohlížeči půjdeme na adresu ``http://0.0.0.0:8080``, měli bychom vidět očekávanou `odpověď <http-response>`__:
+Když nyní v prohlížeči půjdeme na adresu ``http://0.0.0.0:8080``, měli bychom vidět očekávanou :ref:`odpověď <http-response>`:
 
 .. image:: ../_static/images/me-api-text.png
     :alt: Odpověď v textovém formátu
@@ -112,225 +87,47 @@ Co když zkusíme curl? Protože nám spuštěné API blokuje terminál, spustí
 
 Vidíme, že API se chová tak, jak jsme původně chtěli. Odpověď má status kód ``200 OK``, formát těla odpovědi je v hlavičce ``Content-Type`` nastaven na obyčejný text, a v těle zprávy vidíme jméno, příjmení, i velikost ponožek. Kromě toho Falcon s Waitress přidali i nějaké další hlavičky.
 
-.. code-block:: text
-
-    $ curl -i 'http://0.0.0.0:8080/'
-    HTTP/1.1 200 OK
-    Content-Length: 44
-    Content-Type: text/plain
-    Date: Sun, 14 Apr 2019 20:37:56 GMT
-    Server: waitress
-
-    name: Honza
-    surname: Javorek
-    socks_size: 42
+.. literalinclude:: ../code/base_test.txt
+    :language: text
 
 Server nyní můžeme v terminálu ukončit pomocí :kbd:`Ctrl+C` a budeme API rozšiřovat o další funkce.
 
-Data
-----
-
-.. warning::
-
-    Tato kapitola je právě přepisována z Flasku na Falcon. Přijďte raději později, po krátkou chvíli návod nebude dávat smysl.
+Uchováváme data jako slovník
+----------------------------
 
 Naše data nyní vypadají následovně:
 
-.. code-block:: python
+.. literalinclude:: ../code/base.py
+    :language: python
+    :emphasize-lines: 9-13
 
-    about_me_data = """
-    name: Honza
-    surname: Javorek
-    eyes count: 2
-    eyes color: brown
-    hands count: 2
-    legs count: 2
-    hair color: brown
-    mood: cheerful
-    """
+Co si budeme povídat, takto data běžně nevypadají. Většinou jsou někde v databázi, v souboru, apod. a musíme zavolat nějakou funkci, abychom je dostali. Zpravidla je také dostaneme jako seznam nebo slovník, ne jako připravený řetězec. Pojďme si tedy tuto situaci nasimulovat. Nejdříve si data vytáhneme do funkce, která je bude vracet.
 
-Co si budeme povídat, takto data běžně nevypadají. Většinou přijdou odněkud z databáze, ze souboru, apod. Pojďme si je z řetězce převést do nějaké datové struktury, třeba do slovníku, ať připomínají něco, s čím se můžeme při programování reálně setkat.
+.. literalinclude:: ../code/base_data_func.py
+    :language: python
+    :emphasize-lines: 4-9, 17
 
-.. code-block:: python
+Nyní z dat uděláme slovník, který až při sestavování odpovědi složíme do textu. Tím rozdělíme uložení dat a jejich prezentaci navenek. Jak už bylo zmíněno, data většinou přicházejí např. z databáze právě jako slovník, takže toto rozdělení je v praxi potřebné a velmi časté.
 
-    about_me_data = {
-        "name": "Honza",
-        "surname": "Javorek",
-        "eyes_count": 2,
-        "eyes_color": "brown",
-        "hands_count": 2,
-        "legs_count": 2,
-        "hair_color": "brown",
-        "mood": "cheerful",
-    }
+.. literalinclude:: ../code/base_data_func_dict.py
+    :language: python
+    :emphasize-lines: 4-9, 18-22
 
-Výhodou nyní je, že k datům můžeme přidat i nějaké chování. Asi to má každý jinak, ale moje nálada se v čase různě mění. Někdy by se skoro řeklo, že náhodně. Co kdybychom mohli tuto skutečnost odrazit v našem API, teď, když naše data už nejsou jen pouhý text?
-
-.. code-block:: python
-
-    import random
-
-    about_me_data = {
-        "name": "Honza",
-        "surname": "Javorek",
-        "eyes_count": 2,
-        "eyes_color": "brown",
-        "hands_count": 2,
-        "legs_count": 2,
-        "hair_color": "brown",
-        "mood": random.choice(["cheerful", "grumpy", "comfortably numb"]),
-    }
-
-Použili jsme `random.choice <https://docs.python.org/3/library/random.html#random.choice>`__ na to, abychom náhodně vybrali nějakou z uvedených nálad. Jak teď ale pošleme HTTP odpověď? Musíme ze slovníku s daty ručně složit text:
-
-.. code-block:: python
-
-    @app.route("/")
-    def about_me():
-        body = ""
-        for key, value in about_me_data.items():
-            body += "{0}: {1}\n".format(key, value)
-        return Response(body, headers={"Content-Type": "text/plain"})
-
-Celý program bude nyní vypadat takto:
-
-.. code-block:: python
-
-    import random
-    from flask import Flask, Response
-
-    app = Flask(__name__)
-
-    about_me_data = {
-        "name": "Honza",
-        "surname": "Javorek",
-        "eyes_count": 2,
-        "eyes_color": "brown",
-        "hands_count": 2,
-        "legs_count": 2,
-        "hair_color": "brown",
-        "mood": random.choice(["cheerful", "grumpy", "comfortably numb"]),
-    }
-
-    @app.route("/")
-    def about_me():
-        body = ""
-        for key, value in about_me_data.items():
-            body += "{0}: {1}\n".format(key, value)
-        return Response(body, headers={"Content-Type": "text/plain"})
-
-Pokaždé když znova API spustíme a přes curl se jej dotážeme na informace o nás, bude vracet jinou náladu.
-
-.. code-block:: text
-
-    $ curl -i 'http://127.0.0.1:5000/'
-    HTTP/1.0 200 OK
-    Content-Type: text/plain
-    Content-Length: 131
-    Server: Werkzeug/0.14.1 Python/3.7.1
-    Date: Fri, 09 Nov 2018 20:22:28 GMT
-
-    name: Honza
-    surname: Javorek
-    eyes_count: 2
-    eyes_color: brown
-    hands_count: 2
-    legs_count: 2
-    hair_color: brown
-    mood: comfortably numb
-
-Pokud bychom chtěli být ještě náladovější, mohli bychom data při každém dotazu získávat jako výsledek funkce.
-
-.. code-block:: python
-    :emphasize-lines: 6-7, 16, 21
-
-    import random
-    from flask import Flask, Response
-
-    app = Flask(__name__)
-
-    def get_about_me():
-        return {
-            "name": "Honza",
-            "surname": "Javorek",
-            "eyes_count": 2,
-            "eyes_color": "brown",
-            "hands_count": 2,
-            "legs_count": 2,
-            "hair_color": "brown",
-            "mood": random.choice(["cheerful", "grumpy", "comfortably numb"]),
-        }
-
-    @app.route("/")
-    def about_me():
-        body = ""
-        for key, value in get_about_me().items():
-            body += "{0}: {1}\n".format(key, value)
-        return Response(body, headers={"Content-Type": "text/plain"})
-
-Když aplikaci spustíme teď a budeme se přes curl nebo prohlížeč opakovaně za sebou ptát, měli bychom dostat vždy náhodnou náladu.
-
-.. code-block:: text
-
-    $ curl -i 'http://127.0.0.1:5000/'
-    HTTP/1.0 200 OK
-    Content-Type: text/plain
-    ...
-    mood: comfortably numb
-
-.. code-block:: text
-
-    $ curl -i 'http://127.0.0.1:5000/'
-    HTTP/1.0 200 OK
-    Content-Type: text/plain
-    ...
-    mood: cheerful
+Takovéto API nám bude fungovat stále stejně, protože ze slovníku opět složí řetězec, který jsme původně posílali v odpovědi. Data jsou nyní ale nezávislá na tom, jak je budeme prezentovat uživateli. Prakticky si tuto výhodu ukážeme v následujících odstavcích.
 
 Posíláme JSON
 -------------
 
-.. warning::
+Jak jsme si :ref:`vysvětlovali <struktura>`, obyčejný text není nejlepší způsob, jak něco udělat strojově čitelné. Zkusíme tedy poslat naše data jako :ref:`JSON`.
 
-    Tato kapitola je právě přepisována z Flasku na Falcon. Přijďte raději později, po krátkou chvíli návod nebude dávat smysl.
+.. literalinclude:: ../code/json_response.py
+    :language: python
+    :emphasize-lines: 1, 17-18
 
-Jak jsme si :ref:`vysvětlovali <struktura>`, obyčejný text není nejlepší způsob, jak něco udělat strojově čitelné. Zkusíme tedy poslat naše data jako :ref:`JSON`. Flask má pro tento případ připravenou funkci `jsonify <http://flask.pocoo.org/docs/1.0/api/#flask.json.jsonify>`__, která za nás převede slovníky a seznamy do řetězce zformátovaného jako JSON a dokonce vytvoří i celý `Response <http://flask.pocoo.org/docs/1.0/api/#response-objects>`__ objekt se správně nastavenou ``Content-Type`` hlavičkou. Pojďme na to!
+Jak vidíme, kód se nám s JSONem zjednodušil. Navíc díky tomu, že máme data hezky oddělená od samotného API, nemuseli jsme je nijak měnit. Stačilo změnit způsob, jakým se budou posílat v odpovědi. Když aplikaci spustíme, můžeme opět použít curl nebo prohlížeč a ověřit výsledek.
 
-.. code-block:: python
-    :emphasize-lines: 2, 20
-
-    import random
-    from flask import Flask, jsonify
-
-    app = Flask(__name__)
-
-    def get_about_me():
-        return {
-            "name": "Honza",
-            "surname": "Javorek",
-            "eyes_count": 2,
-            "eyes_color": "brown",
-            "hands_count": 2,
-            "legs_count": 2,
-            "hair_color": "brown",
-            "mood": random.choice(["cheerful", "grumpy", "comfortably numb"]),
-        }
-
-    @app.route("/")
-    def about_me():
-        return jsonify(get_about_me())
-
-Jak vidíme, kód se nám s JSONem dokonce zjednodušil. Navíc díky tomu, že máme data hezky oddělená od samotného API, nemuseli jsme je nijak měnit. Stačilo změnit způsob, jakým se budou posílat v odpovědi. Když aplikaci spustíme, můžeme opět použít curl nebo prohlížeč a ověřit výsledek.
-
-.. code-block:: text
-
-    $ curl -i 'http://127.0.0.1:5000/'
-    HTTP/1.0 200 OK
-    Content-Type: application/json
-    Content-Length: 143
-    Server: Werkzeug/0.14.1 Python/3.7.1
-    Date: Fri, 09 Nov 2018 20:37:48 GMT
-
-    {"eyes_color":"brown","eyes_count":2,"hair_color":"brown","hands_count":2,"legs_count":2,"mood":"cheerful","name":"Honza","surname":"Javorek"}
+.. literalinclude:: ../code/json_response_test.txt
+    :language: text
 
 .. image:: ../_static/images/me-api-json.png
     :alt: api.py API, odpověď ve formátu JSON
@@ -752,30 +549,23 @@ Uveřejňujeme API
 
     Tato kapitola je právě přepisována, aby co nejlépe odrážela současný stav věcí a plně podporovala now 2.0.
 
-Zatím jsme naši aplikaci spouštěli pouze na svém počítači a neměl k ní přístup nikdo jiný, než my sami. Nebylo by lepší, kdyby naše API bylo veřejné a naši kamarádi k němu mohli psát své klienty?
+Zatím jsme naši aplikaci spouštěli pouze na svém počítači a neměl k ní přístup nikdo jiný, než my sami. Nebylo by lepší, kdyby naše API bylo veřejné a mohli by jej používat naši kamarádi?
 
-Můžeme k tomu využít službu `now.sh <https://now.sh>`__. Ta nám umožní naše API uveřejnit tak, aby nebylo jen na našem počítači, ale mohl na něj přistupovat kdokoliv. Nejdříve potřebujeme nainstalovat program ``now``:
+Můžeme k tomu využít službu `now.sh <https://now.sh>`__. Ta nám umožní uveřejnit aplikaci tak, aby nebyla jen na našem počítači, ale mohl na ni přistupovat kdokoliv. Nejdříve nainstalujeme program ``now``:
 
 #.  Půjdeme na https://zeit.co/download a nainstalujeme si ``now`` pro náš systém
 #.  Otevřeme si příkazovou řádku a zkusíme napsat ``now --version``, abychom ověřili, zda vše funguje, jak má
 #.  V témže adresáři, ve kterém máme ``index.py``, vytvoříme nový soubor ``now.json`` s následujícím obsahem:
 
-    .. code-block:: json
-
-        {
-          "version": 2,
-          "builds": [
-            { "src": "index.py", "use": "@now/python@canary" }
-          ]
-        }
+    .. literalinclude:: ../code/now.json
+        :language: json
 
 #.  V témže adresáři, ve kterém máme ``index.py``, vytvoříme nový soubor ``requirements.txt`` s následujícím obsahem:
 
-    .. code-block:: text
+    .. literalinclude:: ../code/requirements.txt
+        :language: text
 
-        falcon
-
-    Tím říkáme, že aby naše API fungovalo, bude potřeba mít nainstalovaný Falcon. Waitress do souboru psát nebudeme, ten potřebujeme jen pro spuštění na našem počítači a `now.sh <https://now.sh>`__ si poradí i bez něj.
+    Tím říkáme, že aby naše API fungovalo, bude potřeba nejdříve nainstalovat Falcon. Waitress do souboru psát nebudeme, ten potřebujeme jen pro spuštění na našem počítači, `now.sh <https://now.sh>`__ si poradí i bez něj.
 
 #.  Nyní zkusíme na příkazové řádce, v našem adresáři s aplikací, spustit příkaz ``now``
 #.  Je pravděpodobné, že ``now`` po nás bude chtít e-mailovou adresu. Zadáme ji a ověříme v naší e-mailové schránce
