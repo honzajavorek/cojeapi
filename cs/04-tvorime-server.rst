@@ -551,7 +551,7 @@ Uveřejňujeme API
 
 Zatím jsme naši aplikaci spouštěli pouze na svém počítači a neměl k ní přístup nikdo jiný, než my sami. Nebylo by lepší, kdyby naše API bylo veřejné a mohli by jej používat naši kamarádi?
 
-Můžeme k tomu využít službu `now.sh <https://now.sh>`__. Ta nám umožní uveřejnit aplikaci tak, aby nebyla jen na našem počítači, ale mohl na ni přistupovat kdokoliv. Nejdříve nainstalujeme program ``now``:
+Můžeme k tomu využít službu `now.sh <https://zeit.co/now>`__. Ta nám umožní uveřejnit aplikaci tak, aby nebyla jen na našem počítači, ale mohl na ni přistupovat kdokoliv. Nejdříve nainstalujeme program ``now``:
 
 #.  Půjdeme na https://zeit.co/download a nainstalujeme si ``now`` pro náš systém
 #.  Otevřeme si příkazovou řádku a zkusíme napsat ``now --version``, abychom ověřili, zda vše funguje, jak má
@@ -565,7 +565,7 @@ Můžeme k tomu využít službu `now.sh <https://now.sh>`__. Ta nám umožní u
     .. literalinclude:: ../code/requirements.txt
         :language: text
 
-    Tím říkáme, že aby naše API fungovalo, bude potřeba nejdříve nainstalovat Falcon. Waitress do souboru psát nebudeme, ten potřebujeme jen pro spuštění na našem počítači, `now.sh <https://now.sh>`__ si poradí i bez něj.
+    Tím říkáme, že aby naše API fungovalo, bude potřeba nejdříve nainstalovat Falcon. Waitress do souboru psát nebudeme, ten potřebujeme jen pro spuštění na našem počítači, `now.sh <https://zeit.co/now>`__ si poradí i bez něj.
 
 #.  Nyní zkusíme na příkazové řádce, v našem adresáři s aplikací, spustit příkaz ``now``
 #.  Je pravděpodobné, že ``now`` po nás bude chtít e-mailovou adresu. Zadáme ji a ověříme v naší e-mailové schránce
@@ -605,4 +605,4 @@ Jelikož jsou webová API založena na podobných principech jako webové strán
 
 Např. chyby by takový framework standardně posílal jako HTML, přitom by bylo lepší, kdyby byly také naformátovány jako JSON. Museli bychom ručně doplnit kód, který upraví výchozí chování Flasku nebo Djanga a bude chyby posílat tak, jak se v JSON API sluší a patří.
 
-Z tohoto a dalších důvodů je tedy výhodnější buďto pro API využít specializovaný framework, jakým je Falcon, nebo se poohlédnout po doplňcích do Flasku, popřípadě Djanga, které nám tvorbu API usnadní. To jsou např. `Django REST Framework <https://www.django-rest-framework.org/>`__, `Flask-Restful <https://flask-restful.readthedocs.io/>`__, `Eve <http://docs.python-eve.org/>`__, a další.
+Z tohoto a dalších důvodů je tedy výhodnější buďto pro API využít specializovaný framework, jakým je Falcon, nebo se poohlédnout po doplňcích do Flasku, popřípadě Djanga, které nám tvorbu API usnadní. To jsou např. `Django REST Framework <https://www.django-rest-framework.org/>`__, `Flask-Restful <https://flask-restful.readthedocs.io/>`__, `Eve <https://docs.python-eve.org/>`__, a další.

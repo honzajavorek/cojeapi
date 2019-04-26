@@ -440,7 +440,7 @@ Tato API si přes HTTP posílají zprávy zabalené do přesně specifikovaného
 ^^^^^^^^^^^^^^^^^^^
 
 - `Phil Sturgeon: Understanding RPC Vs REST For HTTP APIs <https://www.smashingmagazine.com/2016/09/understanding-rest-and-rpc-for-http-apis/>`__
-- `Leonard Richardson, Sam Ruby: RESTful Web Services <http://shop.oreilly.com/product/9780596529260.do>`__
+- `Leonard Richardson, Sam Ruby: RESTful Web Services <https://shop.oreilly.com/product/9780596529260.do>`__
 
 
 .. _rest:
@@ -464,7 +464,7 @@ Zastánci původních principů se nevzdávali a zkoušeli postupně prorazit s 
 Čtení pro pokročilé
 ^^^^^^^^^^^^^^^^^^^
 
-- `Leonard Richardson, Sam Ruby, Mike Amundsen: RESTful Web APIs <http://shop.oreilly.com/product/0636920028468.do>`__
+- `Leonard Richardson, Sam Ruby, Mike Amundsen: RESTful Web APIs <https://shop.oreilly.com/product/0636920028468.do>`__
 
 
 .. _graphql:

@@ -28,7 +28,7 @@ V druhém příkazovém řádku začneme vytvářet klienta, který na něj bude
     :alt: připravená příkazová řádka na nového klienta
     :align: center
 
-V adresáři ``cojeapi-client`` si vytvoříme nový soubor s názvem ``client.py`` a použijeme v něm Requests pro jednoduchý dotaz na server. Funkce `requests.get <http://docs.python-requests.org/en/master/api/#requests.get>`__ nám umožní poslat dotaz metodou ``GET``. Naše API běží a je dostupné na adrese ``http://127.0.0.1:5000/``, takže ji použijeme jako cíl dotazu. Následně vypíšeme detaily odpovědi, kterou dostaneme:
+V adresáři ``cojeapi-client`` si vytvoříme nový soubor s názvem ``client.py`` a použijeme v něm Requests pro jednoduchý dotaz na server. Funkce `requests.get <https://2.python-requests.org/en/master/api/#requests.get>`__ nám umožní poslat dotaz metodou ``GET``. Naše API běží a je dostupné na adrese ``http://127.0.0.1:5000/``, takže ji použijeme jako cíl dotazu. Následně vypíšeme detaily odpovědi, kterou dostaneme:
 
 .. code-block:: python
 
@@ -60,7 +60,7 @@ A je to, udělali jsme svůj první dotaz na server! Vidíme, že se nám povedl
 Čteme JSON
 ----------
 
-Je vidět, že text, který obsahuje tělo odpovědi, je ve formátu JSON. To potvrzuje i hlavička ``Content-Type``, která hlásá ``application/json``. Nešlo by tělo také dostat nějak jednoduše jako slovník? Šlo - přesně na toto mají Requests metodu `Response.json <http://docs.python-requests.org/en/master/api/#requests.Response.json>`__:
+Je vidět, že text, který obsahuje tělo odpovědi, je ve formátu JSON. To potvrzuje i hlavička ``Content-Type``, která hlásá ``application/json``. Nešlo by tělo také dostat nějak jednoduše jako slovník? Šlo - přesně na toto mají Requests metodu `Response.json <https://2.python-requests.org/en/master/api/#requests.Response.json>`__:
 
 .. code-block:: python
     :emphasize-lines: 7
@@ -152,7 +152,7 @@ Teď můžeme spouštět program následovně:
     $ python client.py "https://cojeapi-server-rdfzhwecwv.now.sh"
     Zuzana Válková is cheerful
 
-To nám umožňuje snadno a rychle našeho klienta nasměrovat na jakékoliv API budeme chtít - a to se může hodit, především pokud kolem sebe máme hodně lidí, kteří prošli těmito materiály a mají své osobní API na https://now.sh.
+To nám umožňuje snadno a rychle našeho klienta nasměrovat na jakékoliv API budeme chtít - a to se může hodit, především pokud kolem sebe máme hodně lidí, kteří prošli těmito materiály a mají své osobní API na https://zeit.co/now.
 
 Pokud adresu neuvedeme, použije se automaticky ``http://127.0.0.1:5000/`` pro API puštěné lokálně na našem počítači:
 
