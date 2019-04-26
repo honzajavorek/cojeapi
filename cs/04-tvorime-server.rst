@@ -142,56 +142,34 @@ A je to, máme své první JSON API! Už teď jsme se dostali dál, než kam se 
 
         response.body = json.dumps(get_personal_details(), ensure_ascii=False)
 
+Protože :ref:`odpověďi <http-response>` mají ve většině případů status kód 200 a protože :ref:`JSON` je nejpoužívanější formát, tak je Falcon ve skutečnosti nastavuje jako výchozí. Můžeme proto zcela vynechat dva řádky z našeho programu a stále bude fungovat tak, jak jsme chtěli:
+
+.. literalinclude:: ../code/json_response_simplified.py
+    :language: python
+    :emphasize-lines: 15-16
+
+
+Přidáváme další endpoint
+------------------------
+
+Naše API má zatím pouze jednu adresu, na kterou se může klient dotazovat. V hantýrce programátorů webů by se řeklo, že má jednu "routu" (z anglického *route*). V hantýrce programátorů API by se zase řeklo, že má jeden *endpoint*. No a API s jedním endpointem není nic moc. Přidáme tedy druhý, který bude světu sdělovat seznam našich oblíbených filmů.
+
+.. literalinclude:: ../code/movies.py
+    :language: python
+    :emphasize-lines: 19-31, 36
+
+Když aplikaci spustíme, bude na adrese ``/movies`` vracet informace o našich oblíbených filmech.
+
+.. literalinclude:: ../code/movies_test.txt
+    :language: text
+
+
 Čteme URL parametry
 -------------------
 
 .. warning::
 
     Tato kapitola je právě přepisována z Flasku na Falcon. Přijďte raději později, po krátkou chvíli návod nebude dávat smysl.
-
-Naše API má zatím pouze jednu adresu, na kterou se může klient dotazovat. V hantýrce programátorů webů by se řeklo, že má jednu "routu" (z anglického *route*). V hantýrce programátorů API by se zase řeklo, že má jeden *endpoint*. No a API s jedním endpointem není nic moc. Přidáme tedy druhý, který bude světu sdělovat seznam našich oblíbených filmů.
-
-.. code-block:: python
-    :emphasize-lines: 15-25
-
-    import random
-    from flask import Flask, jsonify
-
-    app = Flask(__name__)
-
-    def get_about_me():
-        return {
-            ...
-        }
-
-    @app.route("/")
-    def about_me():
-        return jsonify(get_about_me())
-
-    def get_movies():
-        return [
-            {"name": "The Last Boy Scout", "year": 1991},
-            {"name": "Mies vailla menneisyyttä", "year": 2002},
-            {"name": "Sharknado", "year": 2013},
-            {"name": "Mega Shark vs. Giant Octopus", "year": 2009},
-        ]
-
-    @app.route("/movies")
-    def movies():
-        return jsonify(get_movies())
-
-Když aplikaci spustíme, bude na adrese ``/movies`` vracet informace o našich oblíbených filmech.
-
-.. code-block:: text
-
-    $ curl -i 'http://127.0.0.1:5000/movies'
-    HTTP/1.0 200 OK
-    Content-Type: application/json
-    Content-Length: 182
-    Server: Werkzeug/0.14.1 Python/3.7.1
-    Date: Fri, 09 Nov 2018 21:34:22 GMT
-
-    [{"name":"The Last Boy Scout","year":1991},{"name":"Mies vailla menneisyytt\u00e4","year":2002},{"name":"Sharknado","year":2013},{"name":"Mega Shark vs. Giant Octopus","year":2009}]
 
 Co kdybychom ale měli opravdu hodně oblíbených filmů? Možná bychom chtěli mít možnost výsledky filtrovat. K tomu se nám mohou hodit :ref:`URL parametry <http-request>`. Chtěli bychom třeba, aby klient mohl udělat dotaz na ``/movies?name=shark`` a tím by našel jen ty filmy, které mají v názvu řetězec ``shark``.
 
