@@ -135,6 +135,13 @@ Jak vidíme, kód se nám s JSONem zjednodušil. Navíc díky tomu, že máme da
 
 A je to, máme své první JSON API! Už teď jsme se dostali dál, než kam se se svým API dostala :ref:`ČNB <cnb>`.
 
+.. note::
+    Pokud máte v datech diakritiku, bude zakódována. Kdybych se jmenoval Řehoř, vypadal by můj JSON takto: ``{"name": "\u0158eho\u0159", ...}`` Jestliže se chceme takového kódování zbavit, můžeme při tvorbě JSONu nastavit ``ensure_ascii`` na ``False``:
+
+    .. code-block:: python
+
+        response.body = json.dumps(get_personal_details(), ensure_ascii=False)
+
 Čteme URL parametry
 -------------------
 
