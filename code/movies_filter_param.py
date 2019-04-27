@@ -16,7 +16,7 @@ class PersonalDetailsResource():
         response.body = json.dumps(get_personal_details())
 
 
-def get_favorite_movies(name=None):
+def get_movies(name=None):
     movies = [
         {'name': 'The Last Boy Scout', 'year': 1991},
         {'name': 'Mies vailla menneisyyttä', 'year': 2002},
@@ -33,13 +33,13 @@ def get_favorite_movies(name=None):
         return movies
 
 
-class FavoriteMoviesResource():
+class MoviesResource():
 
     def on_get(self, request, response):
         name = request.get_param('name')
-        response.body = json.dumps(get_favorite_movies(name))
+        response.body = json.dumps(get_movies(name))
 
 
 app = falcon.API()
 app.add_route('/', PersonalDetailsResource())
-app.add_route('/movies', FavoriteMoviesResource())
+app.add_route('/movies', MoviesResource())

@@ -151,23 +151,25 @@ Protože :ref:`odpověďi <http-response>` mají ve většině případů status
 Přidáváme další endpoint
 ------------------------
 
-Naše API má zatím pouze jednu adresu, na kterou se může klient dotazovat. V hantýrce programátorů webů by se řeklo, že má jednu "routu" (z anglického *route*). V hantýrce programátorů API by se zase řeklo, že má jeden *endpoint*. No a API s jedním endpointem není nic moc. Přidáme tedy druhý, který bude světu sdělovat seznam našich oblíbených filmů.
+Naše API má zatím pouze jednu adresu, na kterou se může klient dotazovat. V hantýrce programátorů webů by se řeklo, že má jednu "routu" (z anglického *route*). V hantýrce programátorů API by se zase řeklo, že má jeden *endpoint*. No a API s jedním endpointem není nic moc. Přidáme tedy druhý, který bude světu sdělovat seznam filmů, které bychom chtěli vidět.
 
 .. literalinclude:: ../code/movies.py
     :language: python
     :emphasize-lines: 19-31, 36
 
-Když aplikaci spustíme, bude na adrese ``/movies`` vracet informace o našich oblíbených filmech.
+Když aplikaci spustíme, bude na adrese ``/movies`` vracet seznam filmů.
 
 .. literalinclude:: ../code/movies_test.txt
     :language: text
 
+Kdyby každý měl takovéto API, mohl by někdo vytvořit třeba mobilní appku na organizaci filmových večerů. Dávala by dohromady lidi, kteří jsou poblíž a mají stejné filmy na svých seznamech.
+
 Čteme URL parametry
 -------------------
 
-Co kdybychom ale měli opravdu hodně oblíbených filmů? Možná bychom chtěli dát uživatelům našeho API možnost výsledky filtrovat. K tomu se nám mohou hodit :ref:`URL parametry <http-request>`. Chtěli bychom třeba, aby klient mohl udělat dotaz na ``/movies?name=shark`` a tím by našel jen ty filmy, které mají v názvu řetězec ``shark``.
+Co kdybychom ale chtěli vidět opravdu hodně filmů? Možná bychom chtěli dát uživatelům našeho API možnost výsledky filtrovat. K tomu se nám mohou hodit :ref:`URL parametry <http-request>`. Chtěli bychom třeba, aby klient mohl udělat dotaz na ``/movies?name=shark`` a tím by našel jen ty filmy, které mají v názvu řetězec ``shark``.
 
-Nejdříve si připravme hledání. Upravíme funkci ``get_favorite_movies()`` tak, aby stále vracela všechny filmy, pokud nedostane žádný parametr, ale aby nyní navíc podporovala nepovinný parametr ``name``. Když ho dostane, vrátí pouze ty filmy, jejichž název obsahuje hodnotu tohoto parametru, bez ohledu na velká a malá písmena.
+Nejdříve si připravme hledání. Upravíme funkci ``get_favorite_movies()`` tak, aby stále vracela všechny filmy, pokud nedostane žádný parametr, ale aby nyní navíc podporovala nepovinný parametr ``name``. Když ho dostane, vrátí pouze ty filmy, jejichž název obsahuje hodnotu tohoto parametru, a to bez ohledu na velká a malá písmena.
 
 V následujícím příkladu je použit `cyklus <https://naucse.python.cz/course/pyladies/sessions/loops/>`__, ale kdo zná funkci `filter <https://docs.python.org/3/library/functions.html#filter>`__ nebo `list comprehentions <https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions>`__, může si klidně poradit jinak.
 
