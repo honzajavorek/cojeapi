@@ -148,7 +148,6 @@ Protože :ref:`odpověďi <http-response>` mají ve většině případů status
     :language: python
     :emphasize-lines: 15-16
 
-
 Přidáváme další endpoint
 ------------------------
 
@@ -163,60 +162,29 @@ Když aplikaci spustíme, bude na adrese ``/movies`` vracet informace o našich 
 .. literalinclude:: ../code/movies_test.txt
     :language: text
 
-
 Čteme URL parametry
 -------------------
 
-.. warning::
+Co kdybychom ale měli opravdu hodně oblíbených filmů? Možná bychom chtěli dát uživatelům našeho API možnost výsledky filtrovat. K tomu se nám mohou hodit :ref:`URL parametry <http-request>`. Chtěli bychom třeba, aby klient mohl udělat dotaz na ``/movies?name=shark`` a tím by našel jen ty filmy, které mají v názvu řetězec ``shark``.
 
-    Tato kapitola je právě přepisována z Flasku na Falcon. Přijďte raději později, po krátkou chvíli návod nebude dávat smysl.
+Nejdříve si připravme hledání. Upravíme funkci ``get_favorite_movies()`` tak, aby stále vracela všechny filmy, pokud nedostane žádný parametr, ale aby nyní navíc podporovala nepovinný parametr ``name``. Když ho dostane, vrátí pouze ty filmy, jejichž název obsahuje hodnotu tohoto parametru, bez ohledu na velká a malá písmena.
 
-Co kdybychom ale měli opravdu hodně oblíbených filmů? Možná bychom chtěli mít možnost výsledky filtrovat. K tomu se nám mohou hodit :ref:`URL parametry <http-request>`. Chtěli bychom třeba, aby klient mohl udělat dotaz na ``/movies?name=shark`` a tím by našel jen ty filmy, které mají v názvu řetězec ``shark``.
+V následujícím příkladu je použit `cyklus <https://naucse.python.cz/course/pyladies/sessions/loops/>`__, ale kdo zná funkci `filter <https://docs.python.org/3/library/functions.html#filter>`__ nebo `list comprehentions <https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions>`__, může si klidně poradit jinak.
 
-Nejdříve si připravme hledání. V následujícím příkladu je použit `cyklus <https://naucse.python.cz/course/pyladies/sessions/loops/>`__, ale kdo zná funkci `filter <https://docs.python.org/3/library/functions.html#filter>`__ nebo `list comprehentions <https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions>`__, může si klidně poradit jinak.
+.. literalinclude:: ../code/movies_filter.py
+    :language: python
+    :emphasize-lines: 19-33
 
-.. code-block:: python
+Nyní potřebujeme přečíst z dotazu parametr a použít jej:
 
-    def get_movies(name=None):
-        movies = [
-            {"name": "The Last Boy Scout", "year": 1991},
-            {"name": "Mies vailla menneisyyttä", "year": 2002},
-            {"name": "Sharknado", "year": 2013},
-            {"name": "Mega Shark vs. Giant Octopus", "year": 2009},
-        ]
-        if name is not None:
-            filtered_movies = []
-            for movie in movies:
-                if name in movie["name"].lower():
-                    filtered_movies.append(movie)
-            return filtered_movies
-        else:
-            return movies
-
-Nyní potřebujeme přečíst z dotazu parametr a použít jej. K tomu nám Flask přichystal `request <http://flask.pocoo.org/docs/1.0/api/#flask.request>`__.
-
-.. code-block:: python
-
-    from flask import Flask, jsonify, request
-
-    ...
-
-    @app.route("/movies")
-    def movies():
-        return jsonify(get_movies(name=request.args.get("name")))
+.. literalinclude:: ../code/movies_filter_param.py
+    :language: python
+    :emphasize-lines: 38-40
 
 Pokud se na náš nový endpoint dotážeme bez parametrů, měl by fungovat stejně jako předtím. Jestliže ale přidáme ``?name=`` do adresy, měla by hodnota parametru filtrovat filmy.
 
-.. code-block:: text
-
-    $ curl -i 'http://127.0.0.1:5000/movies?name=shark'
-    HTTP/1.0 200 OK
-    Content-Type: application/json
-    Content-Length: 87
-    Server: Werkzeug/0.14.1 Python/3.7.1
-    Date: Fri, 09 Nov 2018 21:54:39 GMT
-
-    [{"name":"Sharknado","year":2013},{"name":"Mega Shark vs. Giant Octopus","year":2009}]
+.. literalinclude:: ../code/movies_filter_param_test.txt
+    :language: text
 
 Vidíme, že tentokrát jsme dostali v těle odpovědi jen dva filmy místo čtyř.
 
