@@ -1,0 +1,8 @@
+$ curl -i 'http://0.0.0.0:8080/movies/?name=shark'
+HTTP/1.1 200 OK
+Content-Length: 143
+Content-Type: application/json; charset=UTF-8
+Date: Tue, 30 Apr 2019 19:20:16 GMT
+Server: waitress
+
+[{"name": "Sharknado", "url": "http://0.0.0.0:8080/movies/3"}, {"name": "Mega Shark vs. Giant Octopus", "url": "http://0.0.0.0:8080/movies/4"}]

@@ -101,17 +101,17 @@ Naše data nyní vypadají následovně:
     :language: python
     :emphasize-lines: 9-13
 
-Co si budeme povídat, takto data běžně nevypadají. Většinou jsou někde v databázi, v souboru, apod. a musíme zavolat nějakou funkci, abychom je dostali. Zpravidla je také dostaneme jako seznam nebo slovník, ne jako připravený řetězec. Pojďme si tedy tuto situaci nasimulovat. Nejdříve si data vytáhneme do funkce, která je bude vracet.
+Co si budeme povídat, takto data běžně nevypadají. Většinou jsou někde v databázi, v souboru, apod. Zpravidla je dostaneme jako seznam nebo slovník, ne jako připravený řetězec. Pojďme si tedy tuto situaci nasimulovat. Nejdříve si data vytáhneme do proměnné.
 
-.. literalinclude:: ../code/base_data_func.py
+.. literalinclude:: ../code/base_data.py
     :language: python
-    :emphasize-lines: 4-9, 17
+    :emphasize-lines: 4-8, 16
 
 Nyní z dat uděláme slovník, který až při sestavování odpovědi složíme do textu. Tím rozdělíme uložení dat a jejich prezentaci navenek. Jak už bylo zmíněno, data většinou přicházejí např. z databáze právě jako slovník, takže toto rozdělení je v praxi potřebné a velmi časté.
 
-.. literalinclude:: ../code/base_data_func_dict.py
+.. literalinclude:: ../code/base_data_dict.py
     :language: python
-    :emphasize-lines: 4-9, 18-22
+    :emphasize-lines: 4-8, 17-20
 
 Takovéto API nám bude fungovat stále stejně, protože ze slovníku opět složí řetězec, který jsme původně posílali v odpovědi. Data jsou nyní ale nezávislá na tom, jak je budeme prezentovat uživateli. Prakticky si tuto výhodu ukážeme v následujících odstavcích.
 
@@ -122,7 +122,7 @@ Jak jsme si :ref:`vysvětlovali <struktura>`, obyčejný text není nejlepší z
 
 .. literalinclude:: ../code/json_response.py
     :language: python
-    :emphasize-lines: 1, 17-18
+    :emphasize-lines: 1, 16-17
 
 Jak vidíme, kód se nám s JSONem zjednodušil. Navíc díky tomu, že máme data hezky oddělená od samotného API, nemuseli jsme je nijak měnit. Stačilo změnit způsob, jakým se budou posílat v odpovědi. Když aplikaci spustíme, můžeme opět použít curl nebo prohlížeč a ověřit výsledek.
 
@@ -136,17 +136,28 @@ Jak vidíme, kód se nám s JSONem zjednodušil. Navíc díky tomu, že máme da
 A je to, máme své první JSON API! Už teď jsme se dostali dál, než kam se se svým API dostala :ref:`ČNB <cnb>`.
 
 .. note::
-    Pokud máte v datech diakritiku, bude zakódována. Kdybych se jmenoval Řehoř, vypadal by můj JSON takto: ``{"name": "\u0158eho\u0159", ...}`` Jestliže se chceme takového kódování zbavit, můžeme při tvorbě JSONu nastavit ``ensure_ascii`` na ``False``:
+    Pokud máte v datech diakritiku, bude zakódována. Kdybych se jmenoval Řehoř, vypadal by můj JSON takto: ``{"name": "\u0158eho\u0159", ...}`` Jestliže se chceme takového kódování zbavit, můžeme při tvorbě JSONu nastavit ``ensure_ascii`` na ``False``. Strojům to bude jedno, ale lidem se to bude lépe číst:
 
     .. code-block:: python
 
         response.body = json.dumps(get_personal_details(), ensure_ascii=False)
 
+    Stejně tak je strojům jedno, jestli jsou, nebo nejsou jednotlivé části JSONu hezky odsazené. Pokud chcete, aby vaše API odsazovalo, nastavte parametr ``indent`` na počet mezer (používá se 2 nebo 4):
+
+    .. code-block:: python
+
+        response.body = json.dumps(get_personal_details(), ensure_ascii=False, indent=2)
+
+    Zbytek příkladů nebude tyto možnosti využívat, aby byl kód v ukázkách stručnější.
+
+.. todo::
+    Udělat z formátování JSONu kapitolu, vytáhnout to do funkce, a přepsat následující příklady.
+
 Protože :ref:`odpověďi <http-response>` mají ve většině případů status kód 200 a protože :ref:`JSON` je nejpoužívanější formát, tak je Falcon ve skutečnosti nastavuje jako výchozí. Můžeme proto zcela vynechat dva řádky z našeho programu a stále bude fungovat tak, jak jsme chtěli:
 
 .. literalinclude:: ../code/json_response_simplified.py
     :language: python
-    :emphasize-lines: 15-16
+    :emphasize-lines: 14-15
 
 Přidáváme další endpoint
 ------------------------
@@ -155,7 +166,7 @@ Naše API má zatím pouze jednu adresu, na kterou se může klient dotazovat. V
 
 .. literalinclude:: ../code/movies.py
     :language: python
-    :emphasize-lines: 19-31, 36
+    :emphasize-lines: 18-29, 34
 
 Když aplikaci spustíme, bude na adrese ``/movies`` vracet seznam filmů.
 
@@ -169,29 +180,177 @@ Kdyby každý měl takovéto API, mohl by někdo vytvořit třeba mobilní appku
 
 Co kdybychom ale chtěli vidět opravdu hodně filmů? Možná bychom chtěli dát uživatelům našeho API možnost výsledky filtrovat. K tomu se nám mohou hodit :ref:`URL parametry <http-request>`. Chtěli bychom třeba, aby klient mohl udělat dotaz na ``/movies?name=shark`` a tím by našel jen ty filmy, které mají v názvu řetězec ``shark``.
 
-Nejdříve si připravme hledání. Upravíme funkci ``get_favorite_movies()`` tak, aby stále vracela všechny filmy, pokud nedostane žádný parametr, ale aby nyní navíc podporovala nepovinný parametr ``name``. Když ho dostane, vrátí pouze ty filmy, jejichž název obsahuje hodnotu tohoto parametru, a to bez ohledu na velká a malá písmena.
+Nejdříve si připravme hledání. Vytvoříme funkci ``filter_movies()`` s parametry ``movies`` a ``name``, která vrátí pouze ty filmy, jejichž název obsahuje hodnotu tohoto parametru, a to bez ohledu na velká a malá písmena. Pokud bude parametr nastaven na ``None``, vrátí všechny filmy.
 
 V následujícím příkladu je použit `cyklus <https://naucse.python.cz/course/pyladies/sessions/loops/>`__, ale kdo zná funkci `filter <https://docs.python.org/3/library/functions.html#filter>`__ nebo `list comprehentions <https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions>`__, může si klidně poradit jinak.
 
 .. literalinclude:: ../code/movies_filter.py
     :language: python
-    :emphasize-lines: 19-33
+    :pyobject: filter_movies
 
 Nyní potřebujeme přečíst z dotazu parametr a použít jej:
 
-.. literalinclude:: ../code/movies_filter_param.py
+.. literalinclude:: ../code/movies_filter.py
     :language: python
-    :emphasize-lines: 38-40
+    :emphasize-lines: 26-34, 40-41
 
 Pokud se na náš nový endpoint dotážeme bez parametrů, měl by fungovat stejně jako předtím. Jestliže ale přidáme ``?name=`` do adresy, měla by hodnota parametru filtrovat filmy.
 
-.. literalinclude:: ../code/movies_filter_param_test.txt
+.. literalinclude:: ../code/movies_filter_test.txt
     :language: text
 
 Vidíme, že tentokrát jsme dostali v těle odpovědi jen dva filmy místo čtyř.
 
-Umožňujeme zápis
-----------------
+Detail filmu
+------------
+
+V našem případě má každý film jen název a rok uvedení, ale většinou data nebývají tak strohá. Pojďme si k filmům přidat víc údajů, ať naše "databáze" působí o něco víc realisticky.
+
+Když něco evidujeme, zpravidla tomu přiřadíme nějaké evidenční číslo, abychom to mohli jednoznačně odlišit a případně i rychle najít. Programátoři takovému údaji říkají *unikátní identifikátor*, což zkracují na ID nebo ``id``. Filmy se mohou jmenovat stejně, takže jméno se na to nehodí. Kdybychom měli opravdovou databázi, něco by nám pro každý záznam sama vymyslela, ale takto si musíme poradit sami. Použijeme tedy prostě pořadové číslovky od jedničky.
+
+Kromě ``id`` přidáme každému filmu ještě ``name_cs`` s českým názvem (``cs`` je mezinárodní standardní kód pro `Češtinu <https://cs.wikipedia.org/wiki/Seznam_k%C3%B3d%C5%AF_ISO_639-2>`__), ``imdb_url`` s odkazem na `IMDb <https://www.imdb.com/>`__ a ``csfd_url`` s odkazem na `ČSFD.cz <https://www.csfd.cz/>`__.
+
+.. literalinclude:: ../code/movies_db.py
+    :language: python
+    :lines: 18-51
+
+Když se podíváme, co nyní vrací naše API, uvidíme o dost více dat:
+
+.. literalinclude:: ../code/movies_db_test.txt
+    :language: text
+
+Pokud bychom přidali ještě více údajů a měli v seznamu větší množství filmů, byla by odpověď na endpointu ``/movies`` už možná příliš velká a pro některé uživatele našeho API by tam mohlo být možná až příliš mnoho zbytečných informací. Kdybychom tvořili webové stránky, seznam filmů by nejspíš obsahoval jen základní údaje a zbytek by byl na nějaké stránce s detailem filmu pro ty, které to zajímá. Při tvorbě API je praxe stejná.
+
+Pojďme tedy upravit API tak, aby v seznamu vypisovalo jen ``name`` a odkaz na detail filmu. Nejdříve ale vytvoříme ten, ať máme na co odkazovat. Jako obvykle se zamyslíme nad tím, jak by měl nový endpoint fungovat:
+
+.. literalinclude:: ../code/movies_detail_example.txt
+    :language: text
+
+Chceme tedy, abychom mohli na adrese ``/movies/1`` zjistit informace o filmu s ID číslo jedna, na adrese ``/movies/2`` o filmu s ID číslo dvě, atd.
+
+Začneme funkcí ``get_movie_by_id()``, která dostane seznam filmů ``movies`` a identifikátor ``id``. Prohledá seznam a když v něm najde film s daným identifikátorem, vrátí tento film.
+
+.. literalinclude:: ../code/movies_detail.py
+    :language: python
+    :pyobject: get_movie_by_id
+
+Nyní přidáme další endpoint. To sice už umíme, ale nyní je v tom drobný háček. Potřebujeme totiž obsloužit hned čtyři adresy:
+
+-   ``/movies/1``
+-   ``/movies/2``
+-   ``/movies/3``
+-   ``/movies/4``
+
+Určitě se nám ale nechce přidávat každou zvlášť. Co kdybychom v seznamu měli dvacet filmů? Potřebujeme něco, co by obsloužilo všechny zmíněné adresy.
+
+Falcon nám dává řešení v podobě možnosti zapsat adresu jako "šablonu", podle které bude odchytávat odlišné adresy a směřovat na jeden a ten samý kód pro jejich obsluhu.
+
+.. literalinclude:: ../code/movies_detail.py
+    :language: python
+    :lines: 78-87
+
+Jak vidíme, pokud zadáme adresu jako ``/movies/{id:int}``, dostane naše metoda ``on_get()`` navíc čtvrtý parametr. V něm bude to, co Falcon v adrese odchytne na místě naší značky ``{id:int}``. První část značky i parametr metody si vhodně pojmenujeme jako ``id``. Druhá část značky Falcon upozorňuje na to, že namísto značky očekáváme pouze celá čísla (*int* odkazuje na vestavěnou funkci ``int()`` a anglické slovo *integer*).
+
+Když nyní spustíme naše API a vyzkoušíme, co vrací na adrese ``/movies/1``, měli bychom dostat informace o prvním filmu v seznamu:
+
+.. literalinclude:: ../code/movies_detail_1_test.txt
+    :language: text
+
+Zkuste si to i pro ostatní filmy.
+
+Nenalezeno
+----------
+
+Naše API umí hezky odpovídat v případě, že se číslem trefíme do existujícího filmu. Co se ale stane pokud se dotážeme na nějakou hloupost?
+
+.. literalinclude:: ../code/movies_detail_hello_test.txt
+    :language: text
+
+Jistě, Falcon díky ``{id:int}`` obsluhuje jen adresy s čísly, takže se za nás postará o odpověď. Vrací ``404 Not Found``, čímž dává uživateli najevo, že se asi spletl, protože na této adrese nic není. Co když se ale dotážeme s číslem, akorát na neexistující film, např. na ``/movies/42``?
+
+.. literalinclude:: ../code/movies_detail_42_test.txt
+    :language: text
+
+Tady nám Falcon už nepomůže. Adresu obslouží naše metoda a ta, jak vidíme, nevrací zrovna nejlepší odpověď. Žádný film číslo 42 neexistuje, ale naše API se chová, jako by to nebyl žádný problém. Upravíme třídu ``MovieResource`` tak, aby s touto situací počítala. Pokud funkce ``get_movie_by_id()`` nic nenajde, odpovíme s chybovým status kódem. Tělo posílat žádné nemusíme.
+
+.. literalinclude:: ../code/movies_not_found.py
+    :language: python
+    :pyobject: MovieResource
+
+Pokud se po této změně dotážeme na neexistující film, měli bychom dostat chybu:
+
+.. literalinclude:: ../code/movies_not_found_42_test.txt
+    :language: text
+
+Získávání informací o existujícím filmu by mělo fungovat stejně jako předtím.
+
+.. literalinclude:: ../code/movies_not_found_1_test.txt
+    :language: text
+
+V tomto návodu s chybou neposíláme žádné tělo, ale je běžné nějaké poslat a poskytnout v něm uživateli našeho API více informací o tom, co se stalo, např. takto:
+
+.. literalinclude:: ../code/movies_not_found_example.txt
+    :language: text
+
+Zatímco status kód ``404 Not Found`` je záležitost standardu protokolu :ref:`HTTP`, strukturu těla chybové zprávy jsme si v tomto případě vymysleli. Aby uživatel našeho API věděl, že se má při chybě podívat na její důvod právě do ``message``, nesmíme to potom zapomenout :ref:`popsat v dokumentaci <dokumentace>`.
+
+.. note::
+    Na strukturu těla chybové zprávy také existují standardy, byť je málokdo dodržuje:
+
+    -   `vnd.error <https://github.com/blongden/vnd.error>`__
+    -   Problem Details for HTTP APIs, :rfc:`7807`
+
+    V případě toho druhého bychom pak v hlavičce ``Content-Type`` místo ``application/json`` poslali ``application/problem+json`` a příjemce by díky tomu hned mohl tušit, jakou přesně strukturu bude tělo chybové odpovědi mít.
+
+Odkazování mezi endpointy, reprezentace, resource
+-------------------------------------------------
+
+Detail filmu máme připravený, takže se můžeme pustit do úprav seznamu filmů, tedy třídy ``MoviesResource``. Jak již bylo zmíněno, budeme v seznamu chtít jen ``name`` a odkaz na detail filmu.
+
+Doteď bylo to, co jsme poslali v odpovědi, vždy shodné s tím, jak máme data uložena interně v naší aplikaci. Nyní ale nastává situace, kdy chceme v odpovědi poslat něco trochu jiného, než jak data vypadají ve skutečnosti. Chceme poslat jen určitou *reprezentaci* těchto dat. Začneme tedy funkcí, která vezme seznam filmů a poskytne nám jeho reprezentaci tak, jak jsme si ji vymysleli:
+
+.. literalinclude:: ../code/movies_repr.py
+    :language: python
+    :pyobject: represent_movies
+
+Nyní pojďme upravit ``MoviesResource``. Víme, že adresa našeho API je teď ``http://0.0.0.0:8080``, ale jakmile budeme chtít aplikaci :ref:`uveřejnit někam na internet <nowsh>`, bude zase jiná. Proto je lepší si ji vytáhnout z objektu ``request``.
+
+.. literalinclude:: ../code/movies_repr.py
+    :language: python
+    :pyobject: MoviesResource
+
+Zbytek úprav by měl být celkem srozumitelný. Nejdříve filmy filtrujeme podle parametrů, poté vytvoříme reprezentaci výsledného seznamu a nakonec z ní uděláme JSON a ten pošleme jako tělo odpovědi. Když aplikaci spustíme a vyzkoušíme dotazem např. na ``/movies/?name=shark``, měla by nám vracet správně filtrovaný seznam filmů v nové podobě:
+
+.. literalinclude:: ../code/movies_repr_test.txt
+    :language: text
+
+V hantýrce API návrhářů a vývojářů bychom řekli, že film, nebo v tomto případě seznam filmů, je nějaký *resource*, který zpřístupňujeme uživatelům našeho API na adrese ``/movies``. Je reprezentován jako JSON, v němž má každý film název a odkaz k dalším podrobnostem. Proto má ``MoviesResource`` v názvu slovo resource.
+
+Je důležité rozlišit, že *resource* je pomyslný, nehmatatelný model světa, zatímco reprezentace už je jeho konkrétní zobrazení. Jak jsme si vyzkoušeli u ``PersonalDetailsResource``, lze mít více různých reprezentací pro tutéž pomyslnou věc - čistě textovou, nebo jako JSON, nebo úplně jinou.
+
+A když už jsme u toho našeho prvního endpointu, správné :ref:`REST` API by mělo být propojeno pomocí odkazů. Z odpovědi s osobními informacemi však nelze nijak zjistit, že v API zpřístupňujeme ještě i seznam filmů, které chceme vidět. Pojďme to napravit:
+
+.. literalinclude:: ../code/movies_repr.py
+    :language: python
+    :pyobject: PersonalDetailsResource
+
+Odkaz jsme pojmenovali ``movies_watchlist_url``, protože kdyby to bylo pouze ``movies_url``, nebylo by úplně zřejmé, o jaký přesně seznam filmů se jedná. Samozřejmě i tak by to mělo být :ref:`popsáno v dokumentaci <dokumentace>`, ale proč neusnadnit druhé straně práci a nenazvat věci zřejmějším jménem?
+
+Content negotiation
+-------------------
+
+.. todo::
+    vysvetlit o co jde, kdyz udelame accept na cs
+
+Přidáváme filmy
+---------------
+
+Nyní máme API, které je pouze ke čtení. Řekněme, že bychom chtěli, aby nám někdo mohl doporučit film na zhlédnutí tím, že jej přidá do našeho seznamu. Opět si nejdříve navrhněme, jak by věc měla fungovat.
+
+.. literalinclude:: ../code/movies_post_example.txt
+    :language: text
+
+Pokud metodou ``POST`` přijde :ref:`dotaz <http-request>` na adresu ``/movies``, API přečte zaslané tělo dotazu (očekává JSON), které reprezentuje film, a přidá tento film do našeho seznamu. Poté odpoví kódem ``201 Created`` a tělem (opět JSON), v němž je změnený obsah seznamu filmů.
 
 .. warning::
 
@@ -261,51 +420,6 @@ Návrh API
 ^^^^^^^^^
 
 Vidíme, že z jedněch dat jsme vytvořili dva endpointy, které se navzájem doplňují a odkazují na sebe. To je běžná praxe - způsob, jakým chceme aby API fungovalo, nemusí nutně kopírovat interní strukturu našich dat. Ideálně by návrh API měl co nejvíce odpovídat tomu, jak jej bude používat klient. Náš návrh je dobrý, pokud bude klientům většinou stačit jen jmenný seznam oblečení a nebude jim vadit, pokud se na barvu (a případně další detaily) doptají zvlášť, podle potřeby. Každý dotaz totiž něco stojí. Pokud by byla barva důležitá, chtěli bychom ji mít už na ``/clothes``, aby jen kvůli ní nemuseli všichni klienti našeho API dělat ještě zvlášť dotaz pro každý svršek.
-
-Nenalezeno
-^^^^^^^^^^
-
-Co když se zeptáme na neexistující svršek? Dostaneme status kód ``500 Internal Server Error``! Co to znamená? Je to chyba serveru (začíná pětkou), a to znamená, že chyba je na naší straně, jelikož my jsme tvůrci tohoto API serveru.
-
-.. code-block:: text
-
-    $ curl -i 'http://127.0.0.1:5000/clothes/hat'
-    HTTP/1.0 500 INTERNAL SERVER ERROR
-    ...
-
-Když se podíváme, co vypsal Flask, uvidíme detaily chyby:
-
-.. code-block:: text
-
-    [2018-11-10 00:28:51,508] ERROR in app: Exception on /clothes/hat [GET]
-    Traceback (most recent call last):
-    File ...
-    KeyError: 'hat'
-
-Sice nemůžeme za to, že se uživatel ptá na klobouk, tedy neexistující svršek, ale jsme zodpovědní za to, že naše API vybouchlo na výjimce. Musíme ji hezky ošetřit a uživateli dát najevo, že chyba je na jeho straně a o jakou že se jedná přesně chybu. K tomu nám poslouží `abort <http://flask.pocoo.org/docs/1.0/api/#flask.abort>`__ a status kód ``404 Not Found``. Ten něžně svaluje vinu na klienta (začíná čtyřkou) a sděluje mu, že na adrese ``/clothes/hat`` nic není, takže by se měl asi dotazovat jinam.
-
-.. code-block:: python
-    :emphasize-lines: 1, 7, 10-11
-
-    from flask import Flask, jsonify, request, abort
-
-    ...
-
-    @app.route("/clothes/<name>")
-    def garment(name):
-        try:
-            color = clothes_state[name]
-            return jsonify({"name": name, "color": color})
-        except KeyError:
-            abort(404)
-
-Nyní by měla odpověď už nést správný kód a naše Flask aplikace by neměla ledabyle spadnout na výjimce:
-
-.. code-block:: text
-
-    $ curl -i 'http://127.0.0.1:5000/clothes/hat'
-    HTTP/1.0 404 NOT FOUND
-    ...
 
 Přidáváme
 ^^^^^^^^^
@@ -548,6 +662,14 @@ Můžeme se na naše API dotazovat samozřejmě i pomocí curl:
 A co je ještě lepší, na rozdíl od všech předchozích případů, nyní může na naše API posílat dotazy i někdo jiný! Pošlete tuto adresu kamarádce/kamarádovi nebo kolegyni/kolegovi, ať zkusí se svým prohlížečem a s curl posílat dotazy na vaše API. Vy zase můžete zkoušet jejich API. Nebojme se experimentovat, třeba přidat oblečení, nebo nějaké smazat.
 
 Pokud budeme chtít udělat v našem API změny a ty opět promítnout veřejně, budeme muset znova spustit příkaz ``now``.
+
+.. _dokumentace:
+
+Dokumentujeme API
+-----------------
+
+.. todo::
+    https://github.com/honzajavorek/cojeapi/issues/37, formáty pro popis API
 
 .. _frameworky:
 

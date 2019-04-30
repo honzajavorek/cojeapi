@@ -10,6 +10,14 @@
 }
 
 /*
+  The :rfc: role renders bold for no obvious reason. This resets it so
+  the links don't stand out.
+*/
+a.rfc strong {
+  font-weight: normal;
+}
+
+/*
   Workaround for https://github.com/djungelorm/sphinx-tabs/pull/35
 */
 .rst-content .section ul:last-child,

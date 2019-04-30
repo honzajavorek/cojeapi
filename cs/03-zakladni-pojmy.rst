@@ -8,6 +8,8 @@ Protokol
 
 Celé dorozumívání mezi klientem a serverem se odehrává přes tzv. protokol. To není nic jiného, než smluvený způsob, co bude kdo komu posílat a jakou strukturu to bude mít. Protokolů je v počítačovém světě spousta, ale nás bude zajímat jen `HTTP <https://cs.wikipedia.org/wiki/Hypertext_Transfer_Protocol>`__, protože ten využívají webová API a ostatně i web samotný. Není to náhoda, že adresa internetových stránek v prohlížeči zpravidla začíná ``http://`` (nebo ``https://``).
 
+.. _http:
+
 HTTP
 ~~~~
 

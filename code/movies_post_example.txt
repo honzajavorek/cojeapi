@@ -1,0 +1,14 @@
+$ curl -i 'http://example.com/movies' \
+    --header='Content-Type: application/json' \
+    --request=POST \
+    --data='{"name": "Under Siege", "year": 1992}'
+HTTP/1.0 201 OK
+Content-Type: application/json
+
+[
+    {"name": "The Last Boy Scout", "year": 1991},
+    {"name": "Mies vailla menneisyytt\u00e4", "year": 2002},
+    {"name": "Sharknado", "year": 2013},
+    {"name": "Mega Shark vs. Giant Octopus", "year": 2009},
+    {"name": "Under Siege", "year": 1992}
+]
