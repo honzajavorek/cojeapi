@@ -25,7 +25,11 @@ movies = [
 
 def filter_movies(movies, name):
     if name is not None:
-        return [movie for movie in movies if name in movie['name'].lower()]
+        filtered_movies = []
+        for movie in movies:
+            if name in movie['name'].lower():
+                filtered_movies.append(movie)
+        return filtered_movies
     else:
         return movies
 

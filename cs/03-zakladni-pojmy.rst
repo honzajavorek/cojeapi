@@ -45,7 +45,7 @@ Přesně takové dotazy jsme posílali v předchozích příkladech v prohlíže
 Takový dotaz bychom už nemohli poslat přes prohlížeč, protože má více částí, ne jen adresu. Šlo by jej ale poslat s pomocí curl a jeho přepínačů. Které části dotazu jsou povinné, co vše v nich lze poslat, a k čemu jednotlivé části jsou?
 
 metoda (*HTTP method*, někdy také *HTTP verb*)
-    Protokol HTTP `přesně vysvětluje všechny metody <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods>`__ a jaké má jejich použití důsledky pro dotaz i odpověď. Například metoda ``GET`` má tu vlastnost, že provádí pouze čtení a nemůžeme s ní tedy přes API něco změnit - je tzv. *bezpečná*. Metody ``PUT`` nebo ``DELETE`` zase dávají záruku, že i když je pošleme několikrát za sebou, dostaneme vždy stejnou odpověď.
+    Protokol HTTP `přesně vysvětluje všechny metody <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods>`__ a jaké má jejich použití důsledky pro dotaz i odpověď. Například metoda `GET <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET>`__ má tu vlastnost, že provádí pouze čtení a nemůžeme s ní tedy přes API něco změnit - je tzv. *bezpečná*. Metody `PUT <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT>`__ nebo `DELETE <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE>`__ zase dávají záruku, že i když je pošleme několikrát za sebou, dostaneme vždy stejnou odpověď.
 
     Příklady: ``GET``, ``POST``, ``PUT``, ``DELETE``, a další
 
@@ -69,7 +69,7 @@ hlavičky (*headers*)
     -   ``Content-Type: text/plain``
 
 tělo (*body*)
-    Tělo zprávy je krabice, kterou s dotazem posíláme, a do které můžeme vložit, co chceme. Tedy nejlépe něco, čemu bude API na druhé straně rozumět. Tělo může být prázdné. V těle můžeme poslat obyčejný text, data v nějakém formátu, ale klidně i obrázek. Aby API na druhé straně vědělo, co v krabici je a jak ji má rozbalovat, je potřeba s tělem zpravidla posílat hlavičku ``Content-Type``.
+    Tělo zprávy je krabice, kterou s dotazem posíláme, a do které můžeme vložit, co chceme. Tedy nejlépe něco, čemu bude API na druhé straně rozumět. Tělo může být prázdné. V těle můžeme poslat obyčejný text, data v nějakém formátu, ale klidně i obrázek. Aby API na druhé straně vědělo, co v krabici je a jak ji má rozbalovat, je potřeba s tělem zpravidla posílat hlavičku `Content-Type <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type>`__.
 
     Příklady: ``Ahoj!``, ``{"title": "Ariel"}``
 
@@ -181,12 +181,12 @@ Možná snad jen pokud bychom chtěli `v televizi říct, že jsme nikdy nešifr
 Formáty
 -------
 
-Dotaz i odpověď mohou obsahovat tělo. Toto tělo může být v libovolném formátu. Může to být text, HTML, obrázek, PDF soubor, nebo cokoliv jiného. Aby druhá strana věděla, co v těle zprávy posíláme, měli bychom jí dát formát vědět v hlavičce ``Content-Type``.
+Dotaz i odpověď mohou obsahovat tělo. Toto tělo může být v libovolném formátu. Může to být text, HTML, obrázek, PDF soubor, nebo cokoliv jiného. Aby druhá strana věděla, co v těle zprávy posíláme, měli bychom jí dát formát vědět v hlavičce `Content-Type <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type>`__.
 
 MIME
 ~~~~
 
-Hodnotě hlavičky ``Content-Type`` se dávají různé názvy: *content type*, *media type*, *MIME type*. Nejčastěji se skládá jen z typu a podtypu, které se oddělí lomítkem (celá specifikace je k dispozici na `MND web docs <https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types>`__). Několik příkladů:
+Hodnotě hlavičky `Content-Type <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type>`__ se dávají různé názvy: *content type*, *media type*, *MIME type*. Nejčastěji se skládá jen z typu a podtypu, které se oddělí lomítkem (celá specifikace je k dispozici na `MND web docs <https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types>`__). Několik příkladů:
 
 - ``text/plain`` - obyčejný text
 - ``text/html`` - HTML
@@ -228,7 +228,7 @@ Vidíme, že :ref:`API ČNB <cnb>` vrací obyčejný text, tedy ``text/plain`` (
 
     .. tab:: Řešení
 
-        Postupně spouštíme ``curl -I`` (nebo ``curl -i``) pro jednotlivé adresy a ve vypsaných hlavičkách hledáme hodnotu pro ``Content-Type``. Měli bychom dostat následující:
+        Postupně spouštíme ``curl -I`` (nebo ``curl -i``) pro jednotlivé adresy a ve vypsaných hlavičkách hledáme hodnotu pro `Content-Type <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type>`__. Měli bychom dostat následující:
 
         #. JPEG - ``image/jpeg``
         #. :ref:`XML` - ``text/xml; charset=UTF-8``
