@@ -500,7 +500,7 @@ Zpět od čtení k programování. Změníme status kód a přidáme hlavičku. 
 .. literalinclude:: ../code/movies_created.py
     :language: python
     :pyobject: MoviesResource
-    :emphasize-lines: 16-25
+    :emphasize-lines: 16-24
 
 Když nyní restartujeme Waitress a zkusíme opět přidat nový film, měli bychom dostat `201 Created <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201>`__ s ``Location`` hlavičkou a tělem, v němž jsou všechny detaily. Díky ``url`` máme adresu na nový film nejen v hlavičce, ale i přímo v těle zprávy.
 
