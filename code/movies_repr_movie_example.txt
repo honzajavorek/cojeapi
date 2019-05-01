@@ -3,7 +3,7 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
-    "id": 1,
+    "url": "http://api.example.com/movies/1",
     "name": "The Last Boy Scout",
     "name_cs": "Poslední skaut",
     "year": 1991,

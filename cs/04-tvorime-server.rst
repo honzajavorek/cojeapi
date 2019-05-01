@@ -90,7 +90,7 @@ Vidíme, že API se chová tak, jak jsme původně chtěli. Odpověď má status
 .. literalinclude:: ../code/base_test.txt
     :language: text
 
-Server nyní můžeme v terminálu ukončit pomocí :kbd:`Ctrl+C` a budeme API rozšiřovat o další funkce.
+Server nyní můžeme v terminálu ukončit pomocí :kbd:`Ctrl+C` a budeme API rozšiřovat o další funkce. Pokaždé, když změníme kód a budeme chtít naše API vyzkoušet, budeme muset Waitress nejdřív restartovat.
 
 Uchováváme data jako slovník
 ----------------------------
@@ -150,10 +150,7 @@ A je to, máme své první JSON API! Už teď jsme se dostali dál, než kam se 
 
     Zbytek příkladů nebude tyto možnosti využívat, aby byl kód v ukázkách stručnější.
 
-.. todo::
-    Udělat z formátování JSONu kapitolu, vytáhnout to do funkce, a přepsat následující příklady.
-
-Protože :ref:`odpověďi <http-response>` mají ve většině případů status kód 200 a protože :ref:`JSON` je nejpoužívanější formát, tak je Falcon ve skutečnosti nastavuje jako výchozí. Můžeme proto zcela vynechat dva řádky z našeho programu a stále bude fungovat tak, jak jsme chtěli:
+Protože :ref:`odpovědi <http-response>` mají ve většině případů status kód 200 a protože :ref:`JSON` je nejpoužívanější formát, tak je Falcon ve skutečnosti nastavuje jako výchozí. Můžeme proto zcela vynechat dva řádky z našeho programu a stále bude fungovat tak, jak jsme chtěli:
 
 .. literalinclude:: ../code/json_response_simplified.py
     :language: python
@@ -294,6 +291,8 @@ V tomto návodu s chybou neposíláme žádné tělo, ale je běžné nějaké p
 
 Zatímco status kód ``404 Not Found`` je záležitost standardu protokolu :ref:`HTTP`, strukturu těla chybové zprávy jsme si v tomto případě vymysleli. Aby uživatel našeho API věděl, že se má při chybě podívat na její důvod právě do ``message``, nesmíme to potom zapomenout :ref:`popsat v dokumentaci <dokumentace>`.
 
+.. _problem:
+
 .. note::
     Na strukturu těla chybové zprávy také existují standardy, byť je málokdo dodržuje:
 
@@ -302,8 +301,8 @@ Zatímco status kód ``404 Not Found`` je záležitost standardu protokolu :ref:
 
     V případě toho druhého bychom pak v hlavičce ``Content-Type`` místo ``application/json`` poslali ``application/problem+json`` a příjemce by díky tomu hned mohl tušit, jakou přesně strukturu bude tělo chybové odpovědi mít.
 
-Odkazování mezi endpointy, reprezentace, resource
--------------------------------------------------
+Reprezentace filmu
+------------------
 
 Detail filmu máme připravený, takže se můžeme pustit do úprav seznamu filmů, tedy třídy ``MoviesResource``. Jak již bylo zmíněno, budeme v seznamu chtít jen ``name`` a odkaz na detail filmu.
 
@@ -313,221 +312,250 @@ Doteď bylo to, co jsme poslali v odpovědi, vždy shodné s tím, jak máme dat
     :language: python
     :pyobject: represent_movies
 
-Nyní pojďme upravit ``MoviesResource``. Víme, že adresa našeho API je teď ``http://0.0.0.0:8080``, ale jakmile budeme chtít aplikaci :ref:`uveřejnit někam na internet <nowsh>`, bude zase jiná. Proto je lepší si ji vytáhnout z objektu ``request``.
+Nyní pojďme upravit ``MoviesResource``. Víme, že adresa našeho API je teď ``http://0.0.0.0:8080``, ale jakmile budeme chtít aplikaci :ref:`uveřejnit někam na internet <nowsh>`, bude zase jiná. Proto je lepší si ji vytáhnout z objektu ``request``. Falcon nám ji poskytuje jako `request.prefix <https://falcon.readthedocs.io/en/stable/api/request_and_response.html#falcon.Request.prefix>`__.
 
 .. literalinclude:: ../code/movies_repr.py
     :language: python
     :pyobject: MoviesResource
 
-Zbytek úprav by měl být celkem srozumitelný. Nejdříve filmy filtrujeme podle parametrů, poté vytvoříme reprezentaci výsledného seznamu a nakonec z ní uděláme JSON a ten pošleme jako tělo odpovědi. Když aplikaci spustíme a vyzkoušíme dotazem např. na ``/movies/?name=shark``, měla by nám vracet správně filtrovaný seznam filmů v nové podobě:
+Zbytek úprav by měl být celkem srozumitelný. Nejdříve filmy filtrujeme podle parametrů, poté vytvoříme JSON reprezentaci výsledného seznamu a tu pošleme jako tělo odpovědi. Když aplikaci spustíme a vyzkoušíme dotazem např. na ``/movies/?name=shark``, měla by nám vracet správně filtrovaný seznam filmů v nové podobě:
 
-.. literalinclude:: ../code/movies_repr_test.txt
+.. literalinclude:: ../code/movies_repr_movies_test.txt
     :language: text
+
+Reprezentace a resource
+^^^^^^^^^^^^^^^^^^^^^^^
 
 V hantýrce API návrhářů a vývojářů bychom řekli, že film, nebo v tomto případě seznam filmů, je nějaký *resource*, který zpřístupňujeme uživatelům našeho API na adrese ``/movies``. Je reprezentován jako JSON, v němž má každý film název a odkaz k dalším podrobnostem. Proto má ``MoviesResource`` v názvu slovo resource.
 
-Je důležité rozlišit, že *resource* je pomyslný, nehmatatelný model světa, zatímco reprezentace už je jeho konkrétní zobrazení. Jak jsme si vyzkoušeli u ``PersonalDetailsResource``, lze mít více různých reprezentací pro tutéž pomyslnou věc - čistě textovou, nebo jako JSON, nebo úplně jinou.
+Je důležité rozlišit, že *resource* je pomyslný, nehmatatelný model světa, zatímco reprezentace už je jeho konkrétní zobrazení. Jak jsme si vyzkoušeli u ``PersonalDetailsResource``, lze mít více různých reprezentací pro tutéž pomyslnou věc - čistě textovou, nebo jako JSON, nebo úplně jinou:
 
-A když už jsme u toho našeho prvního endpointu, správné :ref:`REST` API by mělo být propojeno pomocí odkazů. Z odpovědi s osobními informacemi však nelze nijak zjistit, že v API zpřístupňujeme ještě i seznam filmů, které chceme vidět. Pojďme to napravit:
+.. literalinclude:: ../code/base_test.txt
+    :language: text
+    :emphasize-lines: 4, 8-10
+
+.. literalinclude:: ../code/json_response_test.txt
+    :language: text
+    :emphasize-lines: 4, 8
+
+Odkazování mezi reprezentacemi
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Když už jsme u toho našeho prvního endpointu, z jeho odpovědi s osobními informacemi nelze nijak zjistit, že v API zpřístupňujeme ještě i seznam filmů, které chceme vidět. Pojďme to napravit a přidat na seznam filmů odkaz:
 
 .. literalinclude:: ../code/movies_repr.py
     :language: python
     :pyobject: PersonalDetailsResource
 
-Odkaz jsme pojmenovali ``movies_watchlist_url``, protože kdyby to bylo pouze ``movies_url``, nebylo by úplně zřejmé, o jaký přesně seznam filmů se jedná. Samozřejmě i tak by to mělo být :ref:`popsáno v dokumentaci <dokumentace>`, ale proč neusnadnit druhé straně práci a nenazvat věci zřejmějším jménem?
+Voláme ``dict(personal_details)``, abychom dostali kopii původního slovníku, kterou můžeme upravovat, aniž bychom ovlivnili obsah proměnné ``personal_details``. Odkaz jsme pojmenovali ``movies_watchlist_url``, protože kdyby to bylo pouze ``movies_url``, nebylo by úplně zřejmé, o jaký přesně seznam filmů se jedná. Samozřejmě i tak by to mělo být :ref:`popsáno v dokumentaci <dokumentace>`, ale proč neusnadnit druhé straně práci a nenazvat věci zřejmějším jménem?
 
-Content negotiation
--------------------
+.. literalinclude:: ../code/movies_repr_root_test.txt
+    :language: text
 
-.. todo::
-    vysvetlit o co jde, kdyz udelame accept na cs
+Pokud bychom odkaz nepřidali, uživatel našeho API, který by dostal pouze jeho výchozí adresu, např. ``http://api.example.com``, by neměl bez :ref:`dokumentace <dokumentace>` jak zjistit, že nějaký seznam filmů existuje. Je to jako kdybyste měli web, např. https://denikn.cz, který sice má stránku https://denikn.cz/kontakt/, ale nevede na ni žádný odkaz. Denník N by ovšem uveřejnil návod, kde by bylo napsáno, že pokud do prohlížeče napíšete https://denikn.cz/kontakt/, najdete tam kontaktní informace. Ač to zní absurdně, takto se bohužel spousta skutečných API chová.
+
+Reprezentace vrácené z takových API sice občas propojené jsou, ale pomocí ID, ne pomocí URL. V takovém případě si musíte všechny odkazy tvořit na straně klienta podle :ref:`dokumentace <dokumentace>`, místo abyste je dostali od serveru. Pokud server něco změní, vašeho klienta to rozbije. To jde zcela proti tomu, jak byla :ref:`REST` API zamýšlena.
+
+I do našeho malého API bychom ve skutečnosti mohli přidat ještě spoustu dalších odkazů. Podívejte se například na `ukázku z GitHub API <https://developer.github.com/v3/users/#response>`__, kde odkazy plně využívají.
+
+Odkazy na sebe sama
+^^^^^^^^^^^^^^^^^^^
+
+Pokud v API používáte odkazy, je dobrým zvykem v odpovědích posílat i odkazy na sebe sama. Každá jednotlivá odpověď by mohla mít ``url``, aby i po stažení klientem v sobě nesla informaci o tom, co byla její původní adresa. Navíc je takové ``url`` unikátní, takže by šlo navenek identifikovat filmy jím místo nějakých z kontextu vytržených čísel:
+
+.. literalinclude:: ../code/movies_repr_movie_example.txt
+    :language: text
+    :emphasize-lines: 6
+
+Ostatně, v seznamu filmů na ``/movies`` už to tak děláme pro každou položku zvlášť. Pojďme upravit detail filmu, aby se choval podobně:
+
+.. literalinclude:: ../code/movies_repr.py
+    :language: python
+    :pyobject: MovieResource
+    :emphasize-lines: 8-14
+
+Nyní v reprezentaci už není ``id``, nahradilo jej ``url``:
+
+.. literalinclude:: ../code/movies_repr_movie_test.txt
+    :language: text
+
+Kvůli způsobu, jakým jsme naprogramovali tvoření reprezentace se ``url`` oproti původnímu návrhu objevuje sice až na konci naší JSON odpovědi, ale na pořadí položek většinou nezáleží, takže si s tím nebudeme lámat hlavu.
+
+Odkazy na sebe sama bychom mohli přidat i do zbytku reprezentací v našem API a přidat bychom také mohli další odkazy, např. odkaz zpět z detailu filmu na seznam filmů, ale takové úpravy už nejspíš zvládnete samostatně. Pojďme se naučit zase něco nového.
 
 Přidáváme filmy
 ---------------
 
-Nyní máme API, které je pouze ke čtení. Řekněme, že bychom chtěli, aby nám někdo mohl doporučit film na zhlédnutí tím, že jej přidá do našeho seznamu. Opět si nejdříve navrhněme, jak by věc měla fungovat.
+Nyní máme API, které je pouze ke čtení. Řekněme, že bychom chtěli, aby nám někdo mohl doporučit film na zhlédnutí tím, že jej přidá do našeho seznamu. Opět si nejdříve navrhněme, jak by věc mohla fungovat:
 
 .. literalinclude:: ../code/movies_post_example.txt
     :language: text
 
-Pokud metodou ``POST`` přijde :ref:`dotaz <http-request>` na adresu ``/movies``, API přečte zaslané tělo dotazu (očekává JSON), které reprezentuje film, a přidá tento film do našeho seznamu. Poté odpoví kódem ``201 Created`` a tělem (opět JSON), v němž je změnený obsah seznamu filmů.
+Jak vidíme, jde trochu do tuhého. Předáváme několik parametrů, postupně pro jednotlivé části :ref:`HTTP dotazu <http-request>`. Metodu měníme z výchozího ``GET``, které se psát nemuselo, na ``POST``. Přidáváme hlavičku ``Content-Type`` pro tělo dotazu a pak samotné tělo.
 
-.. warning::
+A co tedy chceme aby se stalo? Pokud metodou ``POST`` přijde :ref:`dotaz <http-request>` na adresu ``/movies``, náš kód přečte zaslané tělo dotazu (očekává JSON), které reprezentuje film, a přidá tento film do našeho seznamu. Poté odpoví kódem ``200 OK``. Příchozí data o filmu by měla mít všechny položky, které zaznamenáváme. Nebudeme ale chtít, aby měla ``id``, protože to novým záznamům přiřazuje naše "databáze" (ani ``url``, protože to vytváří naše API na základě ``id``).
 
-    Tato kapitola je právě přepisována z Flasku na Falcon. Přijďte raději později, po krátkou chvíli návod nebude dávat smysl.
+Obsluhujeme POST
+^^^^^^^^^^^^^^^^
 
-Nyní máme API, které je pouze ke čtení. Zkusme si naprogramovat endpointy, jež by umožňovaly i zápis. Ti starší z nás možná ještě pamatují `vystřihovací panenky <https://www.fler.cz/zbozi/vystrihovaci-panenka-marinka-2866816>`__, ti mladší možná narazili na `My Octocat <https://myoctocat.com/build-your-octocat/>`__ - tak teď si vytvoříme něco podobného. Začneme tím, že přidáme ``/clothes``, kde bude API vypisovat, co máme zrovna na sobě, a ``/clothes/<název svršku>`` s detaily pro každý svršek.
-
-.. code-block:: python
-
-    clothes_state = {
-        "shoes": "brown",
-        "jeans": "blue",
-        "t-shirt": "white",
-        "socks": "red",
-        "underwear": "black",
-    }
-
-    @app.route("/clothes")
-    def clothes():
-        return jsonify(list(clothes_state.keys()))
-
-    @app.route("/clothes/<name>")
-    def garment(name):
-        color = clothes_state[name]
-        return jsonify({"name": name, "color": color})
-
-Slovník s oblečením tentokrát nezískáváme funkcí, ale záměrně si jej ukládáme jako globální proměnnou. Je to proto, že budeme potřebovat globální stav, který půjde postupně měnit. To by s funkcí nešlo, vrátila by nám vždy nový, nezměněný slovník.
-
-Magické ``"/clothes/<name>"`` je instrukce pro Flask, která mu říká, že na místě, kde je v adrese ``<name>`` má očekávat jakýkoliv řetězec a ten má potom funkci předat jako argument ``name``. Pokud tedy bude klient dotazovat ``/clothes/socks``, Flask zavolá naši funkci s argumentem ``socks``.
-
-Ověříme, zda nám vše funguje:
-
-.. code-block:: text
-
-    $ curl -i 'http://127.0.0.1:5000/clothes'
-    HTTP/1.0 200 OK
-    Content-Type: application/json
-    Content-Length: 48
-    Server: Werkzeug/0.14.1 Python/3.7.1
-    Date: Fri, 09 Nov 2018 22:06:22 GMT
-
-    ["shoes","jeans","t-shirt","socks","underwear"]
-
-.. code-block:: text
-
-    $ curl -i 'http://127.0.0.1:5000/clothes/socks'
-    HTTP/1.0 200 OK
-    Content-Type: application/json
-    Content-Length: 31
-    Server: Werkzeug/0.14.1 Python/3.7.1
-    Date: Fri, 09 Nov 2018 23:17:21 GMT
-
-    {"color":"red","name":"socks"}
-
-.. code-block:: text
-
-    $ curl -i 'http://127.0.0.1:5000/clothes/jeans'
-    HTTP/1.0 200 OK
-    Content-Type: application/json
-    Content-Length: 32
-    Server: Werkzeug/0.14.1 Python/3.7.1
-    Date: Fri, 09 Nov 2018 23:17:43 GMT
-
-    {"color":"blue","name":"jeans"}
-
-Návrh API
-^^^^^^^^^
-
-Vidíme, že z jedněch dat jsme vytvořili dva endpointy, které se navzájem doplňují a odkazují na sebe. To je běžná praxe - způsob, jakým chceme aby API fungovalo, nemusí nutně kopírovat interní strukturu našich dat. Ideálně by návrh API měl co nejvíce odpovídat tomu, jak jej bude používat klient. Náš návrh je dobrý, pokud bude klientům většinou stačit jen jmenný seznam oblečení a nebude jim vadit, pokud se na barvu (a případně další detaily) doptají zvlášť, podle potřeby. Každý dotaz totiž něco stojí. Pokud by byla barva důležitá, chtěli bychom ji mít už na ``/clothes``, aby jen kvůli ní nemuseli všichni klienti našeho API dělat ještě zvlášť dotaz pro každý svršek.
-
-Přidáváme
-^^^^^^^^^
-
-Nyní zkusíme umožnit přidávat oblečení. Na zimu se to může hodit. Klient využívající naše API by mohl mít možnost poslat nám nové svršky v těle HTTP dotazu. Ty by se potom přidaly do seznamu.
-
-Zatím všechny dotazy, které jsme dělali, byly metodou ``GET``, která je pro čtení, a kterou Flask automaticky předpokládá. Pokud chceme zapisovat, můžeme použít metodu ``POST``, ale to už musíme Flasku jasně říct:
+Možná si domyslíte, že když budeme chtít na adrese ``/movies`` obsluhovat ``POST``, bude potřeba do třídy ``MoviesResource`` přidat metodu ``on_post()``:
 
 .. code-block:: python
 
-    @app.route("/clothes", methods=["GET", "POST"])
-    def clothes():
-        return jsonify(clothes_state)
+    class MoviesResource():
 
-Teď bychom rádi přečetli tělo dotazu, pokud jde o metodu ``POST``, našli v něm nové oblečení a přidali jej do našeho slovníku. Opět nám dobře poslouží `request <http://flask.pocoo.org/docs/1.0/api/#flask.request>`__.
+        def on_get(self, request, response):
+            ...
+
+        def on_post(self, request, response):
+            ...
+
+Z dotazu ovšem potřebujeme nějak dostat příchozí tělo a udělat z něj nový film. Jak na to? Falcon nám v tomto ohledu nabízí `request.bounded_stream <https://falcon.readthedocs.io/en/stable/api/request_and_response.html#falcon.Request.bounded_stream>`__. Je to věc, ze níž můžeme číst tak, jako kdyby to byl soubor. To znamená, že má metodu ``.read()``, kterou lze zavolat, a ona vrátí řetězec s obsahem:
 
 .. code-block:: python
-    :emphasize-lines: 3-5
 
-    @app.route("/clothes", methods=["GET", "POST"])
-    def clothes():
-        if request.method == "POST":
-            new_garment = request.get_json()
-            clothes_state[new_garment["name"]] = new_garment["color"]
-        return jsonify(list(clothes_state.keys()))
+    request_body = request.bounded_stream.read()
+    movie = json.loads(request_body)
 
-Teď jde do tuhého - abychom vyzkoušeli, zda přidávání funguje, musíme se ponořit mezi spoustu nových argumentů pro curl: ``-d`` nám umožní poslat data v těle dotazu, ``-H`` přidá hlavičku, ``-X`` nastaví metodu, kterou chceme dotaz poslat (doteď jsme posílali ``GET``, jenž je výchozí). Celé to bude vypadat takto:
+Nebo tuto věc můžeme přímo předat jako parametr do `json.load() <https://docs.python.org/3/library/json.html#json.load>`__, protože na rozdíl od `json.loads() <https://docs.python.org/3/library/json.html#json.loads>`__, která očekává řetězec, tato funkce očekává cokoliv, na čem může zavolat ``.read()``:
 
-.. code-block:: text
+.. code-block:: python
 
-    $ curl -i -d '{"name":"hat", "color":"red"}' -H "Content-Type: application/json" -X POST 'http://127.0.0.1:5000/clothes'
-    HTTP/1.0 200 OK
-    Content-Type: application/json
-    Content-Length: 54
-    Server: Werkzeug/0.14.1 Python/3.7.1
-    Date: Sat, 10 Nov 2018 00:03:35 GMT
+    movie = json.load(request.bounded_stream)
 
-    ["shoes","jeans","t-shirt","socks","underwear","hat"]
-
-A je to, přidali jsme klobouk! Hned můžeme ověřit, jestli se pro něj automaticky vytvořila i adresa s detailem:
-
-.. code-block:: text
-
-    $ curl -i 'http://127.0.0.1:5000/clothes/hat'
-    HTTP/1.0 200 OK
-    Content-Type: application/json
-    Content-Length: 29
-    Server: Werkzeug/0.14.1 Python/3.7.1
-    Date: Sat, 10 Nov 2018 00:06:16 GMT
-
-    {"color":"red","name":"hat"}
-
-Funguje to. Jen si představte, co by šlo s takovýmto API udělat! Někdo by mohl napsat klienta, který bude automaticky objednávat oblečení na `Zootu <https://www.zoot.cz/>`__ a rovnou jej na nás přes ``POST /clothes`` házet.
+S těmito znalostmi by už neměl být velký problém nový film přečíst a přidat do globální proměnné ``movies``, kterou používáme jako "databázi".
 
 .. note::
-    Měli bychom ošetřit, zda to, co klient pošle, má správnou strukturu, zda neposílá čísla místo řetězců, apod. Např. kdyby poslal ``{"nejaky": "nesmysl"}``, naše API opět spadne na výjimce. V těchto materiálech se ošetřováním dat zabývat nebudeme, ale je dobré vědět, že se tomu obecně říká validace a že pro JSON to řeší `JSON Schema <https://json-schema.org/understanding-json-schema/>`__.
+    Možná si říkáte, že je to nějaké zbytečně složité. Proč nemůžeme tělo zprávy prostě přečíst rovnou jako řetězec pomocí ``request.body``? Je to proto, že nikdy nevíme, kolik dat nám někdo do API pošle. Kdybychom obdrželi gigabyty dat a Falcon se je snažil rovnou přečíst a uložit do ``request.body`` jako řetězec, nejspíš by na takovém množství zmodral a začal se dusit. Co je horší, naše aplikace by s tím nemohla vůbec nic dělat. Takto Falcon nechává na nás, co s tělem zprávy uděláme. Můžeme tělo číst postupně řádek po řádku, aby se API nezadusilo, nebo celý najednou. Falcon nám přes ``request.bounded_stream`` dává na výběr, co uděláme. My sice v tomto návodu tělo načteme celé najednou, protože zde gigabyty neřešíme, ale stejně je milé, že na nás Falcon takto myslí.
 
-Přidáváme po správňácku
-^^^^^^^^^^^^^^^^^^^^^^^
+Jediný zbývající zádrhel je snad v ``id``, které filmu musíme přiřadit. Jak bylo několikrát zmíněno, běžně by jej za nás vymyslela databáze. Žádnou databázi nemáme, takže si vypomůžeme trikem - podíváme se, jaké je nejvyšší ID mezi našimi filmy a tomu novému přiřadíme o jedna větší. Ostatně, reálná databáze by většinou udělala totéž. Přidáme funkci ``create_movie_id()``, která bude ID pro nové filmy vymýšlet:
 
-Naše přidávání ovšem není ještě úplně ideální. Sice funguje, ale nechová se správně podle HTTP specifikace a běžných zvyklostí. Když se něco přidává, měli bychom vrátit status kód ``201 Created``, což je v tomto případě konkrétnější, než ``200 OK``. Také bychom mohli vrátit v odpovědi hlavičku ``Location`` s adresou, na které může klient najít detail právě vytvořeného svršku. Využijeme skutečnost, že `jsonify <http://flask.pocoo.org/docs/1.0/api/#flask.json.jsonify>`__ vrací `Response <http://flask.pocoo.org/docs/1.0/api/#response-objects>`__ objekt a ten lze před odesláním ještě dle libosti upravovat. Pro vytvoření adresy budeme navíc ještě potřebovat `url_for <http://flask.pocoo.org/docs/1.0/api/#flask.url_for>`__.
+.. literalinclude:: ../code/movies_post.py
+    :language: python
+    :pyobject: create_movie_id
 
-.. code-block:: python
-    :emphasize-lines: 1, 9-18
+Nyní vše poskládáme dohromady:
 
-    from flask import Flask, jsonify, request, abort, url_for
+.. literalinclude:: ../code/movies_post.py
+    :language: python
+    :pyobject: MoviesResource
+    :emphasize-lines: 11-14
 
-    ...
+Hotovo! Nyní si můžeme vyzkoušet přidání nového filmu.
 
-    @app.route("/clothes", methods=["GET", "POST"])
-    def clothes():
-        if request.method == "POST":
-            new_garment = request.get_json()
-            name, color = new_garment["name"], new_garment["color"]
+.. warning::
+    Mezi následujícími dotazy nesmíte restartovat aplikaci (Waitress musí po celou dobu běžet), jinak nebudou fungovat správně.
 
-            clothes_state[name] = color
+Naše API by nám mělo odpovědět s kódem ``200 OK`` a bez těla:
 
-            response = jsonify(list(clothes_state.keys()))
-            response.status_code = 201
-            response.headers["Location"] = url_for('garment', name=name)
-            return response
-        else:
-            return jsonify(list(clothes_state.keys()))
+.. literalinclude:: ../code/movies_post_movies_post_test.txt
+    :language: text
 
-Výsledek by měl vypadat následovně:
+Když se podíváme na seznam filmů, na konci odpovědi vidíme, že nový film dostal ID číslo 5 a jeho adresa je tedy ``http://0.0.0.0:8080/movies/5``:
 
-.. code-block:: text
-    :emphasize-lines: 2, 5
+.. literalinclude:: ../code/movies_post_movies_get_test.txt
+    :language: text
 
-    $ curl -i -d '{"name":"jacket", "color":"navy"}' -H "Content-Type: application/json" -X POST 'http://127.0.0.1:5000/clothes'
-    HTTP/1.0 201 CREATED
-    Content-Type: application/json
-    Content-Length: 57
-    Location: http://127.0.0.1:5000/clothes/jacket
-    Server: Werkzeug/0.14.1 Python/3.7.1
-    Date: Sat, 10 Nov 2018 00:16:57 GMT
+Když se podíváme na adresu filmu, měli bychom dostat všechny informace o filmu:
 
-    ["shoes","jeans","t-shirt","socks","underwear","jacket"]
+.. literalinclude:: ../code/movies_post_movie_test.txt
+    :language: text
 
 Ukládání natrvalo
 ^^^^^^^^^^^^^^^^^
 
-Možná jste si všimli, že pokaždé, když restartujete Flask aplikaci, vrátí se oblečení do původního stavu. Je to proto, že stav našeho API udržujeme v Pythonu, v globálním slovníku. Ten se ukládá pouze v paměti počítače a když program skončí, odejde slovník do věčných lovišť.
+Možná jste si při svých pokusech všimli, že pokaždé, když restartujete aplikaci, vrátí se filmy do původního stavu. Je to proto, že stav našeho API udržujeme v Pythonu, v globálním seznamu. Ten se ukládá pouze v paměti počítače a když program skončí, odejde slovník do věčných lovišť.
 
-Aby změny přežily restartování programu, museli bychom stav ukládat do souboru nebo do databáze. To je ovšem nad rámec těchto materiálů.
+Aby změny přežily restartování programu, museli bychom stav ukládat do souboru nebo do opravdové databáze. To je ovšem nad rámec těchto materiálů.
 
-Mažeme
-^^^^^^
+201 Created
+^^^^^^^^^^^
+
+Naše přidávání nyní sice funguje, ale nechová se úplně prakticky. Kdyby uživatel našeho API chtěl zjistit jakou dostal nově přidaný film adresu, musel by udělat několik dalších dotazů. Bylo by asi lepší, kdybychom v odpovědi na ``POST`` rovnou poslali informace o právě vytvořeném filmu.
+
+Když se něco přidává, má se podle :ref:`HTTP <http>` specifikace správně vracet status kód ``201 Created``. Stačí nám ale prostě vrátit tento kód, nebo je v tom i něco víc? Kdy přesně se tento kód používá?
+
+Mohli bychom si o něm přečíst přímo ve standardu, :rfc:`7231`, ale tam hrozí, že bude popis tak detailní, že mu začátečník snadno neporozumí. Skvělý přepis standardů kolem HTTP lze ale najít na `MDN web docs <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201>`__:
+
+    The HTTP 201 Created success status response code indicates that the request has succeeded and has led to the creation of a resource ... The common use case of this status code is as the result of a POST request.
+
+Přesně v této situaci jsme. Výborně, toto se nás rozhodně týká.
+
+    The new resource is effectively created before this response is sent back and the new resource is returned in the body of the message, ...
+
+MDN nám radí, že v těle odpovědi bychom spolu s ``201 Created`` měli poslat reprezentaci toho, co jsme zrovna vytvořili, tedy v našem případě nového filmu.
+
+    ... its location being either the URL of the request, or the content of the Location header.
+
+Toto znamená, že bychom ideálně ještě měli přidat do odpovědi hlavičku ``Location`` (ta má mimochodem také `svůj popis na MDN <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Location>`__), jejíž hodnotou bude odkaz na vytvořený film. Druhá možnost je, že přímo adresa, kam se dělá dotaz, je adresou nově vytvořeného filmu, ale to není náš případ. Celé by to tedy mělo vypadat asi nějak takto:
+
+.. literalinclude:: ../code/movies_created_example.txt
+    :language: text
+
+.. note::
+    Nebojte se dívat přímo do standardů nebo do jejich kvalitního přepisu, jako je na `MDN <https://developer.mozilla.org/en-US/docs/Web/HTTP>`__. Ze začátku to může být tuhé čtení, ale dlouhodobě se to vyplácí. V některých případech není nejlepší se spoléhat na náhodné informace, které lze najít na internetu, jelikož mohou být zatíženy různými nepřesnostmi nebo mýty.
+
+Zpět od čtení k programování. Změníme status kód a přidáme hlavičku. Po tom, co vložíme film do naší "databáze", si uděláme jeho reprezentaci s ``url`` místo ``id`` a následně ji nastavíme jako tělo odpovědi:
+
+.. literalinclude:: ../code/movies_created.py
+    :language: python
+    :pyobject: MoviesResource
+    :emphasize-lines: 16-25
+
+Když nyní restartujeme Waitress a zkusíme opět přidat nový film, měli bychom dostat ``201 Created`` s ``Location`` hlavičkou a tělem, v němž jsou všechny detaily. Díky ``url`` máme adresu na nový film nejen v hlavičce, ale i přímo v těle zprávy.
+
+.. literalinclude:: ../code/movies_created_test.txt
+    :language: text
+
+V hlavičce i v ``url`` rovnou vidíme, že nový film dostal ID číslo 5 a jeho adresa je tedy ``http://0.0.0.0:8080/movies/5``.
+
+.. note::
+    Kód by šlo zjednodušit. Vytváření adresy filmu už máme na několika místech, mohlo by tedy mít svou funkci:
+
+    .. code-block:: python
+
+        def get_movie_url(movie, base_url):
+            return '{0}/movies/{1}'.format(base_url, movie['id'])
+
+    Řádky, které vytvářejí reprezentaci filmu jsou téměř totožné s těmi, jež se nacházejí v ``MovieResource``. Mohli bychom vytvořit funkci ``represent_movie()``, kterou by oba endpointy mohly využívat a díky ní bychom mohli oba o několik řádků zkrátit.
+
+    .. code-block:: python
+
+        def represent_movie(movie, movie_url):
+            movie_repr = dict(movie)
+            movie_repr['url'] = movie_url
+            del movie_repr['id']
+            return json.dumps(movie_repr)
+
+    Takto bychom ``on_post()`` zkrátili na toto:
+
+    .. code-block:: python
+
+        def on_post(self, request, response):
+            movie = json.load(request.bounded_stream)
+            movie['id'] = create_movie_id(movies)
+            movies.append(movie)
+
+            movie_url = get_movie_url(movie, request.prefix)
+            response.status = '201 Created'
+            response.set_header('Location', movie_url)
+            response.body = represent_movie(movie, movie_url)
+
+    Podobným úpravám se v programování říká *refactoring*. Jedná se o změny, které nemají žádný vliv na funkčnost z hlediska uživatele, ale vylepšují kód po stránce čitelnosti a udržovatelnosti. Smyslem tohoto návodu je ale především učit API, takže refactoring kódu bude spíše opomíjet.
+
+Validace vstupních dat
+^^^^^^^^^^^^^^^^^^^^^^
+
+Když uživatel našeho API přidává nový film, přiřazujeme mu ID a podle něj i URL. Nechceme tedy, aby měl uživatel možnost nám poslat film, který už nějaké ID nebo URL má. Bylo by dobré v takovém případě vrátit uživateli API chybu.
+
+A co když pošle čísla místo řetězců? Co když budou nějaké položky úplně chybět? Co když je chceme mít nepovinné? Co když uživatel schválně nebo omylem pošle něco, co ani nelze přečíst jako JSON?
+
+Naše API nyní v takových případech film v pořádku přijme, i když by nemělo. V případě, že nepošleme JSON, vrátí `500 Internal Server Error <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500>`__, což znamená, že naše API zcela selhalo a "spadlo". Správně by taková situace neměla nastávat. Znamená to, že jsme s něčím nepočítali, neošetřili to, a chyba je na naší straně, tedy na straně tvůrců API. Uživatel s ní nic nenadělá. Je to ekvivalent toho, když náš program v Pythonu skončí vyjímkou.
+
+V těchto materiálech se kontrolou vstupních dat zabývat nebudeme, ale je dobré vědět, že se tomu obecně říká *validace* a že pro JSON to řeší `JSON Schema <https://json-schema.org/understanding-json-schema/>`__. V případě, že problém ošetříme a zjistíme, co dělá uživatel špatně, můžeme mu vrátit chybu `400 Bad Request <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400>`__. Nejlépe s co nejpodrobnějším vysvětlením v těle odpovědi (třeba ve formátu :ref:`problem+json <problem>`), aby mohl napravit omyly a poslat svůj dotaz správně.
+
+Mažeme filmy
+------------
 
 Pokud bychom chtěli uživatelům našeho API umožnit kusy oblečení i odebírat, můžeme k tomu použít metodu ``DELETE`` na endpointu pro jednotlivé svršky. Ta funguje tak, že pokud ji klient pošle na nějakou adresu, je to instrukce pro API server, že má věc, kterou ta adresa reprezentuje, smazat.
 
@@ -609,6 +637,12 @@ Podobným způsobem bylo zabezpečeno API od :ref:`OMDb <omdb-api>`. Dokud jsme 
 
 Jediným rozdílem je to, že v jejich API byl použit kód ``401 Unauthorized``. Ten se má poslat ve chvíli, kdy má klient šanci oprávnění získat a dotaz provést znovu. V případě OMDb bylo potřeba se zaregistrovat, obdržet API klíč a poslat ho jako parametr. V našem případě oprávnění nijak dostat nelze. Abychom mohli vracet ``401 Unauthorized``, museli bychom doprogramovat nějaký přístup pro ty, s nimiž chceme strávit romantický večer.
 
+Content negotiation
+-------------------
+
+.. todo::
+    bonus chapter: vysvetlit o co jde, kdyz udelame accept na cs
+
 .. _nowsh:
 
 Uveřejňujeme API
@@ -670,6 +704,12 @@ Dokumentujeme API
 
 .. todo::
     https://github.com/honzajavorek/cojeapi/issues/37, formáty pro popis API
+
+Návrh API
+---------
+
+.. todo::
+    bonus chapter: Vidíme, že z jedněch dat jsme vytvořili dva endpointy, které se navzájem doplňují a odkazují na sebe. To je běžná praxe - způsob, jakým chceme aby API fungovalo, nemusí nutně kopírovat interní strukturu našich dat. Ideálně by návrh API měl co nejvíce odpovídat tomu, jak jej bude používat klient. Náš návrh je dobrý, pokud bude klientům většinou stačit jen jmenný seznam oblečení a nebude jim vadit, pokud se na barvu (a případně další detaily) doptají zvlášť, podle potřeby. Každý dotaz totiž něco stojí. Pokud by byla barva důležitá, chtěli bychom ji mít už na ``/clothes``, aby jen kvůli ní nemuseli všichni klienti našeho API dělat ještě zvlášť dotaz pro každý svršek.
 
 .. _frameworky:
 

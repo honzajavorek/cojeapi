@@ -74,7 +74,14 @@ def represent_movies(movies, base_url):
             'name': movie['name'],
             'url': '{0}/movies/{1}'.format(base_url, movie['id']),
         })
-    return json.dumps(movies_list)
+    return movies_list
+
+
+def create_movie_id(movies):
+    ids = []
+    for movie in movies:
+        ids.append(movie['id'])
+    return max(ids) + 1
 
 
 class MoviesResource():
@@ -84,7 +91,13 @@ class MoviesResource():
         base_url = request.prefix
 
         filtered_movies = filter_movies(movies, name)
-        response.body = represent_movies(filtered_movies, base_url)
+        movies_repr = represent_movies(filtered_movies, base_url)
+        response.body = json.dumps(movies_repr)
+
+    def on_post(self, request, response):
+        movie = json.load(request.bounded_stream)
+        movie['id'] = create_movie_id(movies)
+        movies.append(movie)
 
 
 def get_movie_by_id(movies, id):

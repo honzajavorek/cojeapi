@@ -35,3 +35,10 @@ article ul:last-child {
 .sphinx-tabs .sphinx-menu .item p {
   margin: 0;
 }
+
+/*
+  <blockquote> is hard to recognize
+*/
+blockquote {
+  color: gray;
+}

@@ -1,4 +1,4 @@
-$ curl -i 'http://example.com/'
+$ curl -i 'http://api.example.com/'
 HTTP/1.0 200 OK
 Content-Type: text/plain
 
