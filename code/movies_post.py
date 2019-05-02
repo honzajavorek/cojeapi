@@ -12,7 +12,7 @@ personal_details = {
 class PersonalDetailsResource():
 
     def on_get(self, request, response):
-        movies_watchlist_url = '{0}/movies/'.format(request.prefix)
+        movies_watchlist_url = '{0}/movies'.format(request.prefix)
 
         personal_details_repr = dict(personal_details)
         personal_details_repr['movies_watchlist_url'] = movies_watchlist_url
