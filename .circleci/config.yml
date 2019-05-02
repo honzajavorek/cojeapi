@@ -78,7 +78,7 @@ jobs:
           command: |
             export NOW_TARGET="staging"
             [[ "$CIRCLE_BRANCH" == "master" ]] && export NOW_TARGET="production"
-            now ./code --target="$NOW_TARGET" --token="$NOW_TOKEN"
+            now ./code --name=cojeapi --target="$NOW_TARGET" --token="$NOW_TOKEN"
 
 
 workflows:
