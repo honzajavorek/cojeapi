@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  test:
     docker:
       - image: "circleci/python:3.6"
     working_directory: "~/repo"
@@ -29,3 +29,30 @@ jobs:
           name: "Running tests"
           command: |
             pipenv run lint
+
+  deploy-server:
+    docker:
+      - image: "circleci/node:10"
+    working_directory: "~/repo"
+    steps:
+      - "checkout"
+
+      - run:
+          name: "Installing now.sh"
+          command: sudo npm install --global --unsafe-perm now
+
+      - run:
+          name: "Deploying"
+          command: |
+            export NOW_TARGET="staging"
+            [[ "$CIRCLE_BRANCH" == "master" ]] && export NOW_TARGET="production"
+            now ./code --target="$NOW_TARGET" --token="$NOW_TOKEN"
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - test
+      - deploy-server:
+          requires:
+            - test
