@@ -35,7 +35,7 @@ Aplikace ve vašem mobilu pak může z adresy ``https://chmi.cz/predpoved.xslx``
 Příklad: Kurzy měn
 ------------------
 
-Jako příklad API se pojďme podívat na kurzovní lístek České národní banky. Půjdeme na stránku `Kurzy devizového trhu <https://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.jsp>`__, kde ČNB vypisuje tabulku kurzů.
+Jako příklad API se pojďme podívat na kurzovní lístek České národní banky. Půjdeme na stránku `Kurzy devizového trhu <https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/>`__, kde ČNB vypisuje tabulku kurzů.
 
 .. image:: ../_static/images/cnb-website.png
     :alt: ČNB - kurzovní lístek

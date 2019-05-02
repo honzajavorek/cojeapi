@@ -1,0 +1,6 @@
+$ curl -i 'http://0.0.0.0:8080/movies/42'
+HTTP/1.1 404 Not Found
+Content-Length: 0
+Content-Type: application/json; charset=UTF-8
+Date: Sun, 28 Apr 2019 20:31:40 GMT
+Server: waitress

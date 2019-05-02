@@ -1,0 +1,13 @@
+$ curl -i 'http://api.example.com/movies' --request POST --header 'Content-Type: application/json' --data '{"name": "Under Siege", "name_cs": "Přepadení v Pacifiku", "year": 1992, "imdb_url": "https://www.imdb.com/title/tt0105690/", "csfd_url": "https://www.csfd.cz/film/2308-prepadeni-v-pacifiku/"}'
+HTTP/1.1 201 Created
+Content-Type: application/json
+Location: http://api.example.com/movies/42
+
+{
+    "url": "http://api.example.com/movies/42",
+    "name": "Under Siege",
+    "name_cs": "Přepadení v Pacifiku",
+    "year": 1992,
+    "imdb_url": "https://www.imdb.com/title/tt0105690/",
+    "csfd_url": "https://www.csfd.cz/film/2308-prepadeni-v-pacifiku/"
+}

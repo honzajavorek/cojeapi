@@ -1,0 +1,8 @@
+$ curl -i 'http://0.0.0.0:8080/movies'
+HTTP/1.1 200 OK
+Content-Length: 875
+Content-Type: application/json; charset=UTF-8
+Date: Sun, 28 Apr 2019 18:35:00 GMT
+Server: waitress
+
+[{"id": 1, "name": "The Last Boy Scout", "name_cs": "Posledn\u00ed skaut", "year": 1991, "imdb_url": "https://www.imdb.com/title/tt0102266/", "csfd_url": "https://www.csfd.cz/film/8283-posledni-skaut/"}, {"id": 2, "name": "Mies vailla menneisyytt\u00e4", "name_cs": "Mu\u017e bez minulosti", "year": 2002, "imdb_url": "https://www.imdb.com/title/tt0311519/", "csfd_url": "https://www.csfd.cz/film/35366-muz-bez-minulosti/"}, {"id": 3, "name": "Sharknado", "name_cs": "\u017dralokon\u00e1do", "year": 2013, "imdb_url": "https://www.imdb.com/title/tt2724064/", "csfd_url": "https://www.csfd.cz/film/343017-zralokonado/"}, {"id": 4, "name": "Mega Shark vs. Giant Octopus", "name_cs": "Mega\u017eralok vs. ob\u0159\u00ed chobotnice", "year": 2009, "imdb_url": "https://www.imdb.com/title/tt1350498/", "csfd_url": "https://www.csfd.cz/film/258268-megazralok-vs-obri-chobotnice/"}]

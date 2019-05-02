@@ -1,0 +1,5 @@
+$ curl -i 'http://api.example.com/movies/42'
+HTTP/1.1 404 Not Found
+Content-Type: application/json; charset=UTF-8
+
+{"message": "Movie '42' doesn't exist"}

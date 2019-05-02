@@ -1,11 +1,15 @@
 # Configuration file for the Sphinx documentation builder
 
 import os
+import sys
 
 
 # -- Environment -------------------------------------------------------------
 
 IS_READTHEDOCS = os.environ.get('READTHEDOCS') == 'True'
+
+# Explicitly put the extensions directory to Python path
+sys.path.append(os.path.abspath('../_extensions'))
 
 
 # -- Project information -----------------------------------------------------
@@ -33,6 +37,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.githubpages',
     'sphinx_tabs.tabs',
+    'mdn',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -176,9 +181,12 @@ epub_exclude_files = ['search.html']
 # -- External links check -------------------------------------------------
 
 linkcheck_ignore = [
-    'http://127.0.0.1:8000',  # localhost
-    'https://www.heureka.cz',  # heureka.cz blocks requests from CI
-    'https://sluzby.heureka.cz/napoveda/xml-feed/',  # heureka.cz blocks requests from CI
+    # localhost
+    'http://127.0.0.1:8000',
+
+    # heureka.cz blocks requests from CI
+    'https://www.heureka.cz',
+    'https://sluzby.heureka.cz/napoveda/xml-feed/',
 ]
 
 

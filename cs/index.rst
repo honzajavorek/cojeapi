@@ -46,6 +46,6 @@ Autor
 
 `Honza Javorek <http://honzajavorek.cz/>`__ je programátor. Od roku 2011 pomáhá budovat českou komunitu kolem jazyka `Python <https://python.cz/>`__. V `Apiary <https://apiary.io/>`__ se stará o `Dredd <https://github.com/apiaryio/dredd>`__, nástroj na testování webových API.
 
-`LinkedIn <https://linkedin.com/in/honzajavorek/>`_
+`LinkedIn <https://www.linkedin.com/in/honzajavorek/>`_
 ・ `GitHub <https://github.com/honzajavorek/>`_
 ・ `Twitter <https://twitter.com/honzajavorek/>`_

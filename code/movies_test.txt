@@ -1,0 +1,8 @@
+$ curl -i 'http://0.0.0.0:8080/movies'
+HTTP/1.1 200 OK
+Content-Length: 196
+Content-Type: application/json; charset=UTF-8
+Date: Fri, 26 Apr 2019 08:00:53 GMT
+Server: waitress
+
+[{"name": "The Last Boy Scout", "year": 1991}, {"name": "Mies vailla menneisyytt\u00e4", "year": 2002}, {"name": "Sharknado", "year": 2013}, {"name": "Mega Shark vs. Giant Octopus", "year": 2009}]

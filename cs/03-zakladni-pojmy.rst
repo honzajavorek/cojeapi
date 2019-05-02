@@ -8,22 +8,24 @@ Protokol
 
 Celé dorozumívání mezi klientem a serverem se odehrává přes tzv. protokol. To není nic jiného, než smluvený způsob, co bude kdo komu posílat a jakou strukturu to bude mít. Protokolů je v počítačovém světě spousta, ale nás bude zajímat jen `HTTP <https://cs.wikipedia.org/wiki/Hypertext_Transfer_Protocol>`__, protože ten využívají webová API a ostatně i web samotný. Není to náhoda, že adresa internetových stránek v prohlížeči zpravidla začíná ``http://`` (nebo ``https://``).
 
+.. _http:
+
 HTTP
 ~~~~
 
-Jak jsme mohli pozorovat i na předchozích příkladech, dorozumívání mezi klientem a serverem probíhá formou dotazu (*HTTP request*), jenž posílá klient na server, a odpovědi (*HTTP response*), kterou server posílá zpět. Každá z těchto zpráv má své náležitosti.
+Jak jsme mohli pozorovat i na předchozích příkladech, dorozumívání mezi klientem a serverem probíhá formou požadavku (*HTTP request*), jenž posílá klient na server, a odpovědi (*HTTP response*), kterou server posílá zpět. Každá z těchto zpráv má své náležitosti.
 
 
 .. _http-request:
 
-Součásti dotazu
-^^^^^^^^^^^^^^^
+Součásti požadavku
+^^^^^^^^^^^^^^^^^^
 
-Dotaz může vypadat nějak takto::
+Požadavek může vypadat nějak takto::
 
     GET http://api.example.com/movies?genre=drama&duration=150
 
-Přesně takové dotazy jsme posílali v předchozích příkladech v prohlížeči nebo s ``curl``. Dotaz ale může vypadat i takto:
+Přesně takové požadavky jsme posílali v předchozích příkladech v prohlížeči nebo s curl. Požadavek ale může vypadat i takto:
 
 .. code-block:: text
 
@@ -40,10 +42,10 @@ Přesně takové dotazy jsme posílali v předchozích příkladech v prohlíže
       "duration": 73
     }
 
-Takový dotaz bychom už nemohli poslat přes prohlížeč, protože má více částí, ne jen adresu. Šlo by jej ale poslat s pomocí curl a jeho přepínačů. Které části dotazu jsou povinné, co vše v nich lze poslat, a k čemu jednotlivé části jsou?
+Takový požadavek bychom už nemohli poslat přes prohlížeč, protože má více částí, ne jen adresu. Šlo by jej ale poslat s pomocí curl a jeho přepínačů. Které části požadavku jsou povinné, co vše v nich lze poslat, a k čemu jednotlivé části jsou?
 
 metoda (*HTTP method*, někdy také *HTTP verb*)
-    Protokol HTTP `přesně vysvětluje všechny metody <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods>`__ a jaké má jejich použití důsledky pro dotaz i odpověď. Například metoda ``GET`` má tu vlastnost, že provádí pouze čtení a nemůžeme s ní tedy přes API něco změnit - je tzv. *bezpečná*. Metody ``PUT`` nebo ``DELETE`` zase dávají záruku, že i když je pošleme několikrát za sebou, dostaneme vždy stejnou odpověď.
+    Protokol HTTP `přesně vysvětluje všechny metody <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods>`__ a jaké má jejich použití důsledky pro požadavek i odpověď. Například metoda :method:`get` má tu vlastnost, že provádí pouze čtení a nemůžeme s ní tedy přes API něco změnit - je tzv. *bezpečná*. Metody :method:`put` nebo :method:`delete` zase dávají záruku, že i když je pošleme několikrát za sebou, dostaneme vždy stejnou odpověď.
 
     Příklady: ``GET``, ``POST``, ``PUT``, ``DELETE``, a další
 
@@ -67,11 +69,11 @@ hlavičky (*headers*)
     -   ``Content-Type: text/plain``
 
 tělo (*body*)
-    Tělo zprávy je krabice, kterou s dotazem posíláme, a do které můžeme vložit, co chceme. Tedy nejlépe něco, čemu bude API na druhé straně rozumět. Tělo může být prázdné. V těle můžeme poslat obyčejný text, data v nějakém formátu, ale klidně i obrázek. Aby API na druhé straně vědělo, co v krabici je a jak ji má rozbalovat, je potřeba s tělem zpravidla posílat hlavičku ``Content-Type``.
+    Tělo zprávy je krabice, kterou s požadavkem posíláme, a do které můžeme vložit, co chceme. Tedy nejlépe něco, čemu bude API na druhé straně rozumět. Tělo může být prázdné. V těle můžeme poslat obyčejný text, data v nějakém formátu, ale klidně i obrázek. Aby API na druhé straně vědělo, co v krabici je a jak ji má rozbalovat, je potřeba s tělem zpravidla posílat hlavičku :header:`Content-Type`.
 
     Příklady: ``Ahoj!``, ``{"title": "Ariel"}``
 
-Když chceme poslat dotaz, musíme nejdříve vyčíst z dokumentace API, jak jej máme správně položit tak, aby API vrátilo co chceme.
+Když chceme poslat požadavek, musíme nejdříve vyčíst z dokumentace API, jak jej máme správně položit tak, aby API vrátilo co chceme.
 
 
 .. _http-response:
@@ -99,18 +101,21 @@ Odpověď typicky vypadá následovně:
 Pojďme si opět popsat jednotlivé součásti.
 
 status kód (*status code*)
-    Číselný kód, kterým API dává najevo, jak dotaz zpracovalo. Někdy se s ním objevuje i tzv. *reason phrase*, která kód vysvětluje slovy. Každý kód má zpravidla svou přesně danou *reason phrase*, takže ta neposkytuje žádnou informaci navíc, ale kódy se s ní lépe čtou. Protokol HTTP `přesně určuje všechny kódy <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status>`__, co znamenají, a kdy se mají použít. Podle první číslice kódu se kódy dělí na různé kategorie:
+    Číselný kód, kterým API dává najevo, jak požadavek zpracovalo. Někdy se s ním objevuje i tzv. *reason phrase*, která kód vysvětluje slovy. Každý kód má zpravidla svou přesně danou *reason phrase*, takže ta neposkytuje žádnou informaci navíc, ale kódy se s ní lépe čtou. Protokol HTTP `přesně určuje všechny kódy <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status>`__, co znamenají, a kdy se mají použít. Podle první číslice kódu se kódy dělí na různé kategorie:
 
-    -   1xx - informativní odpověď (dotaz byl přijat, ale jeho zpracování pokračuje)
-    -   2xx - dotaz byl v pořádku přijat a zpracován
-    -   3xx - přesměrování, klient potřebuje poslat další dotaz jinam, aby se dobral odpovědi
+    -   1xx - informativní odpověď (požadavek byl přijat, ale jeho zpracování pokračuje)
+    -   2xx - požadavek byl v pořádku přijat a zpracován
+    -   3xx - přesměrování, klient potřebuje poslat další požadavek jinam, aby se dobral odpovědi
     -   4xx - chyba na straně klienta (špatně jsme poskládali dotaz)
     -   5xx - chyba na straně serveru (API nezvládlo odpovědět)
 
     Příklady kódů i s jejich *reason phrases*: ``404 Not Found``, ``200 OK``, ``500 Internal Server Error``, ``201 Created``
 
+    .. note::
+        Nejlepší způsob, jak si zapamatovat status kódy je projít si `HTTP Status Cats <https://www.flickr.com/photos/girliemac/sets/72157628409467125/>`__.
+
 hlavičky (*headers*)
-    Totéž jako u :ref:`dotazu <http-request>`.
+    Totéž jako u :ref:`požadavku <http-request>`.
 
     Příklady:
 
@@ -118,13 +123,13 @@ hlavičky (*headers*)
     -   ``Content-Type: text/plain``
 
 tělo (*body*)
-    Totéž jako u :ref:`dotazu <http-request>`.
+    Totéž jako u :ref:`požadavku <http-request>`.
 
     Příklady: ``Ahoj!``, ``{"title": "Ariel"}``
 
 .. _curl-lowercase-i:
 
-Posílat základní dotazy přes prohlížeč nebo curl už umíme. Z odpovědí nám ale bylo v obou případech zobrazeno jen tělo. Pokud bychom se chtěli s programem curl podívat i na ostatní části odpovědi, můžeme to udělat pomocí přepínače ``-i``:
+Posílat základní požadavky přes prohlížeč nebo curl už umíme. Z odpovědí nám ale bylo v obou případech zobrazeno jen tělo. Pokud bychom se chtěli s programem curl podívat i na ostatní části odpovědi, můžeme to udělat pomocí přepínače ``-i``:
 
 .. code-block:: text
     :emphasize-lines: 3-10
@@ -153,7 +158,7 @@ Jak jde vidět, hned za verzí protokolu (HTTP/1.1) nám curl vypíše status k�
 HTTPS
 ~~~~~
 
-Dotaz i odpověď se po internetu posílají jako obyčejný text, takže by se v nich nemělo posílat nic tajného.
+Požadavek i odpověď se po internetu posílají jako obyčejný text, takže by se v nich nemělo posílat nic tajného.
 
 Ve skutečnosti ale prakticky vždy potřebujeme poslat něco tajného, ať už jsou to soukromá data uživatelů, nebo přímo nějaké heslo. Toto se řeší tak, že se textové HTTP zprávy obalí do nějaké bezpečné šifry, která funguje jako "neprůhledný obal".
 
@@ -179,12 +184,12 @@ Možná snad jen pokud bychom chtěli `v televizi říct, že jsme nikdy nešifr
 Formáty
 -------
 
-Dotaz i odpověď mohou obsahovat tělo. Toto tělo může být v libovolném formátu. Může to být text, HTML, obrázek, PDF soubor, nebo cokoliv jiného. Aby druhá strana věděla, co v těle zprávy posíláme, měli bychom jí dát formát vědět v hlavičce ``Content-Type``.
+Požadavek i odpověď mohou obsahovat tělo. Toto tělo může být v libovolném formátu. Může to být text, HTML, obrázek, PDF soubor, nebo cokoliv jiného. Aby druhá strana věděla, co v těle zprávy posíláme, měli bychom jí dát formát vědět v hlavičce :header:`Content-Type`.
 
 MIME
 ~~~~
 
-Hodnotě hlavičky ``Content-Type`` se dávají různé názvy: *content type*, *media type*, *MIME type*. Nejčastěji se skládá jen z typu a podtypu, které se oddělí lomítkem (celá specifikace je k dispozici na `MND web docs <https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types>`__). Několik příkladů:
+Hodnotě hlavičky :header:`Content-Type` se dávají různé názvy: *content type*, *media type*, *MIME type*. Nejčastěji se skládá jen z typu a podtypu, které se oddělí lomítkem (celá specifikace je k dispozici na `MND web docs <https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types>`__). Několik příkladů:
 
 - ``text/plain`` - obyčejný text
 - ``text/html`` - HTML
@@ -226,7 +231,7 @@ Vidíme, že :ref:`API ČNB <cnb>` vrací obyčejný text, tedy ``text/plain`` (
 
     .. tab:: Řešení
 
-        Postupně spouštíme ``curl -I`` (nebo ``curl -i``) pro jednotlivé adresy a ve vypsaných hlavičkách hledáme hodnotu pro ``Content-Type``. Měli bychom dostat následující:
+        Postupně spouštíme ``curl -I`` (nebo ``curl -i``) pro jednotlivé adresy a ve vypsaných hlavičkách hledáme hodnotu pro :header:`Content-Type`. Měli bychom dostat následující:
 
         #. JPEG - ``image/jpeg``
         #. :ref:`XML` - ``text/xml; charset=UTF-8``
@@ -314,11 +319,11 @@ Uložíme tento JSON na disk a zkusíme jej zpracovat v jazyce Python:
 
         import json
 
-        with open("places.json", encoding="utf-8-sig") as f:
+        with open('places.json', encoding='utf-8-sig') as f:
             places = json.load(f)
 
         for place in places:
-            print("{name} ({country})".format_map(place))
+            print('{name} ({country})'.format_map(place))
 
 #.  Spusťte program:
 
@@ -440,7 +445,7 @@ Tato API si přes HTTP posílají zprávy zabalené do přesně specifikovaného
 ^^^^^^^^^^^^^^^^^^^
 
 - `Phil Sturgeon: Understanding RPC Vs REST For HTTP APIs <https://www.smashingmagazine.com/2016/09/understanding-rest-and-rpc-for-http-apis/>`__
-- `Leonard Richardson, Sam Ruby: RESTful Web Services <http://shop.oreilly.com/product/9780596529260.do>`__
+- `Leonard Richardson, Sam Ruby: RESTful Web Services <https://shop.oreilly.com/product/9780596529260.do>`__
 
 
 .. _rest:
@@ -456,7 +461,7 @@ Historie
 
 REST se poprvé objevil v roce 2000 v dizertační práci `R. Fieldinga <https://en.wikipedia.org/wiki/Roy_Fielding>`__ (spoluautor HTTP). Ten pozoroval jak funguje web, a snažil se přijít na to, co jej dělá tak úspěšným. Jaké má web zásadní vlastnosti a omezení, a zda jsou za tím nějaké obecné principy, které by šlo využít i jinde. Tyto principy pak popsal a přisoudil jim zkratku REST.
 
-Na REST principech se začala stavět API a ta pak ze scény vytlačovala SOAP. Jenže ze zkratky REST se stal `buzzword <https://cs.wikipedia.org/wiki/Buzzword>`__ a lidé jí začali označovat vše, co používalo HTTP a nebylo to SOAP. Samozřejmě bez ohledu na původní principy.
+Na REST principech se začala stavět API a ta pak ze scény vytlačovala SOAP. Jenže ze zkratky REST se stal buzzword a lidé jí začali označovat vše, co používalo HTTP a nebylo to SOAP. Samozřejmě bez ohledu na původní principy.
 
 Zastánci původních principů se nevzdávali a zkoušeli postupně prorazit s několika termíny, které měly odlišit pravověrnost: RESTful, HATEOAS, hypermedia. Dodnes je ale takovýchto pravověrných API málo. Rozjetý vlak s tím, jak si lidé REST vyložili, už se nepovedlo zastavit.
 
@@ -464,7 +469,7 @@ Zastánci původních principů se nevzdávali a zkoušeli postupně prorazit s 
 Čtení pro pokročilé
 ^^^^^^^^^^^^^^^^^^^
 
-- `Leonard Richardson, Sam Ruby, Mike Amundsen: RESTful Web APIs <http://shop.oreilly.com/product/0636920028468.do>`__
+- `Leonard Richardson, Sam Ruby, Mike Amundsen: RESTful Web APIs <https://shop.oreilly.com/product/0636920028468.do>`__
 
 
 .. _graphql:
@@ -472,7 +477,7 @@ Zastánci původních principů se nevzdávali a zkoušeli postupně prorazit s 
 GraphQL
 ~~~~~~~
 
-`GraphQL <https://graphql.org/>`__ je nejnovějším typem API a momentálně i nejžhavějším `buzzwordem <https://cs.wikipedia.org/wiki/Buzzword>`__ konferencí. Má přesně danou specifikaci a HTTP používá jenom jako "dopravní prostředek", podobně jako dříve SOAP nebo RPC. Jeho největšími fanoušky jsou vývojáři klientů, a to především v jazyce JavaScript. GraphQL nejvíce připomíná dotazovací jazyk pro databáze a je pevně spjato s formátem :ref:`JSON`.
+`GraphQL <https://graphql.org/>`__ je nejnovějším typem API a momentálně i nejžhavějším buzzwordem konferencí. Má přesně danou specifikaci a HTTP používá jenom jako "dopravní prostředek", podobně jako dříve SOAP nebo RPC. Jeho největšími fanoušky jsou vývojáři klientů, a to především v jazyce JavaScript. GraphQL nejvíce připomíná dotazovací jazyk pro databáze a je pevně spjato s formátem :ref:`JSON`.
 
 
 Historie

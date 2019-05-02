@@ -32,6 +32,6 @@ Author
 
 `Honza Javorek <http://honzajavorek.cz/>`__ is a software engineer. Since 2011 he has been helping to drive the grow and success of the `Czech Python User Group <https://python.cz/>`__. In `Apiary <https://apiary.io/>`__ he takes care of the `Dredd <https://github.com/apiaryio/dredd>`__, a tool to test web APIs.
 
-`LinkedIn <https://linkedin.com/in/honzajavorek/>`_
+`LinkedIn <https://www.linkedin.com/in/honzajavorek/>`_
 ・ `GitHub <https://github.com/honzajavorek/>`_
 ・ `Twitter <https://twitter.com/honzajavorek/>`_

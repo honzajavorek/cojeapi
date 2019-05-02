@@ -1,0 +1,6 @@
+$ curl -i 'http://0.0.0.0:8080/movies/42' --request DELETE
+HTTP/1.1 404 Not Found
+Content-Length: 0
+Content-Type: application/json; charset=UTF-8
+Date: Thu, 02 May 2019 21:02:03 GMT
+Server: waitress
