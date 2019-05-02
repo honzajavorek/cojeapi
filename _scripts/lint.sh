@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Check code
+pylama
+
 # Make sure requirements.txt are in sync with Pipfile.lock
 pipenv lock --requirements > ci-requirements.txt
 if ! diff requirements.txt ci-requirements.txt > /dev/null
@@ -20,6 +23,3 @@ fi
 # Check external links
 pipenv run sphinx-build -nW -b linkcheck en _build
 pipenv run sphinx-build -nW -b linkcheck cs _build
-
-# Check code
-pylama **/conf.py code
