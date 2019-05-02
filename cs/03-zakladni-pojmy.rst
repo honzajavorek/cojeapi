@@ -25,7 +25,7 @@ Dotaz může vypadat nějak takto::
 
     GET http://api.example.com/movies?genre=drama&duration=150
 
-Přesně takové dotazy jsme posílali v předchozích příkladech v prohlížeči nebo s ``curl``. Dotaz ale může vypadat i takto:
+Přesně takové dotazy jsme posílali v předchozích příkladech v prohlížeči nebo s curl. Dotaz ale může vypadat i takto:
 
 .. code-block:: text
 
@@ -110,6 +110,9 @@ status kód (*status code*)
     -   5xx - chyba na straně serveru (API nezvládlo odpovědět)
 
     Příklady kódů i s jejich *reason phrases*: ``404 Not Found``, ``200 OK``, ``500 Internal Server Error``, ``201 Created``
+
+    .. note::
+        Nejlepší způsob, jak si zapamatovat status kódy je projít si `HTTP Status Cats <https://www.flickr.com/photos/girliemac/sets/72157628409467125/>`__.
 
 hlavičky (*headers*)
     Totéž jako u :ref:`dotazu <http-request>`.

@@ -20,7 +20,7 @@ Navrhujeme API
 
 Nyní budeme tvořit API, které bude strojově čitelnou formou zpřístupňovat základní informace o nás samotných. Pokud jsme aktivní na sociálních sítích, tak takové API nejspíš už `existuje <https://developers.facebook.com/docs/graph-api/>`__, ale my si uděláme svoje - roztomilejší, jednodušší, méně `děsivé <https://en.wikipedia.org/wiki/Facebook#Criticisms_and_controversies>`__.
 
-Než začneme cokoliv programovat, rozmyslíme si, jak by naše API mělo vypadat. Řekněme, že kdybychom na něj poslali :method:`get` požadavek pomocí programu ``curl``, chceme, aby naše API odpovědělo zhruba následovně:
+Než začneme cokoliv programovat, rozmyslíme si, jak by naše API mělo vypadat. Řekněme, že kdybychom na něj poslali :method:`get` požadavek pomocí programu curl, chceme, aby naše API odpovědělo zhruba následovně:
 
 .. literalinclude:: ../code/base_example.txt
     :language: text
@@ -557,73 +557,67 @@ V těchto materiálech se kontrolou vstupních dat zabývat nebudeme, ale je dob
 Mažeme filmy
 ------------
 
-Pokud bychom chtěli uživatelům našeho API umožnit kusy oblečení i odebírat, můžeme k tomu použít metodu ``DELETE`` na endpointu pro jednotlivé svršky. Ta funguje tak, že pokud ji klient pošle na nějakou adresu, je to instrukce pro API server, že má věc, kterou ta adresa reprezentuje, smazat.
+Pokud bychom chtěli umožnit filmy ze seznamu mazat, můžeme k tomu použít metodu :method:`delete`. Ta funguje tak, že pokud ji klient pošle na nějakou adresu, je to instrukce pro API server, že má věc, kterou ta adresa reprezentuje, smazat. Zatímco přidávání se dělo *do seznamu*, a tedy na adrese ``/movies``, mazání se týká jednoho konkrétního filmu, a proto bude na adrese ``/movies/3`` (např.).
 
-Jenže co vrátit za odpověď? Pokud něco smažeme a ono už to neexistuje, asi to nebudeme chtít vracet v těle odpovědi. Pokud nemáme co do těla odpovědi dát, můžeme v HTTP použít tzv. prázdnou odpověď. Má kód ``204 No Content`` a dává klientovi najevo, že nemá v odpovědi už očekávat žádné tělo. Použijeme opět `Response <http://flask.pocoo.org/docs/1.0/api/#response-objects>`__ objekt.
+Jenže co vrátit za odpověď? Pokud něco smažeme a ono už to neexistuje, asi to nebudeme chtít vracet v těle odpovědi. Pokud nemáme co do těla odpovědi dát, můžeme v HTTP použít tzv. prázdnou odpověď. Má kód :status:`204` a dává klientovi najevo, že nemá v odpovědi už očekávat žádné tělo. Ostatně, `doporučuje nám ji pro metodu DELETE i MDN <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE#Responses>`__.
 
-.. code-block:: python
-    :emphasize-lines: 1, 8-11
+.. literalinclude:: ../code/movies_delete_example.txt
+    :language: text
 
-    from flask import Flask, jsonify, request, abort, Response
+Pojďme si mazání naprogramovat. Začneme opět pomocnou funkcí, která bude hledat film podle jeho ID a pokud jej najde, z naší "databáze" jej smaže. Funkce bude vracet ``True`` nebo ``False`` podle toho, jestli se jí povedlo film najít nebo ne.
 
-    ...
+.. literalinclude:: ../code/movies_delete.py
+    :language: python
+    :pyobject: remove_movie_by_id
 
-    @app.route("/clothes/<name>", methods=["GET", "DELETE"])
-    def garment(name):
-        try:
-            if request.method == "DELETE":
-                del clothes_state[name]
-                return Response(status=204)
-            else:
-                color = clothes_state[name]
-                return jsonify({"name": name, "color": color})
-        except KeyError:
-            abort(404)
+Informace o tom, jestli film v seznamu byl nebo ne se nám bude hodit. Opět bychom totiž měli pamatovat na to, že klient může poslat dotaz na smazání filmu s ID číslo 42, ačkoli žádný takový neexistuje. Asi by se moc nestalo, kdybychom odpověděli, že se neexistující film povedlo smazat, ale bude lepší, když druhou stranu informujeme o tom, že se pokouší dělat něco, co nejde.
 
-Když použijeme curl, abychom smazali například ponožky (opět využijeme ``-x`` pro nastavení metody), dostaneme pouze status kód a hlavičky.
+.. literalinclude:: ../code/movies_delete.py
+    :language: python
+    :pyobject: MovieResource
+    :emphasize-lines: 16-21
 
-.. code-block:: text
+Když se podíváme na *Žralokonádo* a budeme ho chtít smazat ze seznamu, měli bychom dostat prázdnou odpověď s kódem :status:`204`.
 
-    $ curl -i -X DELETE 'http://127.0.0.1:5000/clothes/socks'
-    HTTP/1.0 204 NO CONTENT
-    Content-Type: text/html; charset=utf-8
-    Server: Werkzeug/0.14.1 Python/3.7.1
-    Date: Sat, 10 Nov 2018 10:01:17 GMT
+.. literalinclude:: ../code/movies_delete_3_test.txt
+    :language: text
 
-Pokud bychom chtěli zamezit tomu, aby nám bylo odebráno veškeré oblečení, můžeme doprogramovat jednoduché zabezpečení. Jestliže nechceme něco v API povolit, můžeme to dát druhé straně najevo například pomocí kódu ``403 Forbidden``:
+Jestliže to zkusíme znovu, měli bychom dostat chybu, protože film s ID číslo 3 už nebude existovat. Stejně tak dostaneme chybu, pokud zkusíme nějaké nesmyslné ID:
 
-.. code-block:: python
-    :emphasize-lines: 9-11
+.. literalinclude:: ../code/movies_delete_42_test.txt
+    :language: text
 
-    from flask import Flask, jsonify, request, abort, Response
+Zabezpečujeme
+-------------
 
-    ...
+Už od osmdesátých let `víme <https://www.csfd.cz/film/6642-smrtonosna-past/>`__, že `Bruce Willis <https://www.csfd.cz/tvurce/3-bruce-willis/>`__ se jen tak smazat nenechá. Pojďme tuto nezpochybnitelnou pravdu odrazit v našem API. Pokud se někdo pokusí odebrat ze seznamu film s Brucem v hlavní roli, bude mu tento dotaz odepřen. Abychom to mohli udělat, potřebujeme pro každý film údaje o hercích v hlavních rolích:
 
-    @app.route("/clothes/<name>", methods=["GET", "DELETE"])
-    def garment(name):
-        try:
-            if request.method == "DELETE":
-                if name == 'underwear':
-                    return Response(status=403)  # nic takového!
-                else:
-                    del clothes_state[name]
-                    return Response(status=204)
-            else:
-                color = clothes_state[name]
-                return jsonify({"name": name, "color": color})
-        except KeyError:
-            abort(404)
+.. literalinclude:: ../code/movies_forbidden.py
+    :language: python
+    :lines: 23-60
+    :emphasize-lines: 7, 16, 25, 34
 
-Když zkusíme smazat spodní prádlo, API nám to nyní nedovolí.
+Nyní můžeme vrátit chybu :status:`403`, pokud klient se svým dotazem narazí na Bruce:
 
-.. code-block:: text
+.. literalinclude:: ../code/movies_forbidden.py
+    :language: python
+    :pyobject: MovieResource
+    :emphasize-lines: 17-24
 
-    $ curl -i -X DELETE 'http://127.0.0.1:5000/clothes/underwear'
-    HTTP/1.0 403 FORBIDDEN
-    Content-Type: text/html; charset=utf-8
-    Content-Length: 0
-    Server: Werkzeug/0.14.1 Python/3.7.1
-    Date: Sat, 10 Nov 2018 10:01:23 GMT
+Nejdříve využijeme funkce ``get_movie_by_id()``, která nám vrátí film podle ID. Pokud jej nenajde, rovnou skončíme s chybou :status:`404`. Potom se podíváme, jestli ve filmu hraje Bruce. Pokud ano, skončíme s chybou :status:`403`. Jinak použijeme funkci ``remove_movie_by_id()`` pro smazání filmu a vracíme :status:`204`. Návratovou hodnotu ``remove_movie_by_id()`` nyní již nepotřebujeme, protože v této fázi již víme, že film určitě existuje.
+
+.. literalinclude:: ../code/movies_forbidden_test.txt
+    :language: text
+
+.. note::
+    Není úplně zřejmé, proč je přístup zamezen. Zatímco u chyby :status:`404` je to jasné z definice, u :status:`403` by bylo dobré poslat nějaký důvod:
+
+    .. code-block:: python
+
+        response.status = '403 Forbidden'
+        response.body = json.dumps({'message': "Bruce Willis dies hard"})
+
+    Samozřejmě by opět bylo lepší pro formát těla využít nějaký standard, například již zmíněný :ref:`problem+json <problem>`.
 
 Podobným způsobem bylo zabezpečeno API od :ref:`OMDb <omdb-api>`. Dokud jsme neudělali dotaz s API klíčem, nedostali jsme jinou odpověď než chybu:
 
@@ -635,7 +629,7 @@ Podobným způsobem bylo zabezpečeno API od :ref:`OMDb <omdb-api>`. Dokud jsme 
 
     {"Response":"False","Error":"No API key provided."}
 
-Jediným rozdílem je to, že v jejich API byl použit kód ``401 Unauthorized``. Ten se má poslat ve chvíli, kdy má klient šanci oprávnění získat a dotaz provést znovu. V případě OMDb bylo potřeba se zaregistrovat, obdržet API klíč a poslat ho jako parametr. V našem případě oprávnění nijak dostat nelze. Abychom mohli vracet ``401 Unauthorized``, museli bychom doprogramovat nějaký přístup pro ty, s nimiž chceme strávit romantický večer.
+Jediným rozdílem je to, že v jejich API byl použit kód :status:`401`. Ten se má poslat ve chvíli, kdy má klient šanci oprávnění získat a dotaz provést znovu. V případě OMDb bylo potřeba se zaregistrovat, obdržet API klíč a poslat ho jako parametr. V našem případě oprávnění nijak dostat nelze. Abychom mohli vracet :status:`401`, museli bychom doprogramovat nějaký způsob, jak Bruce přelstít.
 
 .. _nowsh:
 
@@ -696,14 +690,14 @@ Pokud budeme chtít udělat v našem API změny a ty opět promítnout veřejně
 Dokumentujeme API
 -----------------
 
-.. todo::
-    https://github.com/honzajavorek/cojeapi/issues/37, formáty pro popis API
+.. warning::
+    Tato kapitola zatím chybí https://github.com/honzajavorek/cojeapi/issues/76
 
 Návrh API
 ---------
 
-.. todo::
-    bonus chapter: Vidíme, že z jedněch dat jsme vytvořili dva endpointy, které se navzájem doplňují a odkazují na sebe. To je běžná praxe - způsob, jakým chceme aby API fungovalo, nemusí nutně kopírovat interní strukturu našich dat. Ideálně by návrh API měl co nejvíce odpovídat tomu, jak jej bude používat klient. Náš návrh je dobrý, pokud bude klientům většinou stačit jen jmenný seznam oblečení a nebude jim vadit, pokud se na barvu (a případně další detaily) doptají zvlášť, podle potřeby. Každý dotaz totiž něco stojí. Pokud by byla barva důležitá, chtěli bychom ji mít už na ``/clothes``, aby jen kvůli ní nemuseli všichni klienti našeho API dělat ještě zvlášť dotaz pro každý svršek.
+.. warning::
+    Tato kapitola zatím chybí https://github.com/honzajavorek/cojeapi/issues/77
 
 .. _frameworky:
 

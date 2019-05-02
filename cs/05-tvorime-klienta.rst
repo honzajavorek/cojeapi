@@ -3,6 +3,9 @@ Tvoříme klienta
 
 Doteď jsme používali obecného klienta v podobě prohlížeče nebo programu curl. Obecného klienta musí ovládat člověk. To je přesně to, co potřebujeme, když si chceme nějaké API vyzkoušet, ale celý smysl API je v tom, aby je programy mohly využívat automaticky.
 
+.. warning::
+    Celá část o tvorbě serveru byla nedávno přepsána a proto některé věci v této části nemusí zatím úplně dávat smysl nebo dobře navazovat. Na obsahu se stále pracuje.
+
 Základ aplikace
 ---------------
 
