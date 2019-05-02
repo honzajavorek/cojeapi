@@ -25,7 +25,7 @@ Než začneme cokoliv programovat, rozmyslíme si, jak by naše API mělo vypada
 .. literalinclude:: ../code/base_example.txt
     :language: text
 
-Jinými slovy, pokud metodou :method:`get` přijde :ref:`dotaz <http-request>` na adresu ``/``, pošleme zpátky :ref:`odpověď <http-response>` se status kódem :status:`200` a tělem v textovém :ref:`formátu <formaty>`. V těle zprávy budou tři řádky, v nichž pošleme své jméno, příjmení, a velikost ponožek.
+Jinými slovy, pokud metodou :method:`get` přijde :ref:`požadavek <http-request>` na adresu ``/``, pošleme zpátky :ref:`odpověď <http-response>` se status kódem :status:`200` a tělem v textovém :ref:`formátu <formaty>`. V těle zprávy budou tři řádky, v nichž pošleme své jméno, příjmení, a velikost ponožek.
 
 .. note::
 
@@ -41,9 +41,9 @@ Začneme tím, že vytvoříme soubor ``index.py`` s následujícím obsahem:
 
 V kódu můžeme vidět `třídu <https://naucse.python.cz/course/pyladies/beginners/class/>`__ ``PersonalDetailsResource`` s jednou metodou. Třídu jsme si pojmenovali sami podle toho, že je zodpovědná za naše osobní údaje, akorát jsme podle konvence připojili slovo *resource*.
 
-Název metody ``on_get()`` naznačuje, že se stará o HTTP metodu :method:`get`. Bere parametry ``request`` reprezentující právě přicházející :ref:`dotaz <http-request>`, a ``response``, tedy :ref:`odpověď <http-response>`, kterou se chystáme odeslat zpět. Uvnitř metody nastavujeme status kód odpovědi na :status:`200`, hlavičku :header:`Content-Type` na formát těla, a poté tělo na tři řádky řetězců s osobními údaji.
+Název metody ``on_get()`` naznačuje, že se stará o HTTP metodu :method:`get`. Bere parametry ``request`` reprezentující právě přicházející :ref:`požadavek <http-request>`, a ``response``, tedy :ref:`odpověď <http-response>`, kterou se chystáme odeslat zpět. Uvnitř metody nastavujeme status kód odpovědi na :status:`200`, hlavičku :header:`Content-Type` na formát těla, a poté tělo na tři řádky řetězců s osobními údaji.
 
-Nakonec do proměnné ``app`` ukládáme naši Falcon aplikaci a na dalším řádku jí říkáme, že pokud někdo bude posílat :ref:`dotazy <http-request>` na adresu ``/``, bude je mít na starost naše třída.
+Nakonec do proměnné ``app`` ukládáme naši Falcon aplikaci a na dalším řádku jí říkáme, že pokud někdo bude posílat :ref:`požadavky <http-request>` na adresu ``/``, bude je mít na starost naše třída.
 
 Spouštíme aplikaci na našem počítači
 ------------------------------------
@@ -71,7 +71,7 @@ Nyní můžeme spustit naše API. Stačí spustit ``waitress-serve`` s nápověd
     (venv)$ waitress-serve index:app
     Serving on http://0.0.0.0:8080
 
-Waitress nám píše, že na adrese ``http://0.0.0.0:8080`` teď najdeme spuštěné naše API. Bude tam čekat na :ref:`dotazy <http-request>` tak dlouho, dokud v programu nenastane chyba (potom "spadne"), nebo dokud jej v terminálu neukončíme pomocí :kbd:`Ctrl+C`.
+Waitress nám píše, že na adrese ``http://0.0.0.0:8080`` teď najdeme spuštěné naše API. Bude tam čekat na :ref:`požadavky <http-request>` tak dlouho, dokud v programu nenastane chyba (potom "spadne"), nebo dokud jej v terminálu neukončíme pomocí :kbd:`Ctrl+C`.
 
 Když nyní v prohlížeči půjdeme na adresu ``http://0.0.0.0:8080``, měli bychom vidět očekávanou :ref:`odpověď <http-response>`:
 
@@ -159,7 +159,7 @@ Protože :ref:`odpovědi <http-response>` mají ve většině případů status 
 Přidáváme další endpoint
 ------------------------
 
-Naše API má zatím pouze jednu adresu, na kterou se může klient dotazovat. V hantýrce programátorů webů by se řeklo, že má jednu "routu" (z anglického *route*). V hantýrce programátorů API by se zase řeklo, že má jeden *endpoint*. No a API s jedním endpointem není nic moc. Přidáme tedy druhý, který bude světu sdělovat seznam filmů, které bychom chtěli vidět.
+Naše API má zatím pouze jednu adresu, na kterou může klient posílat požadavky. V hantýrce programátorů webů by se řeklo, že má jednu "routu" (z anglického *route*). V hantýrce programátorů API by se zase řeklo, že má jeden *endpoint*. No a API s jedním endpointem není nic moc. Přidáme tedy druhý, který bude světu sdělovat seznam filmů, které bychom chtěli vidět.
 
 .. literalinclude:: ../code/movies.py
     :language: python
@@ -175,7 +175,7 @@ Kdyby každý měl takovéto API, mohl by někdo vytvořit třeba mobilní appku
 Čteme URL parametry
 -------------------
 
-Co kdybychom ale chtěli vidět opravdu hodně filmů? Možná bychom chtěli dát uživatelům našeho API možnost výsledky filtrovat. K tomu se nám mohou hodit :ref:`URL parametry <http-request>`. Chtěli bychom třeba, aby klient mohl udělat dotaz na ``/movies?name=shark`` a tím by našel jen ty filmy, které mají v názvu řetězec ``shark``.
+Co kdybychom ale chtěli vidět opravdu hodně filmů? Možná bychom chtěli dát uživatelům našeho API možnost výsledky filtrovat. K tomu se nám mohou hodit :ref:`URL parametry <http-request>`. Chtěli bychom třeba, aby klient mohl udělat požadavek na ``/movies?name=shark`` a tím by našel jen ty filmy, které mají v názvu řetězec ``shark``.
 
 Nejdříve si připravme hledání. Vytvoříme funkci ``filter_movies()`` s parametry ``movies`` a ``name``, která vrátí pouze ty filmy, jejichž název obsahuje hodnotu tohoto parametru, a to bez ohledu na velká a malá písmena. Pokud bude parametr nastaven na ``None``, vrátí všechny filmy.
 
@@ -185,7 +185,7 @@ V následujícím příkladu je použit `cyklus <https://naucse.python.cz/course
     :language: python
     :pyobject: filter_movies
 
-Nyní potřebujeme přečíst z dotazu parametr a použít jej:
+Nyní potřebujeme přečíst z požadavku parametr a použít jej:
 
 .. literalinclude:: ../code/movies_filter.py
     :language: python
@@ -318,7 +318,7 @@ Nyní pojďme upravit ``MoviesResource``. Víme, že adresa našeho API je teď 
     :language: python
     :pyobject: MoviesResource
 
-Zbytek úprav by měl být celkem srozumitelný. Nejdříve filmy filtrujeme podle parametrů, poté vytvoříme JSON reprezentaci výsledného seznamu a tu pošleme jako tělo odpovědi. Když aplikaci spustíme a vyzkoušíme dotazem např. na ``/movies/?name=shark``, měla by nám vracet správně filtrovaný seznam filmů v nové podobě:
+Zbytek úprav by měl být celkem srozumitelný. Nejdříve filmy filtrujeme podle parametrů, poté vytvoříme JSON reprezentaci výsledného seznamu a tu pošleme jako tělo odpovědi. Když aplikaci spustíme a vyzkoušíme požadavkem např. na ``/movies/?name=shark``, měla by nám vracet správně filtrovaný seznam filmů v nové podobě:
 
 .. literalinclude:: ../code/movies_repr_movies_test.txt
     :language: text
@@ -391,9 +391,9 @@ Nyní máme API, které je pouze ke čtení. Řekněme, že bychom chtěli, aby 
 .. literalinclude:: ../code/movies_post_example.txt
     :language: text
 
-Jak vidíme, jde trochu do tuhého. Předáváme několik parametrů, postupně pro jednotlivé části :ref:`HTTP dotazu <http-request>`. Metodu měníme z výchozího :method:`get`, které se psát nemuselo, na :method:`post`. Přidáváme hlavičku :header:`Content-Type` pro tělo dotazu a pak samotné tělo.
+Jak vidíme, jde trochu do tuhého. Předáváme několik parametrů, postupně pro jednotlivé části :ref:`HTTP požadavku <http-request>`. Metodu měníme z výchozího :method:`get`, které se psát nemuselo, na :method:`post`. Přidáváme hlavičku :header:`Content-Type` pro tělo požadavku a pak samotné tělo.
 
-A co tedy chceme aby se stalo? Pokud metodou :method:`post` přijde :ref:`dotaz <http-request>` na adresu ``/movies``, náš kód přečte zaslané tělo dotazu (očekává JSON), které reprezentuje film, a přidá tento film do našeho seznamu. Poté odpoví kódem :status:`200`. Příchozí data o filmu by měla mít všechny položky, které zaznamenáváme. Nebudeme ale chtít, aby měla ``id``, protože to novým záznamům přiřazuje naše "databáze" (ani ``url``, protože to vytváří naše API na základě ``id``).
+A co tedy chceme aby se stalo? Pokud metodou :method:`post` přijde :ref:`požadavek <http-request>` na adresu ``/movies``, náš kód přečte zaslané tělo požadavku (očekává JSON), které reprezentuje film, a přidá tento film do našeho seznamu. Poté odpoví kódem :status:`200`. Příchozí data o filmu by měla mít všechny položky, které zaznamenáváme. Nebudeme ale chtít, aby měla ``id``, protože to novým záznamům přiřazuje naše "databáze" (ani ``url``, protože to vytváří naše API na základě ``id``).
 
 Obsluhujeme POST
 ^^^^^^^^^^^^^^^^
@@ -410,7 +410,7 @@ Možná si domyslíte, že když budeme chtít na adrese ``/movies`` obsluhovat 
         def on_post(self, request, response):
             ...
 
-Z dotazu ovšem potřebujeme nějak dostat příchozí tělo a udělat z něj nový film. Jak na to? Falcon nám v tomto ohledu nabízí `request.bounded_stream <https://falcon.readthedocs.io/en/stable/api/request_and_response.html#falcon.Request.bounded_stream>`__. Je to věc, ze níž můžeme číst tak, jako kdyby to byl soubor. To znamená, že má metodu ``.read()``, kterou lze zavolat, a ona vrátí řetězec s obsahem:
+Z požadavku ovšem potřebujeme nějak dostat příchozí tělo a udělat z něj nový film. Jak na to? Falcon nám v tomto ohledu nabízí `request.bounded_stream <https://falcon.readthedocs.io/en/stable/api/request_and_response.html#falcon.Request.bounded_stream>`__. Je to věc, ze níž můžeme číst tak, jako kdyby to byl soubor. To znamená, že má metodu ``.read()``, kterou lze zavolat, a ona vrátí řetězec s obsahem:
 
 .. code-block:: python
 
@@ -444,7 +444,7 @@ Nyní vše poskládáme dohromady:
 Hotovo! Teď si můžeme vyzkoušet přidání nového filmu.
 
 .. warning::
-    Mezi následujícími dotazy nesmíte restartovat aplikaci (Waitress musí po celou dobu běžet), jinak nebudou fungovat správně.
+    Mezi následujícími požadavky nesmíte restartovat aplikaci (Waitress musí po celou dobu běžet), jinak nebudou fungovat správně.
 
 Naše API by nám mělo odpovědět s kódem :status:`200` a bez těla:
 
@@ -471,7 +471,7 @@ Aby změny přežily restartování programu, museli bychom stav ukládat do sou
 201 Created
 ^^^^^^^^^^^
 
-Naše přidávání nyní sice funguje, ale nechová se úplně prakticky. Kdyby uživatel našeho API chtěl zjistit jakou dostal nově přidaný film adresu, musel by udělat několik dalších dotazů. Bylo by asi lepší, kdybychom v odpovědi na :method:`post` rovnou poslali informace o právě vytvořeném filmu.
+Naše přidávání nyní sice funguje, ale nechová se úplně prakticky. Kdyby uživatel našeho API chtěl zjistit jakou dostal nově přidaný film adresu, musel by udělat několik dalších požadavků. Bylo by asi lepší, kdybychom v odpovědi na :method:`post` rovnou poslali informace o právě vytvořeném filmu.
 
 Když se něco přidává, má se podle :ref:`HTTP <http>` specifikace správně vracet status kód :status:`201`. Stačí nám ale prostě vrátit tento kód, nebo je v tom i něco víc? Kdy přesně se tento kód používá?
 
@@ -487,7 +487,7 @@ MDN nám radí, že v těle odpovědi bychom spolu s :status:`201` měli poslat 
 
     ... its location being either the URL of the request, or the content of the Location header.
 
-Toto znamená, že bychom ideálně ještě měli přidat do odpovědi hlavičku :header:`Location`, jejíž hodnotou bude odkaz na vytvořený film. Druhá možnost je, že přímo adresa, kam se dělá dotaz, je adresou nově vytvořeného filmu, ale to není náš případ. Celé by to tedy mělo vypadat asi nějak takto:
+Toto znamená, že bychom ideálně ještě měli přidat do odpovědi hlavičku :header:`Location`, jejíž hodnotou bude odkaz na vytvořený film. Druhá možnost je, že přímo adresa, kam se dělá požadavek, je adresou nově vytvořeného filmu, ale to není náš případ. Celé by to tedy mělo vypadat asi nějak takto:
 
 .. literalinclude:: ../code/movies_created_example.txt
     :language: text
@@ -552,7 +552,7 @@ A co když pošle čísla místo řetězců? Co když budou nějaké položky ú
 
 Naše API nyní v takových případech film v pořádku přijme, i když by nemělo. V případě, že nepošleme JSON, vrátí :status:`500`, což znamená, že naše API zcela selhalo a "spadlo". Správně by taková situace neměla nastávat. Znamená to, že jsme s něčím nepočítali, neošetřili to, a chyba je na naší straně, tedy na straně tvůrců API. Uživatel s ní nic nenadělá. Je to ekvivalent toho, když náš program v Pythonu skončí vyjímkou.
 
-V těchto materiálech se kontrolou vstupních dat zabývat nebudeme, ale je dobré vědět, že se tomu obecně říká *validace* a že pro JSON to řeší `JSON Schema <https://json-schema.org/understanding-json-schema/>`__. V případě, že problém ošetříme a zjistíme, co dělá uživatel špatně, můžeme mu vrátit chybu :status:`400`. Nejlépe s co nejpodrobnějším vysvětlením v těle odpovědi (třeba ve formátu :ref:`problem+json <problem>`), aby mohl napravit omyly a poslat svůj dotaz správně.
+V těchto materiálech se kontrolou vstupních dat zabývat nebudeme, ale je dobré vědět, že se tomu obecně říká *validace* a že pro JSON to řeší `JSON Schema <https://json-schema.org/understanding-json-schema/>`__. V případě, že problém ošetříme a zjistíme, co dělá uživatel špatně, můžeme mu vrátit chybu :status:`400`. Nejlépe s co nejpodrobnějším vysvětlením v těle odpovědi (třeba ve formátu :ref:`problem+json <problem>`), aby mohl napravit omyly a poslat svůj požadavek správně.
 
 Mažeme filmy
 ------------
@@ -570,7 +570,7 @@ Pojďme si mazání naprogramovat. Začneme opět pomocnou funkcí, která bude 
     :language: python
     :pyobject: remove_movie_by_id
 
-Informace o tom, jestli film v seznamu byl nebo ne se nám bude hodit. Opět bychom totiž měli pamatovat na to, že klient může poslat dotaz na smazání filmu s ID číslo 42, ačkoli žádný takový neexistuje. Asi by se moc nestalo, kdybychom odpověděli, že se neexistující film povedlo smazat, ale bude lepší, když druhou stranu informujeme o tom, že se pokouší dělat něco, co nejde.
+Informace o tom, jestli film v seznamu byl nebo ne se nám bude hodit. Opět bychom totiž měli pamatovat na to, že klient může poslat požadavek na smazání filmu s ID číslo 42, ačkoli žádný takový neexistuje. Asi by se moc nestalo, kdybychom odpověděli, že se neexistující film povedlo smazat, ale bude lepší, když druhou stranu informujeme o tom, že se pokouší dělat něco, co nejde.
 
 .. literalinclude:: ../code/movies_delete.py
     :language: python
@@ -590,14 +590,14 @@ Jestliže to zkusíme znovu, měli bychom dostat chybu, protože film s ID čís
 Zabezpečujeme
 -------------
 
-Už od osmdesátých let `víme <https://www.csfd.cz/film/6642-smrtonosna-past/>`__, že `Bruce Willis <https://www.csfd.cz/tvurce/3-bruce-willis/>`__ se jen tak smazat nenechá. Pojďme tuto nezpochybnitelnou pravdu odrazit v našem API. Pokud se někdo pokusí odebrat ze seznamu film s Brucem v hlavní roli, bude mu tento dotaz odepřen. Abychom to mohli udělat, potřebujeme pro každý film údaje o hercích v hlavních rolích:
+Už od osmdesátých let `víme <https://www.csfd.cz/film/6642-smrtonosna-past/>`__, že `Bruce Willis <https://www.csfd.cz/tvurce/3-bruce-willis/>`__ se jen tak smazat nenechá. Pojďme tuto nezpochybnitelnou pravdu odrazit v našem API. Pokud se někdo pokusí odebrat ze seznamu film s Brucem v hlavní roli, bude mu tento požadavek odepřen. Abychom to mohli udělat, potřebujeme pro každý film údaje o hercích v hlavních rolích:
 
 .. literalinclude:: ../code/movies_forbidden.py
     :language: python
     :lines: 23-60
     :emphasize-lines: 7, 16, 25, 34
 
-Nyní můžeme vrátit chybu :status:`403`, pokud klient se svým dotazem narazí na Bruce:
+Nyní můžeme vrátit chybu :status:`403`, pokud klient se svým požadavkem narazí na Bruce:
 
 .. literalinclude:: ../code/movies_forbidden.py
     :language: python
@@ -619,7 +619,7 @@ Nejdříve využijeme funkce ``get_movie_by_id()``, která nám vrátí film pod
 
     Samozřejmě by opět bylo lepší pro formát těla využít nějaký standard, například již zmíněný :ref:`problem+json <problem>`.
 
-Podobným způsobem bylo zabezpečeno API od :ref:`OMDb <omdb-api>`. Dokud jsme neudělali dotaz s API klíčem, nedostali jsme jinou odpověď než chybu:
+Podobným způsobem bylo zabezpečeno API od :ref:`OMDb <omdb-api>`. Dokud jsme neudělali požadavek s API klíčem, nedostali jsme jinou odpověď než chybu:
 
 .. code-block:: text
 
@@ -629,7 +629,7 @@ Podobným způsobem bylo zabezpečeno API od :ref:`OMDb <omdb-api>`. Dokud jsme 
 
     {"Response":"False","Error":"No API key provided."}
 
-Jediným rozdílem je to, že v jejich API byl použit kód :status:`401`. Ten se má poslat ve chvíli, kdy má klient šanci oprávnění získat a dotaz provést znovu. V případě OMDb bylo potřeba se zaregistrovat, obdržet API klíč a poslat ho jako parametr. V našem případě oprávnění nijak dostat nelze. Abychom mohli vracet :status:`401`, museli bychom doprogramovat nějaký způsob, jak Bruce přelstít.
+Jediným rozdílem je to, že v jejich API byl použit kód :status:`401`. Ten se má poslat ve chvíli, kdy má klient šanci oprávnění získat a požadavek provést znovu. V případě OMDb bylo potřeba se zaregistrovat, obdržet API klíč a poslat ho jako parametr. V našem případě oprávnění nijak dostat nelze. Abychom mohli vracet :status:`401`, museli bychom doprogramovat nějaký způsob, jak Bruce přelstít.
 
 .. _nowsh:
 
@@ -669,7 +669,7 @@ Když na tuto adresu půjdeme v prohlížeči, měli bychom vidět HTTP odpově�
     :alt: now.sh v prohlížeči
     :align: center
 
-Můžeme se na naše API dotazovat samozřejmě i pomocí curl:
+Můžeme na naše API posílat požadavky samozřejmě i pomocí curl:
 
 .. code-block:: text
 
@@ -681,7 +681,7 @@ Můžeme se na naše API dotazovat samozřejmě i pomocí curl:
 
     {"eyes_color":"brown","eyes_count":2,"hair_color":"brown","hands_count":2,"legs_count":2,"mood":"grumpy","name":"Honza","surname":"Javorek"}
 
-A co je ještě lepší, na rozdíl od všech předchozích případů, nyní může na naše API posílat dotazy i někdo jiný! Pošlete tuto adresu kamarádce/kamarádovi nebo kolegyni/kolegovi, ať zkusí se svým prohlížečem a s curl posílat dotazy na vaše API. Vy zase můžete zkoušet jejich API. Nebojme se experimentovat, třeba přidat oblečení, nebo nějaké smazat.
+A co je ještě lepší, na rozdíl od všech předchozích případů, nyní může na naše API posílat požadavky i někdo jiný! Pošlete tuto adresu kamarádce/kamarádovi nebo kolegyni/kolegovi, ať zkusí se svým prohlížečem a s curl posílat požadavky na vaše API. Vy zase můžete zkoušet jejich API. Nebojme se experimentovat, třeba přidat oblečení, nebo nějaké smazat.
 
 Pokud budeme chtít udělat v našem API změny a ty opět promítnout veřejně, budeme muset znova spustit příkaz ``now``.
 

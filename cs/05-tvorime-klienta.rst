@@ -25,13 +25,13 @@ Nyní můžeme začít s tvorbou klienta. Jenže specializovaný klient potřebu
     :alt: spuštěný API server
     :align: center
 
-V druhém příkazovém řádku začneme vytvářet klienta, který na něj bude posílat dotazy:
+V druhém příkazovém řádku začneme vytvářet klienta, který na něj bude posílat požadavky:
 
 .. image:: ../_static/images/client-empty.png
     :alt: připravená příkazová řádka na nového klienta
     :align: center
 
-V adresáři ``cojeapi-client`` si vytvoříme nový soubor s názvem ``client.py`` a použijeme v něm Requests pro jednoduchý dotaz na server. Funkce `requests.get <https://2.python-requests.org/en/master/api/#requests.get>`__ nám umožní poslat dotaz metodou :method:`get`. Naše API běží a je dostupné na adrese ``http://127.0.0.1:5000/``, takže ji použijeme jako cíl dotazu. Následně vypíšeme detaily odpovědi, kterou dostaneme:
+V adresáři ``cojeapi-client`` si vytvoříme nový soubor s názvem ``client.py`` a použijeme v něm Requests pro jednoduchý požadavek na server. Funkce `requests.get <https://2.python-requests.org/en/master/api/#requests.get>`__ nám umožní poslat požadavek metodou :method:`get`. Naše API běží a je dostupné na adrese ``http://127.0.0.1:5000/``, takže ji použijeme jako cíl požadavku. Následně vypíšeme detaily odpovědi, kterou dostaneme:
 
 .. code-block:: python
 
@@ -58,7 +58,7 @@ Zkusme jej spustit, zatímco nám ve vedlejším okně jede naše API:
     {'Content-Type': 'application/json', 'Content-Length': '151', 'Server': 'Werkzeug/0.14.1 Python/3.7.1', 'Date': 'Sat, 10 Nov 2018 12:23:57 GMT'}
     {"eyes_color":"brown","eyes_count":2,"hair_color":"brown","hands_count":2,"legs_count":2,"mood":"grumpy","name":"Honza","surname":"Javorek"}
 
-A je to, udělali jsme svůj první dotaz na server! Vidíme, že se nám povedlo vypsat status kód odpovědi, hlavičky, i tělo. Hlavičky nám Requests rovnou poskytují jako Python `slovník <https://naucse.python.cz/course/pyladies/sessions/dict/>`__. Tělo odpovědi ale máme zatím jako řetězec.
+A je to, udělali jsme svůj první požadavek na server! Vidíme, že se nám povedlo vypsat status kód odpovědi, hlavičky, i tělo. Hlavičky nám Requests rovnou poskytují jako Python `slovník <https://naucse.python.cz/course/pyladies/sessions/dict/>`__. Tělo odpovědi ale máme zatím jako řetězec.
 
 Čteme JSON
 ----------
@@ -113,7 +113,7 @@ Protože je nálada proměnlivá, měl by program pokaždé vypsat jinou:
 Zkoušíme veřejné API
 --------------------
 
-Stejným způsobem můžeme dotazovat i :ref:`naše veřejné API <nowsh>` (stačí vyměnit ``http://127.0.0.1:5000/`` za adresu, kterou vám přidělilo ``now``), ale nejspíš to nebude o moc zajímavější, protože jsme ho vytvořili my a vychází z toho samého kódu, jaký je u nás na počítači.
+Stejným způsobem můžeme posílat požadavky i na :ref:`naše veřejné API <nowsh>` (stačí vyměnit ``http://127.0.0.1:5000/`` za adresu, kterou vám přidělilo ``now``), ale nejspíš to nebude o moc zajímavější, protože jsme ho vytvořili my a vychází z toho samého kódu, jaký je u nás na počítači.
 
 Pokud ale máte kamarádku/kamaráda nebo kolegyni/kolegu, kteří těmito materiály také procházejí, můžete si vzít adresu na jejich API uveřejněné pomocí ``now``, a zjistit, jakou mají náladu:
 
