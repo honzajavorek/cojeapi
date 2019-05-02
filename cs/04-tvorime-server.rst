@@ -20,12 +20,12 @@ Navrhujeme API
 
 Nyní budeme tvořit API, které bude strojově čitelnou formou zpřístupňovat základní informace o nás samotných. Pokud jsme aktivní na sociálních sítích, tak takové API nejspíš už `existuje <https://developers.facebook.com/docs/graph-api/>`__, ale my si uděláme svoje - roztomilejší, jednodušší, méně `děsivé <https://en.wikipedia.org/wiki/Facebook#Criticisms_and_controversies>`__.
 
-Než začneme cokoliv programovat, rozmyslíme si, jak by naše API mělo vypadat. Řekněme, že kdybychom na něj poslali `GET <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET>`__ požadavek pomocí programu ``curl``, chceme, aby naše API odpovědělo zhruba následovně:
+Než začneme cokoliv programovat, rozmyslíme si, jak by naše API mělo vypadat. Řekněme, že kdybychom na něj poslali :method:`get` požadavek pomocí programu ``curl``, chceme, aby naše API odpovědělo zhruba následovně:
 
 .. literalinclude:: ../code/base_example.txt
     :language: text
 
-Jinými slovy, pokud metodou `GET <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET>`__ přijde :ref:`dotaz <http-request>` na adresu ``/``, pošleme zpátky :ref:`odpověď <http-response>` se status kódem `200 OK <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200>`__ a tělem v textovém :ref:`formátu <formaty>`. V těle zprávy budou tři řádky, v nichž pošleme své jméno, příjmení, a velikost ponožek.
+Jinými slovy, pokud metodou :method:`get` přijde :ref:`dotaz <http-request>` na adresu ``/``, pošleme zpátky :ref:`odpověď <http-response>` se status kódem :status:`200` a tělem v textovém :ref:`formátu <formaty>`. V těle zprávy budou tři řádky, v nichž pošleme své jméno, příjmení, a velikost ponožek.
 
 .. note::
 
@@ -41,7 +41,7 @@ Začneme tím, že vytvoříme soubor ``index.py`` s následujícím obsahem:
 
 V kódu můžeme vidět `třídu <https://naucse.python.cz/course/pyladies/beginners/class/>`__ ``PersonalDetailsResource`` s jednou metodou. Třídu jsme si pojmenovali sami podle toho, že je zodpovědná za naše osobní údaje, akorát jsme podle konvence připojili slovo *resource*.
 
-Název metody ``on_get()`` naznačuje, že se stará o HTTP metodu `GET <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET>`__. Bere parametry ``request`` reprezentující právě přicházející :ref:`dotaz <http-request>`, a ``response``, tedy :ref:`odpověď <http-response>`, kterou se chystáme odeslat zpět. Uvnitř metody nastavujeme status kód odpovědi na `200 OK <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200>`__, hlavičku `Content-Type <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type>`__ na formát těla, a poté tělo na tři řádky řetězců s osobními údaji.
+Název metody ``on_get()`` naznačuje, že se stará o HTTP metodu :method:`get`. Bere parametry ``request`` reprezentující právě přicházející :ref:`dotaz <http-request>`, a ``response``, tedy :ref:`odpověď <http-response>`, kterou se chystáme odeslat zpět. Uvnitř metody nastavujeme status kód odpovědi na :status:`200`, hlavičku :header:`Content-Type` na formát těla, a poté tělo na tři řádky řetězců s osobními údaji.
 
 Nakonec do proměnné ``app`` ukládáme naši Falcon aplikaci a na dalším řádku jí říkáme, že pokud někdo bude posílat :ref:`dotazy <http-request>` na adresu ``/``, bude je mít na starost naše třída.
 
@@ -85,7 +85,7 @@ Co když zkusíme curl? Protože nám spuštěné API blokuje terminál, spustí
     :alt: Spouštění curl v dalším terminálu
     :align: center
 
-Vidíme, že API se chová tak, jak jsme původně chtěli. Odpověď má status kód `200 OK <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200>`__, formát těla odpovědi je v hlavičce `Content-Type <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type>`__ nastaven na obyčejný text, a v těle zprávy vidíme jméno, příjmení, i velikost ponožek. Kromě toho Falcon s Waitress přidali i nějaké další hlavičky.
+Vidíme, že API se chová tak, jak jsme původně chtěli. Odpověď má status kód :status:`200`, formát těla odpovědi je v hlavičce :header:`Content-Type` nastaven na obyčejný text, a v těle zprávy vidíme jméno, příjmení, i velikost ponožek. Kromě toho Falcon s Waitress přidali i nějaké další hlavičky.
 
 .. literalinclude:: ../code/base_test.txt
     :language: text
@@ -263,7 +263,7 @@ Naše API umí hezky odpovídat v případě, že se číslem trefíme do existu
 .. literalinclude:: ../code/movies_detail_hello_test.txt
     :language: text
 
-Jistě, Falcon díky ``{id:int}`` obsluhuje jen adresy s čísly, takže se za nás postará o odpověď. Vrací `404 Not Found <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404>`__, čímž dává uživateli najevo, že se asi spletl, protože na této adrese nic není. Co když se ale dotážeme s číslem, akorát na neexistující film, např. na ``/movies/42``?
+Jistě, Falcon díky ``{id:int}`` obsluhuje jen adresy s čísly, takže se za nás postará o odpověď. Vrací :status:`404`, čímž dává uživateli najevo, že se asi spletl, protože na této adrese nic není. Co když se ale dotážeme s číslem, akorát na neexistující film, např. na ``/movies/42``?
 
 .. literalinclude:: ../code/movies_detail_42_test.txt
     :language: text
@@ -289,7 +289,7 @@ V tomto návodu s chybou neposíláme žádné tělo, ale je běžné nějaké p
 .. literalinclude:: ../code/movies_not_found_example.txt
     :language: text
 
-Zatímco status kód `404 Not Found <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404>`__ je záležitost standardu protokolu :ref:`HTTP`, strukturu těla chybové zprávy jsme si v tomto případě vymysleli. Aby uživatel našeho API věděl, že se má při chybě podívat na její důvod právě do ``message``, nesmíme to potom zapomenout :ref:`popsat v dokumentaci <dokumentace>`.
+Zatímco status kód :status:`404` je záležitost standardu protokolu :ref:`HTTP`, strukturu těla chybové zprávy jsme si v tomto případě vymysleli. Aby uživatel našeho API věděl, že se má při chybě podívat na její důvod právě do ``message``, nesmíme to potom zapomenout :ref:`popsat v dokumentaci <dokumentace>`.
 
 .. _problem:
 
@@ -299,7 +299,7 @@ Zatímco status kód `404 Not Found <https://developer.mozilla.org/en-US/docs/We
     -   `vnd.error <https://github.com/blongden/vnd.error>`__
     -   Problem Details for HTTP APIs, :rfc:`7807`
 
-    V případě toho druhého bychom pak v hlavičce `Content-Type <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type>`__ místo ``application/json`` poslali ``application/problem+json`` a příjemce by díky tomu hned mohl tušit, jakou přesně strukturu bude tělo chybové odpovědi mít.
+    V případě toho druhého bychom pak v hlavičce :header:`Content-Type` místo ``application/json`` poslali ``application/problem+json`` a příjemce by díky tomu hned mohl tušit, jakou přesně strukturu bude tělo chybové odpovědi mít.
 
 Reprezentace filmu
 ------------------
@@ -391,14 +391,14 @@ Nyní máme API, které je pouze ke čtení. Řekněme, že bychom chtěli, aby 
 .. literalinclude:: ../code/movies_post_example.txt
     :language: text
 
-Jak vidíme, jde trochu do tuhého. Předáváme několik parametrů, postupně pro jednotlivé části :ref:`HTTP dotazu <http-request>`. Metodu měníme z výchozího `GET <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET>`__, které se psát nemuselo, na `POST <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST>`__. Přidáváme hlavičku `Content-Type <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type>`__ pro tělo dotazu a pak samotné tělo.
+Jak vidíme, jde trochu do tuhého. Předáváme několik parametrů, postupně pro jednotlivé části :ref:`HTTP dotazu <http-request>`. Metodu měníme z výchozího :method:`get`, které se psát nemuselo, na :method:`post`. Přidáváme hlavičku :header:`Content-Type` pro tělo dotazu a pak samotné tělo.
 
-A co tedy chceme aby se stalo? Pokud metodou `POST <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST>`__ přijde :ref:`dotaz <http-request>` na adresu ``/movies``, náš kód přečte zaslané tělo dotazu (očekává JSON), které reprezentuje film, a přidá tento film do našeho seznamu. Poté odpoví kódem `200 OK <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200>`__. Příchozí data o filmu by měla mít všechny položky, které zaznamenáváme. Nebudeme ale chtít, aby měla ``id``, protože to novým záznamům přiřazuje naše "databáze" (ani ``url``, protože to vytváří naše API na základě ``id``).
+A co tedy chceme aby se stalo? Pokud metodou :method:`post` přijde :ref:`dotaz <http-request>` na adresu ``/movies``, náš kód přečte zaslané tělo dotazu (očekává JSON), které reprezentuje film, a přidá tento film do našeho seznamu. Poté odpoví kódem :status:`200`. Příchozí data o filmu by měla mít všechny položky, které zaznamenáváme. Nebudeme ale chtít, aby měla ``id``, protože to novým záznamům přiřazuje naše "databáze" (ani ``url``, protože to vytváří naše API na základě ``id``).
 
 Obsluhujeme POST
 ^^^^^^^^^^^^^^^^
 
-Možná si domyslíte, že když budeme chtít na adrese ``/movies`` obsluhovat `POST <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST>`__, bude potřeba do třídy ``MoviesResource`` přidat metodu ``on_post()``:
+Možná si domyslíte, že když budeme chtít na adrese ``/movies`` obsluhovat :method:`post`, bude potřeba do třídy ``MoviesResource`` přidat metodu ``on_post()``:
 
 .. code-block:: python
 
@@ -446,7 +446,7 @@ Hotovo! Teď si můžeme vyzkoušet přidání nového filmu.
 .. warning::
     Mezi následujícími dotazy nesmíte restartovat aplikaci (Waitress musí po celou dobu běžet), jinak nebudou fungovat správně.
 
-Naše API by nám mělo odpovědět s kódem `200 OK <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200>`__ a bez těla:
+Naše API by nám mělo odpovědět s kódem :status:`200` a bez těla:
 
 .. literalinclude:: ../code/movies_post_movies_post_test.txt
     :language: text
@@ -471,9 +471,9 @@ Aby změny přežily restartování programu, museli bychom stav ukládat do sou
 201 Created
 ^^^^^^^^^^^
 
-Naše přidávání nyní sice funguje, ale nechová se úplně prakticky. Kdyby uživatel našeho API chtěl zjistit jakou dostal nově přidaný film adresu, musel by udělat několik dalších dotazů. Bylo by asi lepší, kdybychom v odpovědi na `POST <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST>`__ rovnou poslali informace o právě vytvořeném filmu.
+Naše přidávání nyní sice funguje, ale nechová se úplně prakticky. Kdyby uživatel našeho API chtěl zjistit jakou dostal nově přidaný film adresu, musel by udělat několik dalších dotazů. Bylo by asi lepší, kdybychom v odpovědi na :method:`post` rovnou poslali informace o právě vytvořeném filmu.
 
-Když se něco přidává, má se podle :ref:`HTTP <http>` specifikace správně vracet status kód `201 Created <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201>`__. Stačí nám ale prostě vrátit tento kód, nebo je v tom i něco víc? Kdy přesně se tento kód používá?
+Když se něco přidává, má se podle :ref:`HTTP <http>` specifikace správně vracet status kód :status:`201`. Stačí nám ale prostě vrátit tento kód, nebo je v tom i něco víc? Kdy přesně se tento kód používá?
 
 Mohli bychom si o něm přečíst přímo ve standardu, :rfc:`7231`, ale tam hrozí, že bude popis tak detailní, že mu začátečník snadno neporozumí. Skvělý přepis standardů kolem HTTP lze ale najít na `MDN web docs <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201>`__:
 
@@ -483,11 +483,11 @@ Přesně v této situaci jsme. Výborně, toto se nás rozhodně týká.
 
     The new resource is effectively created before this response is sent back and the new resource is returned in the body of the message, ...
 
-MDN nám radí, že v těle odpovědi bychom spolu s `201 Created <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201>`__ měli poslat reprezentaci toho, co jsme zrovna vytvořili, tedy v našem případě nového filmu.
+MDN nám radí, že v těle odpovědi bychom spolu s :status:`201` měli poslat reprezentaci toho, co jsme zrovna vytvořili, tedy v našem případě nového filmu.
 
     ... its location being either the URL of the request, or the content of the Location header.
 
-Toto znamená, že bychom ideálně ještě měli přidat do odpovědi hlavičku `Content-Type <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Location>`__, jejíž hodnotou bude odkaz na vytvořený film. Druhá možnost je, že přímo adresa, kam se dělá dotaz, je adresou nově vytvořeného filmu, ale to není náš případ. Celé by to tedy mělo vypadat asi nějak takto:
+Toto znamená, že bychom ideálně ještě měli přidat do odpovědi hlavičku :header:`Location`, jejíž hodnotou bude odkaz na vytvořený film. Druhá možnost je, že přímo adresa, kam se dělá dotaz, je adresou nově vytvořeného filmu, ale to není náš případ. Celé by to tedy mělo vypadat asi nějak takto:
 
 .. literalinclude:: ../code/movies_created_example.txt
     :language: text
@@ -502,7 +502,7 @@ Zpět od čtení k programování. Změníme status kód a přidáme hlavičku. 
     :pyobject: MoviesResource
     :emphasize-lines: 16-24
 
-Když nyní restartujeme Waitress a zkusíme opět přidat nový film, měli bychom dostat `201 Created <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201>`__ s ``Location`` hlavičkou a tělem, v němž jsou všechny detaily. Díky ``url`` máme adresu na nový film nejen v hlavičce, ale i přímo v těle zprávy.
+Když nyní restartujeme Waitress a zkusíme opět přidat nový film, měli bychom dostat :status:`201` s ``Location`` hlavičkou a tělem, v němž jsou všechny detaily. Díky ``url`` máme adresu na nový film nejen v hlavičce, ale i přímo v těle zprávy.
 
 .. literalinclude:: ../code/movies_created_test.txt
     :language: text
@@ -550,9 +550,9 @@ Když uživatel našeho API přidává nový film, přiřazujeme mu ID a podle n
 
 A co když pošle čísla místo řetězců? Co když budou nějaké položky úplně chybět? Co když je chceme mít nepovinné? Co když uživatel schválně nebo omylem pošle něco, co ani nelze přečíst jako JSON?
 
-Naše API nyní v takových případech film v pořádku přijme, i když by nemělo. V případě, že nepošleme JSON, vrátí `500 Internal Server Error <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500>`__, což znamená, že naše API zcela selhalo a "spadlo". Správně by taková situace neměla nastávat. Znamená to, že jsme s něčím nepočítali, neošetřili to, a chyba je na naší straně, tedy na straně tvůrců API. Uživatel s ní nic nenadělá. Je to ekvivalent toho, když náš program v Pythonu skončí vyjímkou.
+Naše API nyní v takových případech film v pořádku přijme, i když by nemělo. V případě, že nepošleme JSON, vrátí :status:`500`, což znamená, že naše API zcela selhalo a "spadlo". Správně by taková situace neměla nastávat. Znamená to, že jsme s něčím nepočítali, neošetřili to, a chyba je na naší straně, tedy na straně tvůrců API. Uživatel s ní nic nenadělá. Je to ekvivalent toho, když náš program v Pythonu skončí vyjímkou.
 
-V těchto materiálech se kontrolou vstupních dat zabývat nebudeme, ale je dobré vědět, že se tomu obecně říká *validace* a že pro JSON to řeší `JSON Schema <https://json-schema.org/understanding-json-schema/>`__. V případě, že problém ošetříme a zjistíme, co dělá uživatel špatně, můžeme mu vrátit chybu `400 Bad Request <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400>`__. Nejlépe s co nejpodrobnějším vysvětlením v těle odpovědi (třeba ve formátu :ref:`problem+json <problem>`), aby mohl napravit omyly a poslat svůj dotaz správně.
+V těchto materiálech se kontrolou vstupních dat zabývat nebudeme, ale je dobré vědět, že se tomu obecně říká *validace* a že pro JSON to řeší `JSON Schema <https://json-schema.org/understanding-json-schema/>`__. V případě, že problém ošetříme a zjistíme, co dělá uživatel špatně, můžeme mu vrátit chybu :status:`400`. Nejlépe s co nejpodrobnějším vysvětlením v těle odpovědi (třeba ve formátu :ref:`problem+json <problem>`), aby mohl napravit omyly a poslat svůj dotaz správně.
 
 Mažeme filmy
 ------------
