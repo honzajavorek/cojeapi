@@ -24,6 +24,7 @@ Než začneme cokoliv programovat, rozmyslíme si, jak by naše API mělo vypada
 
 .. literalinclude:: ../code/base_example.txt
     :language: text
+    :class: example
 
 Jinými slovy, pokud metodou :method:`get` přijde :ref:`požadavek <http-request>` na adresu ``/``, pošleme zpátky :ref:`odpověď <http-response>` se status kódem :status:`200` a tělem v textovém :ref:`formátu <formaty>`. V těle zprávy budou tři řádky, v nichž pošleme své jméno, příjmení, a velikost ponožek.
 
@@ -222,6 +223,7 @@ Pojďme tedy upravit API tak, aby v seznamu vypisovalo jen ``name`` a odkaz na d
 
 .. literalinclude:: ../code/movies_detail_example.txt
     :language: text
+    :class: example
 
 Chceme tedy, abychom mohli na adrese ``/movies/1`` zjistit informace o filmu s ID číslo jedna, na adrese ``/movies/2`` o filmu s ID číslo dvě, atd.
 
@@ -288,6 +290,7 @@ V tomto návodu s chybou neposíláme žádné tělo, ale je běžné nějaké p
 
 .. literalinclude:: ../code/movies_not_found_example.txt
     :language: text
+    :class: example
 
 Zatímco status kód :status:`404` je záležitost standardu protokolu :ref:`HTTP`, strukturu těla chybové zprávy jsme si v tomto případě vymysleli. Aby uživatel našeho API věděl, že se má při chybě podívat na její důvod právě do ``message``, nesmíme to potom zapomenout :ref:`popsat v dokumentaci <dokumentace>`.
 
@@ -365,6 +368,7 @@ Pokud v API používáte odkazy, je dobrým zvykem v odpovědích posílat i odk
 
 .. literalinclude:: ../code/movies_repr_movie_example.txt
     :language: text
+    :class: example
     :emphasize-lines: 6
 
 Ostatně, v seznamu filmů na ``/movies`` už to tak děláme pro každou položku zvlášť. Pojďme upravit detail filmu, aby se choval podobně:
@@ -390,6 +394,7 @@ Nyní máme API, které je pouze ke čtení. Řekněme, že bychom chtěli, aby 
 
 .. literalinclude:: ../code/movies_post_example.txt
     :language: text
+    :class: example
 
 Jak vidíme, jde trochu do tuhého. Předáváme několik parametrů, postupně pro jednotlivé části :ref:`HTTP požadavku <http-request>`. Metodu měníme z výchozího :method:`get`, které se psát nemuselo, na :method:`post`. Přidáváme hlavičku :header:`Content-Type` pro tělo požadavku a pak samotné tělo.
 
@@ -491,6 +496,7 @@ Toto znamená, že bychom ideálně ještě měli přidat do odpovědi hlavičku
 
 .. literalinclude:: ../code/movies_created_example.txt
     :language: text
+    :class: example
 
 .. note::
     Nebojte se dívat přímo do standardů nebo do jejich kvalitního přepisu, jako je na `MDN <https://developer.mozilla.org/en-US/docs/Web/HTTP>`__. Ze začátku to může být tuhé čtení, ale dlouhodobě se to vyplácí. V některých případech není nejlepší se spoléhat na náhodné informace, které lze najít na internetu, jelikož mohou být zatíženy různými nepřesnostmi nebo mýty.
@@ -563,6 +569,7 @@ Jenže co vrátit za odpověď? Pokud něco smažeme a ono už to neexistuje, as
 
 .. literalinclude:: ../code/movies_delete_example.txt
     :language: text
+    :class: example
 
 Pojďme si mazání naprogramovat. Začneme opět pomocnou funkcí, která bude hledat film podle jeho ID a pokud jej najde, z naší "databáze" jej smaže. Funkce bude vracet ``True`` nebo ``False`` podle toho, jestli se jí povedlo film najít nebo ne.
 
