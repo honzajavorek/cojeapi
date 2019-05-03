@@ -180,6 +180,10 @@ Co kdybychom ale chtěli vidět opravdu hodně filmů? Možná bychom chtěli d�
 
 Nejdříve si připravme hledání. Vytvoříme funkci ``filter_movies()`` s parametry ``movies`` a ``name``, která vrátí pouze ty filmy, jejichž název obsahuje hodnotu tohoto parametru, a to bez ohledu na velká a malá písmena. Pokud bude parametr nastaven na ``None``, vrátí všechny filmy.
 
+.. note::
+
+    Pro stručnost budou následující ukázky kódu znázorňovat už jen úpravy v souboru ``index.py``, ne celý soubor. Pokud by se vám nedařilo ve změnách zorientovat, na konci sekce bude vždy odkaz na celý soubor.
+
 V následujícím příkladu je použit `cyklus <https://naucse.python.cz/course/pyladies/sessions/loops/>`__, ale kdo zná funkci `filter <https://docs.python.org/3/library/functions.html#filter>`__ nebo `list comprehentions <https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions>`__, může si klidně poradit jinak.
 
 .. literalinclude:: ../code/server/07_params/index.py
@@ -198,6 +202,10 @@ Pokud se na náš nový endpoint dotážeme bez parametrů, měl by fungovat ste
     :language: text
 
 Vidíme, že tentokrát jsme dostali v těle odpovědi jen dva filmy místo čtyř.
+
+.. hint::
+
+    Na celý program se můžete podívat zde: :codeexample:`server/07_params/index.py`
 
 Detail filmu
 ------------
@@ -257,6 +265,10 @@ Když nyní spustíme naše API a vyzkoušíme, co vrací na adrese ``/movies/1`
 
 Zkuste si to i pro ostatní filmy.
 
+.. hint::
+
+    Na celý program se můžete podívat zde: :codeexample:`server/09_movie/index.py`
+
 Nenalezeno
 ----------
 
@@ -285,6 +297,10 @@ Získávání informací o existujícím filmu by mělo fungovat stejně jako p�
 
 .. literalinclude:: ../code/server/10_not_found/test_1.txt
     :language: text
+
+.. hint::
+
+    Na celý program se můžete podívat zde: :codeexample:`server/10_not_found/index.py`
 
 V tomto návodu s chybou neposíláme žádné tělo, ale je běžné nějaké poslat a poskytnout v něm uživateli našeho API více informací o tom, co se stalo, např. takto:
 
@@ -387,6 +403,10 @@ Kvůli způsobu, jakým jsme naprogramovali tvoření reprezentace se ``url`` op
 
 Odkazy na sebe sama bychom mohli přidat i do zbytku reprezentací v našem API a přidat bychom také mohli další odkazy, např. odkaz zpět z detailu filmu na seznam filmů, ale takové úpravy už nejspíš zvládnete samostatně. Pojďme se naučit zase něco nového.
 
+.. hint::
+
+    Na celý program se můžete podívat zde: :codeexample:`server/11_repr/index.py`
+
 Přidáváme filmy
 ---------------
 
@@ -466,6 +486,10 @@ Když se podíváme na adresu filmu, měli bychom dostat všechny informace o fi
 .. literalinclude:: ../code/server/12_post/test3_movie.txt
     :language: text
 
+.. hint::
+
+    Na celý program se můžete podívat zde: :codeexample:`server/12_post/index.py`
+
 Ukládání natrvalo
 ^^^^^^^^^^^^^^^^^
 
@@ -514,6 +538,10 @@ Když nyní restartujeme Waitress a zkusíme opět přidat nový film, měli byc
     :language: text
 
 V hlavičce i v ``url`` rovnou vidíme, že nový film dostal ID číslo 5 a jeho adresa je tedy ``http://0.0.0.0:8080/movies/5``.
+
+.. hint::
+
+    Na celý program se můžete podívat zde: :codeexample:`server/13_created/index.py`
 
 .. note::
     Kód by šlo zjednodušit. Vytváření adresy filmu už máme na několika místech, mohlo by tedy mít svou funkci:
@@ -594,6 +622,10 @@ Jestliže to zkusíme znovu, měli bychom dostat chybu, protože film s ID čís
 .. literalinclude:: ../code/server/14_delete/test3_42.txt
     :language: text
 
+.. hint::
+
+    Na celý program se můžete podívat zde: :codeexample:`server/14_delete/index.py`
+
 Zabezpečujeme
 -------------
 
@@ -637,6 +669,10 @@ Podobným způsobem bylo zabezpečeno API od :ref:`OMDb <omdb-api>`. Dokud jsme 
     {"Response":"False","Error":"No API key provided."}
 
 Jediným rozdílem je to, že v jejich API byl použit kód :status:`401`. Ten se má poslat ve chvíli, kdy má klient šanci oprávnění získat a požadavek provést znovu. V případě OMDb bylo potřeba se zaregistrovat, obdržet API klíč a poslat ho jako parametr. V našem případě oprávnění nijak dostat nelze. Abychom mohli vracet :status:`401`, museli bychom doprogramovat nějaký způsob, jak Bruce přelstít.
+
+.. hint::
+
+    Na celý program se můžete podívat zde: :codeexample:`server/15_forbidden/index.py`
 
 .. _nowsh:
 
