@@ -3,6 +3,7 @@ import json
 import time
 import subprocess
 import shlex
+import platform
 from pathlib import Path
 from operator import itemgetter
 
@@ -32,15 +33,23 @@ def parse_test(text):
     return dict(command=command, response=response)
 
 
+def is_test(basename):
+    if basename.startswith(('test', 'example')):
+        if basename.endswith(('_win.txt', '_unix.txt')):
+            system = '_win' if platform.system() == 'Windows' else '_unix'
+            return basename.endswith(system + '.txt')
+        return True
+    return False
+
+
 def generate(dir):
     for path in sorted(dir.iterdir()):
         if not path.is_dir() or path.name == '__pycache__':
             continue
 
         tests = [
-            parse_test(f.read_text())
-            for f in sorted(path.iterdir())
-            if f.name.startswith(('test', 'example'))
+            parse_test(f.read_text()) for f in sorted(path.iterdir())
+            if is_test(f.name)
         ]
         yield dict(src=path, name='code/server/' + path.name, tests=tests)
 
@@ -60,14 +69,16 @@ def test_code_works(test_batch):
     server = subprocess.Popen(['waitress-serve', 'index:app'],
                               cwd=test_batch['src'])
     time.sleep(0.5)
-    tests = [
-        (test['command'], run_test(test['command']), test['response'])
-        for test in test_batch['tests']
-    ]
-    server.terminate()
+    try:
+        tests = [
+            (test['command'], run_test(test['command']), test['response'])
+            for test in test_batch['tests']
+        ]
+    finally:
+        server.terminate()
 
     for command, response, expected_response in tests:
-        # print(command)
+        print(command)
         assert response['status'] == expected_response['status']
         for header in expected_response['headers']:
             assert header in response['headers']

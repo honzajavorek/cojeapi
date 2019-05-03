@@ -473,8 +473,19 @@ Hotovo! Teď si můžeme vyzkoušet přidání nového filmu.
 
 Naše API by nám mělo odpovědět s kódem :status:`200` a bez těla:
 
-.. literalinclude:: ../code/server/12_post/test1_post.txt
-    :language: text
+.. tabs::
+
+    .. tab:: Linux, macOS
+
+        .. literalinclude:: ../code/server/12_post/test1_post_unix.txt
+            :language: text
+
+    .. tab:: Windows
+
+        .. literalinclude:: ../code/server/12_post/test1_post_win.txt
+            :language: text
+
+        .. include:: _win_json_note.rst
 
 Když se podíváme na seznam filmů, na konci odpovědi vidíme, že nový film dostal ID číslo 5 a jeho adresa je tedy ``http://0.0.0.0:8080/movies/5``:
 
@@ -534,8 +545,19 @@ Zpět od čtení k programování. Změníme status kód a přidáme hlavičku. 
 
 Když nyní restartujeme Waitress a zkusíme opět přidat nový film, měli bychom dostat :status:`201` s ``Location`` hlavičkou a tělem, v němž jsou všechny detaily. Díky ``url`` máme adresu na nový film nejen v hlavičce, ale i přímo v těle zprávy.
 
-.. literalinclude:: ../code/server/13_created/test.txt
-    :language: text
+.. tabs::
+
+    .. tab:: Linux, macOS
+
+        .. literalinclude:: ../code/server/13_created/test_unix.txt
+            :language: text
+
+    .. tab:: Windows
+
+        .. literalinclude:: ../code/server/13_created/test_win.txt
+            :language: text
+
+        .. include:: _win_json_note.rst
 
 V hlavičce i v ``url`` rovnou vidíme, že nový film dostal ID číslo 5 a jeho adresa je tedy ``http://0.0.0.0:8080/movies/5``.
 
