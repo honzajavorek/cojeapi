@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 sphinx = "~=2.0.1"
 sphinx-tabs = "~=1.1.10"
-falcon = "~=1.4.1"  # used in Sphinx extensions to get status codes names
+falcon = "~=2.0.0"  # used in Sphinx extensions to get status codes names
 
 [dev-packages]
 sphinx-autobuild = "==0.7.1"
