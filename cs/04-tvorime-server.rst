@@ -661,7 +661,7 @@ Můžeme k tomu využít službu `now.sh <https://zeit.co/now>`__. Ta nám umož
 #.  Nyní zkusíme na příkazové řádce, v našem adresáři s aplikací, spustit příkaz ``now``
 #.  Je pravděpodobné, že ``now`` po nás bude chtít e-mailovou adresu. Zadáme ji a ověříme v naší e-mailové schránce
 #.  Když nyní znova spustíme ``now``, nahraje se naše aplikace na internet (bude to nejspíše chvíli trvat)
-#.  Po nějaké době bychom měli dostat adresu, na které můžeme naše API najít - něco ve tvaru ``https://cojeapi-server.honzajavorek.now.sh``
+#.  Po nějaké době bychom měli dostat adresu, na které můžeme naše API najít - něco ve tvaru https://cojeapi.honzajavorek.now.sh/
 
 Když na tuto adresu půjdeme v prohlížeči, měli bychom vidět HTTP odpověď na endpoint ``/``:
 
@@ -673,7 +673,7 @@ Můžeme na naše API posílat požadavky samozřejmě i pomocí curl:
 
 .. code-block:: text
 
-    $ curl -i 'https://cojeapi-server.honzajavorek.now.sh'
+    $ curl -i 'https://cojeapi.honzajavorek.now.sh/'
     HTTP/2 200
     date: Sat, 10 Nov 2018 11:12:32 GMT
     ...
