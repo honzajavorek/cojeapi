@@ -18,6 +18,14 @@ a.rfc strong {
 }
 
 /*
+  Inline code renders bold for no obvious reason when in <dl>. This resets it
+  so it doesn't stand out.
+*/
+.rst-content dl:not(.docutils) code {
+  font-weight: normal;
+}
+
+/*
   Workaround for https://github.com/djungelorm/sphinx-tabs/pull/35
 */
 .rst-content .section ul:last-child,

@@ -109,7 +109,7 @@ status kód (*status code*)
     -   4xx - chyba na straně klienta (špatně jsme poskládali dotaz)
     -   5xx - chyba na straně serveru (API nezvládlo odpovědět)
 
-    Příklady kódů i s jejich *reason phrases*: ``404 Not Found``, ``200 OK``, ``500 Internal Server Error``, ``201 Created``
+    Příklady kódů i s jejich *reason phrases*: ``404 Not Found``, ``200 OK``, ``500 Internal Server Error``
 
     .. note::
         Nejlepší způsob, jak si zapamatovat status kódy je projít si `HTTP Status Cats <https://www.flickr.com/photos/girliemac/sets/72157628409467125/>`__.
@@ -508,5 +508,8 @@ V těchto materiálech se nebudeme zabývat :ref:`SOAP` ani RPC. Zatím zde nen�
 Shrnutí
 -------
 
-.. todo::
-    víceméně hlavně přehledový obrázek jak se to všechno k sobě má
+Na následujícím obrázku je shrnutí toho, co jsme se v této části návodu naučili.
+
+.. image:: ../_static/images/http.png
+    :alt: Klient-server a HTTP
+    :align: center
