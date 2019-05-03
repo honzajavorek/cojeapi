@@ -231,7 +231,7 @@ Vidíme, že :ref:`API ČNB <cnb>` vrací obyčejný text, tedy ``text/plain`` (
 
     .. tab:: Řešení
 
-        Postupně spouštíme ``curl -I`` (nebo ``curl -i``) pro jednotlivé adresy a ve vypsaných hlavičkách hledáme hodnotu pro :header:`Content-Type`. Měli bychom dostat následující:
+        Postupně spouštíme ``curl -I`` (nebo ``curl -i``) pro jednotlivé adresy a ve vypsaných hlavičkách hledáme hodnotu pro :header:`Content-Type`. Měli bychom dostat zhruba následující:
 
         #. JPEG - ``image/jpeg``
         #. :ref:`XML` - ``text/xml; charset=UTF-8``

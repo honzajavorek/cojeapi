@@ -110,9 +110,29 @@ Co si budeme povídat, takto data běžně nevypadají. Většinou jsou někde v
 
 Nyní z dat uděláme slovník, který až při sestavování odpovědi složíme do textu. Tím rozdělíme uložení dat a jejich prezentaci navenek. Jak už bylo zmíněno, data většinou přicházejí např. z databáze právě jako slovník, takže toto rozdělení je v praxi potřebné a velmi časté.
 
-.. literalinclude:: ../code/server/03_dict/index.py
-    :language: python
-    :emphasize-lines: 4-8, 17-20
+.. tabs::
+
+    .. tab:: Cvičení
+
+        Změňte data na slovník:
+
+        .. literalinclude:: ../code/server/03_dict/index.py
+            :language: python
+            :lines: 4-8
+
+        Do metody ``on_get()`` doplňte kód, který ze slovníku opět složí původní řetězec, tzn. toto:
+
+        .. code-block:: python
+
+            'name: Honza\nsurname: Javorek\nsocks_size: 42\n'
+
+        Tento řetězec pak nastavte jako tělo odpovědi.
+
+    .. tab:: Řešení
+
+        .. literalinclude:: ../code/server/03_dict/index.py
+            :language: python
+            :emphasize-lines: 4-8, 17-20
 
 Takovéto API nám bude fungovat stále stejně, protože ze slovníku opět složí řetězec, který jsme původně posílali v odpovědi. Data jsou nyní ale nezávislá na tom, jak je budeme prezentovat uživateli. Prakticky si tuto výhodu ukážeme v následujících odstavcích.
 
@@ -151,11 +171,19 @@ A je to, máme své první JSON API! Už teď jsme se dostali dál, než kam se 
 
     Zbytek příkladů nebude tyto možnosti využívat, aby byl kód v ukázkách stručnější.
 
-Protože :ref:`odpovědi <http-response>` mají ve většině případů status kód 200 a protože :ref:`JSON` je nejpoužívanější formát, tak je Falcon ve skutečnosti nastavuje jako výchozí. Můžeme proto zcela vynechat dva řádky z našeho programu a stále bude fungovat tak, jak jsme chtěli:
+Protože :ref:`odpovědi <http-response>` mají ve většině případů status kód 200 a protože :ref:`JSON` je nejpoužívanější formát, tak je Falcon ve skutečnosti nastavuje jako výchozí. Můžeme proto zcela vynechat dva řádky z našeho programu a stále bude fungovat tak, jak jsme chtěli.
 
-.. literalinclude:: ../code/server/05_json_simplified/index.py
-    :language: python
-    :emphasize-lines: 14-15
+.. tabs::
+
+    .. tab:: Cvičení
+
+        Zcela odeberte řádky, kde se nastavuje status kód a hlavička :header:`Content-Type`. Zkuste, jestli vaše API funguje stále stejně.
+
+    .. tab:: Řešení
+
+        .. literalinclude:: ../code/server/05_json_simplified/index.py
+            :language: python
+            :emphasize-lines: 14-15
 
 Přidáváme další endpoint
 ------------------------
@@ -178,23 +206,32 @@ Kdyby každý měl takovéto API, mohl by někdo vytvořit třeba mobilní appku
 
 Co kdybychom ale chtěli vidět opravdu hodně filmů? Možná bychom chtěli dát uživatelům našeho API možnost výsledky filtrovat. K tomu se nám mohou hodit :ref:`URL parametry <http-request>`. Chtěli bychom třeba, aby klient mohl udělat požadavek na ``/movies?name=shark`` a tím by našel jen ty filmy, které mají v názvu řetězec ``shark``.
 
-Nejdříve si připravme hledání. Vytvoříme funkci ``filter_movies()`` s parametry ``movies`` a ``name``, která vrátí pouze ty filmy, jejichž název obsahuje hodnotu tohoto parametru, a to bez ohledu na velká a malá písmena. Pokud bude parametr nastaven na ``None``, vrátí všechny filmy.
-
 .. note::
 
     Pro stručnost budou následující ukázky kódu znázorňovat už jen úpravy v souboru ``index.py``, ne celý soubor. Pokud by se vám nedařilo ve změnách zorientovat, na konci sekce bude vždy odkaz na celý soubor.
 
-V následujícím příkladu je použit `cyklus <https://naucse.python.cz/course/pyladies/sessions/loops/>`__, ale kdo zná funkci `filter <https://docs.python.org/3/library/functions.html#filter>`__ nebo `list comprehentions <https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions>`__, může si klidně poradit jinak.
+Pojďme se do toho pustit. Začneme tím, že si připravíme funkci, která se bude starat o hledání samotné.
 
-.. literalinclude:: ../code/server/07_params/index.py
-    :language: python
-    :pyobject: filter_movies
+.. tabs::
+
+    .. tab:: Cvičení
+
+        Do souboru ``index.py`` přidejte samostatnou funkci ``filter_movies()`` s parametry ``movies`` a ``name``, která vrátí pouze ty filmy, jejichž název obsahuje hodnotu tohoto parametru, a to bez ohledu na velká a malá písmena. Pokud bude parametr nastaven na ``None``, vrátí všechny filmy.
+
+    .. tab:: Řešení
+
+        V následující ukázce je použit `cyklus <https://naucse.python.cz/course/pyladies/sessions/loops/>`__, ale kdo zná funkci `filter <https://docs.python.org/3/library/functions.html#filter>`__ nebo `list comprehentions <https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions>`__, může si klidně poradit jinak.
+
+        .. literalinclude:: ../code/server/07_params/index.py
+            :language: python
+            :pyobject: filter_movies
 
 Nyní potřebujeme přečíst z požadavku parametr a použít jej:
 
 .. literalinclude:: ../code/server/07_params/index.py
     :language: python
-    :emphasize-lines: 26-34, 40-41
+    :pyobject: MoviesResource
+    :emphasize-lines: 4-5
 
 Pokud se na náš nový endpoint dotážeme bez parametrů, měl by fungovat stejně jako předtím. Jestliže ale přidáme ``?name=`` do adresy, měla by hodnota parametru filtrovat filmy.
 
@@ -205,7 +242,7 @@ Vidíme, že tentokrát jsme dostali v těle odpovědi jen dva filmy místo čty
 
 .. hint::
 
-    Na celý program se můžete podívat zde: :codeexample:`server/07_params/index.py`
+    Na kód celého programu se můžete podívat zde: :codeexample:`server/07_params/index.py`
 
 Detail filmu
 ------------
@@ -233,15 +270,21 @@ Pojďme tedy upravit API tak, aby v seznamu vypisovalo jen ``name`` a odkaz na d
     :language: text
     :class: design
 
-Chceme tedy, abychom mohli na adrese ``/movies/1`` zjistit informace o filmu s ID číslo jedna, na adrese ``/movies/2`` o filmu s ID číslo dvě, atd.
+Chceme tedy, abychom mohli na adrese ``/movies/1`` zjistit informace o filmu s ID číslo jedna, na adrese ``/movies/2`` o filmu s ID číslo dvě, atd. Začneme funkcí, která prohledá seznam a když v něm najde film s daným identifikátorem, vrátí tento film.
 
-Začneme funkcí ``get_movie_by_id()``, která dostane seznam filmů ``movies`` a identifikátor ``id``. Prohledá seznam a když v něm najde film s daným identifikátorem, vrátí tento film.
+.. tabs::
 
-.. literalinclude:: ../code/server/09_movie/index.py
-    :language: python
-    :pyobject: get_movie_by_id
+    .. tab:: Cvičení
 
-Nyní přidáme další endpoint. To sice už umíme, ale nyní je v tom drobný háček. Potřebujeme totiž obsloužit hned čtyři adresy:
+        Do souboru ``index.py`` přidejte samostatnou funkci ``get_movie_by_id()`` s parametry ``movies`` a ``id``. Funkce prohledá seznam a když v něm najde film s daným identifikátorem, vrátí tento film.
+
+    .. tab:: Řešení
+
+        .. literalinclude:: ../code/server/09_movie/index.py
+            :language: python
+            :pyobject: get_movie_by_id
+
+Nyní přidáme další endpoint. To sice už umíme, ale teď je v tom drobný háček. Potřebujeme totiž obsloužit hned čtyři adresy:
 
 -   ``/movies/1``
 -   ``/movies/2``
@@ -263,11 +306,15 @@ Když nyní spustíme naše API a vyzkoušíme, co vrací na adrese ``/movies/1`
 .. literalinclude:: ../code/server/09_movie/test_1.txt
     :language: text
 
-Zkuste si to i pro ostatní filmy.
+.. tabs::
+
+    .. tab:: Cvičení
+
+        Zkuste udělat požadavky i na všechny ostatní filmy.
 
 .. hint::
 
-    Na celý program se můžete podívat zde: :codeexample:`server/09_movie/index.py`
+    Na kód celého programu se můžete podívat zde: :codeexample:`server/09_movie/index.py`
 
 Nenalezeno
 ----------
@@ -282,11 +329,19 @@ Jistě, Falcon díky ``{id:int}`` obsluhuje jen adresy s čísly, takže se za n
 .. literalinclude:: ../code/server/09_movie/test_42.txt
     :language: text
 
-Tady nám Falcon už nepomůže. Adresu obslouží naše metoda a ta, jak vidíme, nevrací zrovna nejlepší odpověď. Žádný film číslo 42 neexistuje, ale naše API se chová, jako by to nebyl žádný problém. Upravíme třídu ``MovieResource`` tak, aby s touto situací počítala. Pokud funkce ``get_movie_by_id()`` nic nenajde, odpovíme s chybovým status kódem. Tělo posílat žádné nemusíme.
+Tady nám Falcon už nepomůže. Adresu obslouží naše metoda a ta, jak vidíme, nevrací zrovna nejlepší odpověď. Žádný film číslo 42 neexistuje, ale naše API se chová, jako by to nebyl žádný problém.
 
-.. literalinclude:: ../code/server/10_not_found/index.py
-    :language: python
-    :pyobject: MovieResource
+.. tabs::
+
+    .. tab:: Cvičení
+
+        Upravte třídu ``MovieResource`` tak, aby s touto situací počítala. Pokud funkce ``get_movie_by_id()`` nic nenajde, odpovíme s chybovým status kódem. Tělo posílat žádné nemusíme.
+
+    .. tab:: Řešení
+
+        .. literalinclude:: ../code/server/10_not_found/index.py
+            :language: python
+            :pyobject: MovieResource
 
 Pokud se po této změně dotážeme na neexistující film, měli bychom dostat chybu:
 
@@ -300,7 +355,7 @@ Získávání informací o existujícím filmu by mělo fungovat stejně jako p�
 
 .. hint::
 
-    Na celý program se můžete podívat zde: :codeexample:`server/10_not_found/index.py`
+    Na kód celého programu se můžete podívat zde: :codeexample:`server/10_not_found/index.py`
 
 V tomto návodu s chybou neposíláme žádné tělo, ale je běžné nějaké poslat a poskytnout v něm uživateli našeho API více informací o tom, co se stalo, např. takto:
 
@@ -405,7 +460,7 @@ Odkazy na sebe sama bychom mohli přidat i do zbytku reprezentací v našem API 
 
 .. hint::
 
-    Na celý program se můžete podívat zde: :codeexample:`server/11_repr/index.py`
+    Na kód celého programu se můžete podívat zde: :codeexample:`server/11_repr/index.py`
 
 Přidáváme filmy
 ---------------
@@ -453,11 +508,19 @@ S těmito znalostmi by už neměl být velký problém nový film přečíst a p
 .. note::
     Možná si říkáte, že je to nějaké zbytečně složité. Proč nemůžeme tělo zprávy prostě přečíst rovnou jako řetězec pomocí ``request.body``? Je to proto, že nikdy nevíme, kolik dat nám někdo do API pošle. Kdybychom obdrželi gigabyty dat a Falcon se je snažil rovnou přečíst a uložit do ``request.body`` jako řetězec, nejspíš by na takovém množství zmodral a začal se dusit. Co je horší, naše aplikace by s tím nemohla vůbec nic dělat. Takto Falcon nechává na nás, co s tělem zprávy uděláme. Můžeme tělo číst postupně řádek po řádku, aby se API nezadusilo, nebo celé najednou. Falcon nám přes ``request.bounded_stream`` dává na výběr, co uděláme. My sice v tomto návodu tělo načteme celé najednou, protože zde gigabyty neřešíme, ale stejně je milé, že na nás Falcon takto myslí.
 
-Jediný zbývající zádrhel je snad v ``id``, které filmu musíme přiřadit. Jak bylo několikrát zmíněno, běžně by jej za nás vymyslela databáze. Žádnou databázi nemáme, takže si vypomůžeme trikem - podíváme se, jaké je nejvyšší ID mezi našimi filmy a tomu novému přiřadíme o jedna větší. Ostatně, reálná databáze by většinou udělala totéž. Přidáme funkci ``create_movie_id()``, která bude ID pro nové filmy vymýšlet:
+Jediný zbývající zádrhel je snad v ``id``, které filmu musíme přiřadit. Jak bylo několikrát zmíněno, běžně by jej za nás vymyslela databáze. Žádnou databázi nemáme, takže si vypomůžeme trikem - podíváme se, jaké je nejvyšší ID mezi našimi filmy a tomu novému přiřadíme o jedna větší. Ostatně, reálná databáze by většinou udělala totéž.
 
-.. literalinclude:: ../code/server/12_post/index.py
-    :language: python
-    :pyobject: create_movie_id
+.. tabs::
+
+    .. tab:: Cvičení
+
+        Do souboru ``index.py`` přidejte samostatnou funkci ``create_movie_id()`` s parametrem ``movies``, která se podívá, jaké je nejvyšší ID v seznamu s filmy, a vrátí číslo o jedna větší. Mohla by se vám hodit `tato vestavěná funkce <https://docs.python.org/3.5/library/functions.html#max>`__.
+
+    .. tab:: Řešení
+
+        .. literalinclude:: ../code/server/12_post/index.py
+            :language: python
+            :pyobject: create_movie_id
 
 Nyní vše poskládáme dohromady:
 
@@ -499,7 +562,7 @@ Když se podíváme na adresu filmu, měli bychom dostat všechny informace o fi
 
 .. hint::
 
-    Na celý program se můžete podívat zde: :codeexample:`server/12_post/index.py`
+    Na kód celého programu se můžete podívat zde: :codeexample:`server/12_post/index.py`
 
 Ukládání natrvalo
 ^^^^^^^^^^^^^^^^^
@@ -563,7 +626,7 @@ V hlavičce i v ``url`` rovnou vidíme, že nový film dostal ID číslo 5 a jeh
 
 .. hint::
 
-    Na celý program se můžete podívat zde: :codeexample:`server/13_created/index.py`
+    Na kód celého programu se můžete podívat zde: :codeexample:`server/13_created/index.py`
 
 .. note::
     Kód by šlo zjednodušit. Vytváření adresy filmu už máme na několika místech, mohlo by tedy mít svou funkci:
@@ -621,11 +684,19 @@ Jenže co vrátit za odpověď? Pokud něco smažeme a ono už to neexistuje, as
     :language: text
     :class: design
 
-Pojďme si mazání naprogramovat. Začneme opět pomocnou funkcí, která bude hledat film podle jeho ID a pokud jej najde, z naší "databáze" jej smaže. Funkce bude vracet ``True`` nebo ``False`` podle toho, jestli se jí povedlo film najít nebo ne.
+Pojďme si mazání naprogramovat. Začneme opět pomocnou funkcí, která bude hledat film podle jeho ID a pokud jej najde, z naší "databáze" jej smaže.
 
-.. literalinclude:: ../code/server/14_delete/index.py
-    :language: python
-    :pyobject: remove_movie_by_id
+.. tabs::
+
+    .. tab:: Cvičení
+
+        Do souboru ``index.py`` přidejte samostatnou funkci ``remove_movie_by_id()`` s parametry ``movies`` a ``id``, která podle ID najde film a smaže jej ze seznamu. Funkce bude vracet ``True`` nebo ``False`` podle toho, jestli se jí povedlo film najít nebo ne.
+
+    .. tab:: Řešení
+
+        .. literalinclude:: ../code/server/14_delete/index.py
+            :language: python
+            :pyobject: remove_movie_by_id
 
 Informace o tom, jestli film v seznamu byl nebo ne se nám bude hodit. Opět bychom totiž měli pamatovat na to, že klient může poslat požadavek na smazání filmu s ID číslo 42, ačkoli žádný takový neexistuje. Asi by se moc nestalo, kdybychom odpověděli, že se neexistující film povedlo smazat, ale bude lepší, když druhou stranu informujeme o tom, že se pokouší dělat něco, co nejde.
 
@@ -634,7 +705,7 @@ Informace o tom, jestli film v seznamu byl nebo ne se nám bude hodit. Opět byc
     :pyobject: MovieResource
     :emphasize-lines: 16-21
 
-Když se podíváme na *Žralokonádo* a budeme ho chtít smazat ze seznamu, měli bychom dostat prázdnou odpověď s kódem :status:`204`.
+Když se podíváme na `Žralokonádo <https://www.csfd.cz/film/343017-zralokonado/>`__ a budeme ho chtít smazat ze seznamu, měli bychom dostat prázdnou odpověď s kódem :status:`204`.
 
 .. literalinclude:: ../code/server/14_delete/test1_3.txt
     :language: text
@@ -646,7 +717,7 @@ Jestliže to zkusíme znovu, měli bychom dostat chybu, protože film s ID čís
 
 .. hint::
 
-    Na celý program se můžete podívat zde: :codeexample:`server/14_delete/index.py`
+    Na kód celého programu se můžete podívat zde: :codeexample:`server/14_delete/index.py`
 
 Zabezpečujeme
 -------------
@@ -694,7 +765,7 @@ Jediným rozdílem je to, že v jejich API byl použit kód :status:`401`. Ten s
 
 .. hint::
 
-    Na celý program se můžete podívat zde: :codeexample:`server/15_forbidden/index.py`
+    Na kód celého programu se můžete podívat zde: :codeexample:`server/15_forbidden/index.py`
 
 .. _nowsh:
 
