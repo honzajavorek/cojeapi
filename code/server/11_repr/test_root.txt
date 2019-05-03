@@ -1,8 +1,8 @@
 $ curl -i "http://0.0.0.0:8080/"
 HTTP/1.1 200 OK
-Content-Length: 114
+Content-Length: 113
 Content-Type: application/json; charset=UTF-8
 Date: Wed, 01 May 2019 11:21:02 GMT
 Server: waitress
 
-{"name": "Honza", "surname": "Javorek", "socks_size": "42", "movies_watchlist_url": "http://0.0.0.0:8080/movies/"}
+{"name": "Honza", "surname": "Javorek", "socks_size": "42", "movies_watchlist_url": "http://0.0.0.0:8080/movies"}

@@ -22,9 +22,9 @@ Nyní budeme tvořit API, které bude strojově čitelnou formou zpřístupňova
 
 Než začneme cokoliv programovat, rozmyslíme si, jak by naše API mělo vypadat. Řekněme, že kdybychom na něj poslali :method:`get` požadavek pomocí programu curl, chceme, aby naše API odpovědělo zhruba následovně:
 
-.. literalinclude:: ../code/server/01_base/example.txt
+.. literalinclude:: ../code/server/01_base/design.txt
     :language: text
-    :class: example
+    :class: design
 
 Jinými slovy, pokud metodou :method:`get` přijde :ref:`požadavek <http-request>` na adresu ``/``, pošleme zpátky :ref:`odpověď <http-response>` se status kódem :status:`200` a tělem v textovém :ref:`formátu <formaty>`. V těle zprávy budou tři řádky, v nichž pošleme své jméno, příjmení, a velikost ponožek.
 
@@ -221,9 +221,9 @@ Pokud bychom přidali ještě více údajů a měli v seznamu větší množstv�
 
 Pojďme tedy upravit API tak, aby v seznamu vypisovalo jen ``name`` a odkaz na detail filmu. Nejdříve ale vytvoříme ten, ať máme na co odkazovat. Jako obvykle se zamyslíme nad tím, jak by měl nový endpoint fungovat:
 
-.. literalinclude:: ../code/server/09_movie/example.txt
+.. literalinclude:: ../code/server/09_movie/design.txt
     :language: text
-    :class: example
+    :class: design
 
 Chceme tedy, abychom mohli na adrese ``/movies/1`` zjistit informace o filmu s ID číslo jedna, na adrese ``/movies/2`` o filmu s ID číslo dvě, atd.
 
@@ -252,7 +252,7 @@ Jak vidíme, pokud zadáme adresu jako ``/movies/{id:int}``, dostane naše metod
 
 Když nyní spustíme naše API a vyzkoušíme, co vrací na adrese ``/movies/1``, měli bychom dostat informace o prvním filmu v seznamu:
 
-.. literalinclude:: ../code/server/09_movie/test01_1.txt
+.. literalinclude:: ../code/server/09_movie/test_1.txt
     :language: text
 
 Zkuste si to i pro ostatní filmy.
@@ -262,12 +262,12 @@ Nenalezeno
 
 Naše API umí hezky odpovídat v případě, že se číslem trefíme do existujícího filmu. Co se ale stane pokud se dotážeme na nějakou hloupost?
 
-.. literalinclude:: ../code/server/09_movie/test02_hello.txt
+.. literalinclude:: ../code/server/09_movie/test_hello.txt
     :language: text
 
 Jistě, Falcon díky ``{id:int}`` obsluhuje jen adresy s čísly, takže se za nás postará o odpověď. Vrací :status:`404`, čímž dává uživateli najevo, že se asi spletl, protože na této adrese nic není. Co když se ale dotážeme s číslem, akorát na neexistující film, např. na ``/movies/42``?
 
-.. literalinclude:: ../code/server/09_movie/test03_42.txt
+.. literalinclude:: ../code/server/09_movie/test_42.txt
     :language: text
 
 Tady nám Falcon už nepomůže. Adresu obslouží naše metoda a ta, jak vidíme, nevrací zrovna nejlepší odpověď. Žádný film číslo 42 neexistuje, ale naše API se chová, jako by to nebyl žádný problém. Upravíme třídu ``MovieResource`` tak, aby s touto situací počítala. Pokud funkce ``get_movie_by_id()`` nic nenajde, odpovíme s chybovým status kódem. Tělo posílat žádné nemusíme.
@@ -278,19 +278,19 @@ Tady nám Falcon už nepomůže. Adresu obslouží naše metoda a ta, jak vidím
 
 Pokud se po této změně dotážeme na neexistující film, měli bychom dostat chybu:
 
-.. literalinclude:: ../code/server/10_not_found/test01_42.txt
+.. literalinclude:: ../code/server/10_not_found/test_42.txt
     :language: text
 
 Získávání informací o existujícím filmu by mělo fungovat stejně jako předtím.
 
-.. literalinclude:: ../code/server/10_not_found/test02_1.txt
+.. literalinclude:: ../code/server/10_not_found/test_1.txt
     :language: text
 
 V tomto návodu s chybou neposíláme žádné tělo, ale je běžné nějaké poslat a poskytnout v něm uživateli našeho API více informací o tom, co se stalo, např. takto:
 
-.. literalinclude:: ../code/server/10_not_found/example.txt
+.. literalinclude:: ../code/server/10_not_found/design_proposal.txt
     :language: text
-    :class: example
+    :class: design
 
 Zatímco status kód :status:`404` je záležitost standardu protokolu :ref:`HTTP`, strukturu těla chybové zprávy jsme si v tomto případě vymysleli. Aby uživatel našeho API věděl, že se má při chybě podívat na její důvod právě do ``message``, nesmíme to potom zapomenout :ref:`popsat v dokumentaci <dokumentace>`.
 
@@ -321,9 +321,9 @@ Nyní pojďme upravit ``MoviesResource``. Víme, že adresa našeho API je teď 
     :language: python
     :pyobject: MoviesResource
 
-Zbytek úprav by měl být celkem srozumitelný. Nejdříve filmy filtrujeme podle parametrů, poté vytvoříme JSON reprezentaci výsledného seznamu a tu pošleme jako tělo odpovědi. Když aplikaci spustíme a vyzkoušíme požadavkem např. na ``/movies/?name=shark``, měla by nám vracet správně filtrovaný seznam filmů v nové podobě:
+Zbytek úprav by měl být celkem srozumitelný. Nejdříve filmy filtrujeme podle parametrů, poté vytvoříme JSON reprezentaci výsledného seznamu a tu pošleme jako tělo odpovědi. Když aplikaci spustíme a vyzkoušíme požadavkem např. na ``/movies?name=shark``, měla by nám vracet správně filtrovaný seznam filmů v nové podobě:
 
-.. literalinclude:: ../code/server/11_repr/test01_movies.txt
+.. literalinclude:: ../code/server/11_repr/test_movies.txt
     :language: text
 
 Reprezentace a resource
@@ -352,7 +352,7 @@ Když už jsme u toho našeho prvního endpointu, z jeho odpovědi s osobními i
 
 Voláme ``dict(personal_details)``, abychom dostali kopii původního slovníku, kterou můžeme upravovat, aniž bychom ovlivnili obsah proměnné ``personal_details``. Odkaz jsme pojmenovali ``movies_watchlist_url``, protože kdyby to bylo pouze ``movies_url``, nebylo by úplně zřejmé, o jaký přesně seznam filmů se jedná. Samozřejmě i tak by to mělo být :ref:`popsáno v dokumentaci <dokumentace>`, ale proč neusnadnit druhé straně práci a nenazvat věci zřejmějším jménem?
 
-.. literalinclude:: ../code/server/11_repr/test02_root.txt
+.. literalinclude:: ../code/server/11_repr/test_root.txt
     :language: text
 
 Pokud bychom odkaz nepřidali, uživatel našeho API, který by dostal pouze jeho výchozí adresu, např. ``http://api.example.com``, by neměl bez :ref:`dokumentace <dokumentace>` jak zjistit, že nějaký seznam filmů existuje. Je to jako kdybyste měli web, např. https://denikn.cz, který sice má stránku https://denikn.cz/kontakt/, ale nevede na ni žádný odkaz. Denník N by ovšem uveřejnil návod, kde by bylo napsáno, že pokud do prohlížeče napíšete https://denikn.cz/kontakt/, najdete tam kontaktní informace. Ač to zní absurdně, takto se bohužel spousta skutečných API chová.
@@ -366,9 +366,9 @@ Odkazy na sebe sama
 
 Pokud v API používáte odkazy, je dobrým zvykem v odpovědích posílat i odkazy na sebe sama. Každá jednotlivá odpověď by mohla mít ``url``, aby i po stažení klientem v sobě nesla informaci o tom, co byla její původní adresa. Navíc je takové ``url`` unikátní, takže by šlo navenek identifikovat filmy jím místo nějakých z kontextu vytržených čísel:
 
-.. literalinclude:: ../code/server/11_repr/example.txt
+.. literalinclude:: ../code/server/11_repr/design.txt
     :language: text
-    :class: example
+    :class: design
     :emphasize-lines: 6
 
 Ostatně, v seznamu filmů na ``/movies`` už to tak děláme pro každou položku zvlášť. Pojďme upravit detail filmu, aby se choval podobně:
@@ -380,7 +380,7 @@ Ostatně, v seznamu filmů na ``/movies`` už to tak děláme pro každou polož
 
 Nyní v reprezentaci už není ``id``, nahradilo jej ``url``:
 
-.. literalinclude:: ../code/server/11_repr/test03_movie.txt
+.. literalinclude:: ../code/server/11_repr/test_movie.txt
     :language: text
 
 Kvůli způsobu, jakým jsme naprogramovali tvoření reprezentace se ``url`` oproti původnímu návrhu objevuje sice až na konci naší JSON odpovědi, ale na pořadí položek většinou nezáleží, takže si s tím nebudeme lámat hlavu.
@@ -392,9 +392,9 @@ Přidáváme filmy
 
 Nyní máme API, které je pouze ke čtení. Řekněme, že bychom chtěli, aby nám někdo mohl doporučit film na zhlédnutí tím, že jej přidá do našeho seznamu. Opět si nejdříve navrhněme, jak by věc mohla fungovat:
 
-.. literalinclude:: ../code/server/12_post/example.txt
+.. literalinclude:: ../code/server/12_post/design.txt
     :language: text
-    :class: example
+    :class: design
 
 Jak vidíme, jde trochu do tuhého. Předáváme několik parametrů, postupně pro jednotlivé části :ref:`HTTP požadavku <http-request>`. Metodu měníme z výchozího :method:`get`, které se psát nemuselo, na :method:`post`. Přidáváme hlavičku :header:`Content-Type` pro tělo požadavku a pak samotné tělo.
 
@@ -453,17 +453,17 @@ Hotovo! Teď si můžeme vyzkoušet přidání nového filmu.
 
 Naše API by nám mělo odpovědět s kódem :status:`200` a bez těla:
 
-.. literalinclude:: ../code/server/12_post/test01_post.txt
+.. literalinclude:: ../code/server/12_post/test1_post.txt
     :language: text
 
 Když se podíváme na seznam filmů, na konci odpovědi vidíme, že nový film dostal ID číslo 5 a jeho adresa je tedy ``http://0.0.0.0:8080/movies/5``:
 
-.. literalinclude:: ../code/server/12_post/test02_get.txt
+.. literalinclude:: ../code/server/12_post/test2_get.txt
     :language: text
 
 Když se podíváme na adresu filmu, měli bychom dostat všechny informace o filmu:
 
-.. literalinclude:: ../code/server/12_post/test03_movie.txt
+.. literalinclude:: ../code/server/12_post/test3_movie.txt
     :language: text
 
 Ukládání natrvalo
@@ -494,9 +494,9 @@ MDN nám radí, že v těle odpovědi bychom spolu s :status:`201` měli poslat 
 
 Toto znamená, že bychom ideálně ještě měli přidat do odpovědi hlavičku :header:`Location`, jejíž hodnotou bude odkaz na vytvořený film. Druhá možnost je, že přímo adresa, kam se dělá požadavek, je adresou nově vytvořeného filmu, ale to není náš případ. Celé by to tedy mělo vypadat asi nějak takto:
 
-.. literalinclude:: ../code/server/13_created/example.txt
+.. literalinclude:: ../code/server/13_created/design.txt
     :language: text
-    :class: example
+    :class: design
 
 .. note::
     Nebojte se dívat přímo do standardů nebo do jejich kvalitního přepisu, jako je na `MDN <https://developer.mozilla.org/en-US/docs/Web/HTTP>`__. Ze začátku to může být tuhé čtení, ale dlouhodobě se to vyplácí. V některých případech není nejlepší se spoléhat na náhodné informace, které lze najít na internetu, jelikož mohou být zatíženy různými nepřesnostmi nebo mýty.
@@ -567,9 +567,9 @@ Pokud bychom chtěli umožnit filmy ze seznamu mazat, můžeme k tomu použít m
 
 Jenže co vrátit za odpověď? Pokud něco smažeme a ono už to neexistuje, asi to nebudeme chtít vracet v těle odpovědi. Pokud nemáme co do těla odpovědi dát, můžeme v HTTP použít tzv. prázdnou odpověď. Má kód :status:`204` a dává klientovi najevo, že nemá v odpovědi už očekávat žádné tělo. Ostatně, `doporučuje nám ji pro metodu DELETE i MDN <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE#Responses>`__.
 
-.. literalinclude:: ../code/server/14_delete/example.txt
+.. literalinclude:: ../code/server/14_delete/design.txt
     :language: text
-    :class: example
+    :class: design
 
 Pojďme si mazání naprogramovat. Začneme opět pomocnou funkcí, která bude hledat film podle jeho ID a pokud jej najde, z naší "databáze" jej smaže. Funkce bude vracet ``True`` nebo ``False`` podle toho, jestli se jí povedlo film najít nebo ne.
 
@@ -586,12 +586,12 @@ Informace o tom, jestli film v seznamu byl nebo ne se nám bude hodit. Opět byc
 
 Když se podíváme na *Žralokonádo* a budeme ho chtít smazat ze seznamu, měli bychom dostat prázdnou odpověď s kódem :status:`204`.
 
-.. literalinclude:: ../code/server/14_delete/test01_3.txt
+.. literalinclude:: ../code/server/14_delete/test1_3.txt
     :language: text
 
 Jestliže to zkusíme znovu, měli bychom dostat chybu, protože film s ID číslo 3 už nebude existovat. Stejně tak dostaneme chybu, pokud zkusíme nějaké nesmyslné ID:
 
-.. literalinclude:: ../code/server/14_delete/test03_42.txt
+.. literalinclude:: ../code/server/14_delete/test3_42.txt
     :language: text
 
 Zabezpečujeme

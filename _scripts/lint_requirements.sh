@@ -1,9 +1,6 @@
 #!/bin/bash
 set -e
 
-# Check code
-pylama
-
 # Make sure requirements.txt are in sync with Pipfile.lock
 pipenv lock --requirements | sed -e 's#pypi.org/simple$#pypi.org/simple/#' > ci-requirements.txt
 if ! diff requirements.txt ci-requirements.txt > /dev/null

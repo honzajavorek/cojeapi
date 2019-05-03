@@ -1,93 +1,96 @@
 version: 2
+
+steps:
+  chown: &chown
+    run:
+      name: "Fix ownership of directories with Python packages"
+      command: |
+        sudo chown -R circleci:circleci /usr/local/bin
+        sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages
+
+  restore_cache: &restore_cache
+    restore_cache:
+      key: 'deps-{{ .Branch }}-{{ checksum "Pipfile.lock" }}'
+
+  pip_install: &pip_install
+    run:
+      name: "Installing dependencies"
+      command: |
+        sudo pip install pip pipenv --upgrade
+        pipenv install --dev
+
+  save_cache: &save_cache
+    save_cache:
+      key: 'deps-{{ .Branch }}-{{ checksum "Pipfile.lock" }}'
+      paths:
+        - ".venv"
+        - "/usr/local/bin"
+        - "/usr/local/lib/python3.6/site-packages"
+
 jobs:
   test:
     docker:
       - image: "circleci/python:3.6"
     working_directory: "~/repo"
     steps:
-      - "checkout"
-
-      - run: "sudo chown -R circleci:circleci /usr/local/bin"
-      - run: "sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages"
-      - restore_cache:
-          key: 'deps-{{ .Branch }}-{{ checksum "Pipfile.lock" }}'
-
-      - run:
-          name: "Installing dependencies"
-          command: |
-            sudo pip install pip pipenv --upgrade
-            pipenv install --dev
-
-      - save_cache:
-          key: 'deps-{{ .Branch }}-{{ checksum "Pipfile.lock" }}'
-          paths:
-            - ".venv"
-            - "/usr/local/bin"
-            - "/usr/local/lib/python3.6/site-packages"
-
+      - checkout
+      - *chown
+      - *restore_cache
+      - *pip_install
+      - *save_cache
       - run:
           name: "Running tests"
-          command: |
-            pipenv run lint
+          command: "pipenv run test"
 
+  requirements-vs-pipfile:
+    docker:
+      - image: "circleci/python:3.6"
+    working_directory: "~/repo"
+    steps:
+      - checkout
+      - *chown
+      - *restore_cache
+      - *pip_install
+      - *save_cache
+      - run:
+          name: "Checking whether requirements.txt and Pipfile are in sync"
+          command: "pipenv run lint-requirements"
 
   linkcheck:
     docker:
       - image: "circleci/python:3.6"
     working_directory: "~/repo"
     steps:
-      - "checkout"
-
-      - run: "sudo chown -R circleci:circleci /usr/local/bin"
-      - run: "sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages"
-      - restore_cache:
-          key: 'deps-{{ .Branch }}-{{ checksum "Pipfile.lock" }}'
-
-      - run:
-          name: "Installing dependencies"
-          command: |
-            sudo pip install pip pipenv --upgrade
-            pipenv install --dev
-
-      - save_cache:
-          key: 'deps-{{ .Branch }}-{{ checksum "Pipfile.lock" }}'
-          paths:
-            - ".venv"
-            - "/usr/local/bin"
-            - "/usr/local/lib/python3.6/site-packages"
-
+      - checkout
+      - *chown
+      - *restore_cache
+      - *pip_install
+      - *save_cache
       - run:
           name: "Checking external links"
-          command: |
-            pipenv run linkcheck
-
+          command: "pipenv run linkcheck"
 
   deploy-server:
     docker:
       - image: "circleci/node:10"
     working_directory: "~/repo"
     steps:
-      - "checkout"
-
+      - checkout
       - run:
           name: "Installing now.sh"
-          command: sudo npm install --global --unsafe-perm now
-
+          command: "sudo npm install --global --unsafe-perm now"
       - run:
+          # NOW_TOKEN needs to be set in CircleCI project settings
           name: "Deploying"
-          command: |
-            # NOW_TOKEN needs to be set in CircleCI project settings
-            export NOW_TARGET="staging"
-            [[ "$CIRCLE_BRANCH" == "master" ]] && export NOW_TARGET="production"
-            now ./code/server/16_deploy --name=cojeapi --target="$NOW_TARGET" --token="$NOW_TOKEN"
-
+          command: "now ./code/server/16_deploy --name=cojeapi --token=$NOW_TOKEN"
 
 workflows:
   version: 2
   build:
     jobs:
-      - linkcheck
       - test
+      - requirements-vs-pipfile
+      - linkcheck
       - deploy-server:
           requires:
             - test

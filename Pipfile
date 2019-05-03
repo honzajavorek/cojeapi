@@ -4,14 +4,19 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+# Pinning packages with ~= unless their version starts with 0.,
+# then pinning each version strictly with ==
 sphinx = "~=2.0.1"
 sphinx-tabs = "~=1.1.10"
 falcon = "~=2.0.0"  # used in Sphinx extensions to get status codes names
 
 [dev-packages]
+# Pinning packages with ~= unless their version starts with 0.,
+# then pinning each version strictly with ==
 sphinx-autobuild = "==0.7.1"
 sphinx-rtd-theme = "==0.4.3"
 pylama = "~=7.7.1"
+pytest = "~=4.4.1"
 waitress = "~=1.3.0"
 
 [requires]
@@ -21,5 +26,6 @@ python_version = "3.6"  # ReadTheDocs runtime
 "serve:en" = "sphinx-autobuild en _build"
 "serve:cs" = "sphinx-autobuild cs _build"
 serve = "sphinx-autobuild cs _build"  # because I forget to add :cs EVERY SINGLE TIME
-lint = "_scripts/lint.sh"
+test = "pytest"
+lint-requirements = "_scripts/lint_requirements.sh"
 linkcheck = "_scripts/linkcheck.sh"
