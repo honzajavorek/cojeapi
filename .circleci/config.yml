@@ -76,9 +76,10 @@ jobs:
       - run:
           name: "Deploying"
           command: |
+            # NOW_TOKEN needs to be set in CircleCI project settings
             export NOW_TARGET="staging"
             [[ "$CIRCLE_BRANCH" == "master" ]] && export NOW_TARGET="production"
-            now ./code --name=cojeapi --target="$NOW_TARGET" --token="$NOW_TOKEN"
+            now ./code/server/16_deploy --name=cojeapi --target="$NOW_TARGET" --token="$NOW_TOKEN"
 
 
 workflows:
