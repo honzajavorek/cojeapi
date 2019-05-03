@@ -684,7 +684,7 @@ Podobným způsobem bylo zabezpečeno API od :ref:`OMDb <omdb-api>`. Dokud jsme 
 
 .. code-block:: text
 
-    $ curl -i 'https://www.omdbapi.com/?t=westworld'
+    $ curl -i "https://www.omdbapi.com/?t=westworld"
     HTTP/2 401
     ...
 
