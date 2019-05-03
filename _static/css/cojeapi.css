@@ -55,7 +55,7 @@ blockquote {
   Distinguishing proposed "examples" from real "tests" by a blueprint-like
   background (taken from https://codepen.io/tennowman/pen/ynrih)
 */
-.example .highlight {
+.design .highlight {
   background-color: #2980B9;
   background-image:
     linear-gradient(rgba(255,255,255,.1) 2px, transparent 2px),
@@ -66,7 +66,7 @@ blockquote {
   background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
 }
 
-.example .highlight .hll {
+.design .highlight .hll {
   background: none;
   background-color: rgba(255,255,255,.2);
 }

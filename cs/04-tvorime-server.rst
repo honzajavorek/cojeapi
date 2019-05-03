@@ -22,9 +22,9 @@ Nyní budeme tvořit API, které bude strojově čitelnou formou zpřístupňova
 
 Než začneme cokoliv programovat, rozmyslíme si, jak by naše API mělo vypadat. Řekněme, že kdybychom na něj poslali :method:`get` požadavek pomocí programu curl, chceme, aby naše API odpovědělo zhruba následovně:
 
-.. literalinclude:: ../code/base_example.txt
+.. literalinclude:: ../code/server/01_base/design.txt
     :language: text
-    :class: example
+    :class: design
 
 Jinými slovy, pokud metodou :method:`get` přijde :ref:`požadavek <http-request>` na adresu ``/``, pošleme zpátky :ref:`odpověď <http-response>` se status kódem :status:`200` a tělem v textovém :ref:`formátu <formaty>`. V těle zprávy budou tři řádky, v nichž pošleme své jméno, příjmení, a velikost ponožek.
 
@@ -37,7 +37,7 @@ Programujeme aplikaci
 
 Začneme tím, že vytvoříme soubor ``index.py`` s následujícím obsahem:
 
-.. literalinclude:: ../code/base.py
+.. literalinclude:: ../code/server/01_base/index.py
     :language: python
 
 V kódu můžeme vidět `třídu <https://naucse.python.cz/course/pyladies/beginners/class/>`__ ``PersonalDetailsResource`` s jednou metodou. Třídu jsme si pojmenovali sami podle toho, že je zodpovědná za naše osobní údaje, akorát jsme podle konvence připojili slovo *resource*.
@@ -88,7 +88,7 @@ Co když zkusíme curl? Protože nám spuštěné API blokuje terminál, spustí
 
 Vidíme, že API se chová tak, jak jsme původně chtěli. Odpověď má status kód :status:`200`, formát těla odpovědi je v hlavičce :header:`Content-Type` nastaven na obyčejný text, a v těle zprávy vidíme jméno, příjmení, i velikost ponožek. Kromě toho Falcon s Waitress přidali i nějaké další hlavičky.
 
-.. literalinclude:: ../code/base_test.txt
+.. literalinclude:: ../code/server/01_base/test.txt
     :language: text
 
 Server nyní můžeme v terminálu ukončit pomocí :kbd:`Ctrl+C` a budeme API rozšiřovat o další funkce. Pokaždé, když změníme kód a budeme chtít naše API vyzkoušet, budeme muset Waitress nejdřív restartovat.
@@ -98,19 +98,19 @@ Uchováváme data jako slovník
 
 Naše data nyní vypadají následovně:
 
-.. literalinclude:: ../code/base.py
+.. literalinclude:: ../code/server/01_base/index.py
     :language: python
     :emphasize-lines: 9-13
 
 Co si budeme povídat, takto data běžně nevypadají. Většinou jsou někde v databázi, v souboru, apod. Zpravidla je dostaneme jako seznam nebo slovník, ne jako připravený řetězec. Pojďme si tedy tuto situaci nasimulovat. Nejdříve si data vytáhneme do proměnné.
 
-.. literalinclude:: ../code/base_data.py
+.. literalinclude:: ../code/server/02_data/index.py
     :language: python
     :emphasize-lines: 4-8, 16
 
 Nyní z dat uděláme slovník, který až při sestavování odpovědi složíme do textu. Tím rozdělíme uložení dat a jejich prezentaci navenek. Jak už bylo zmíněno, data většinou přicházejí např. z databáze právě jako slovník, takže toto rozdělení je v praxi potřebné a velmi časté.
 
-.. literalinclude:: ../code/base_data_dict.py
+.. literalinclude:: ../code/server/03_dict/index.py
     :language: python
     :emphasize-lines: 4-8, 17-20
 
@@ -121,13 +121,13 @@ Posíláme JSON
 
 Jak jsme si :ref:`vysvětlovali <struktura>`, obyčejný text není nejlepší způsob, jak něco udělat strojově čitelné. Zkusíme tedy poslat naše data jako :ref:`JSON`.
 
-.. literalinclude:: ../code/json_response.py
+.. literalinclude:: ../code/server/04_json/index.py
     :language: python
     :emphasize-lines: 1, 16-17
 
 Jak vidíme, kód se nám s JSONem zjednodušil. Navíc díky tomu, že máme data hezky oddělená od samotného API, nemuseli jsme je nijak měnit. Stačilo změnit způsob, jakým se budou posílat v odpovědi. Když aplikaci spustíme, můžeme opět použít curl nebo prohlížeč a ověřit výsledek.
 
-.. literalinclude:: ../code/json_response_test.txt
+.. literalinclude:: ../code/server/04_json/test.txt
     :language: text
 
 .. image:: ../_static/images/me-api-json.png
@@ -153,7 +153,7 @@ A je to, máme své první JSON API! Už teď jsme se dostali dál, než kam se 
 
 Protože :ref:`odpovědi <http-response>` mají ve většině případů status kód 200 a protože :ref:`JSON` je nejpoužívanější formát, tak je Falcon ve skutečnosti nastavuje jako výchozí. Můžeme proto zcela vynechat dva řádky z našeho programu a stále bude fungovat tak, jak jsme chtěli:
 
-.. literalinclude:: ../code/json_response_simplified.py
+.. literalinclude:: ../code/server/05_json_simplified/index.py
     :language: python
     :emphasize-lines: 14-15
 
@@ -162,13 +162,13 @@ Přidáváme další endpoint
 
 Naše API má zatím pouze jednu adresu, na kterou může klient posílat požadavky. V hantýrce programátorů webů by se řeklo, že má jednu "routu" (z anglického *route*). V hantýrce programátorů API by se zase řeklo, že má jeden *endpoint*. No a API s jedním endpointem není nic moc. Přidáme tedy druhý, který bude světu sdělovat seznam filmů, které bychom chtěli vidět.
 
-.. literalinclude:: ../code/movies.py
+.. literalinclude:: ../code/server/06_movies/index.py
     :language: python
     :emphasize-lines: 18-29, 34
 
 Když aplikaci spustíme, bude na adrese ``/movies`` vracet seznam filmů.
 
-.. literalinclude:: ../code/movies_test.txt
+.. literalinclude:: ../code/server/06_movies/test.txt
     :language: text
 
 Kdyby každý měl takovéto API, mohl by někdo vytvořit třeba mobilní appku na organizaci filmových večerů. Dávala by dohromady lidi, kteří jsou poblíž a mají stejné filmy na svých seznamech.
@@ -182,19 +182,19 @@ Nejdříve si připravme hledání. Vytvoříme funkci ``filter_movies()`` s par
 
 V následujícím příkladu je použit `cyklus <https://naucse.python.cz/course/pyladies/sessions/loops/>`__, ale kdo zná funkci `filter <https://docs.python.org/3/library/functions.html#filter>`__ nebo `list comprehentions <https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions>`__, může si klidně poradit jinak.
 
-.. literalinclude:: ../code/movies_filter.py
+.. literalinclude:: ../code/server/07_params/index.py
     :language: python
     :pyobject: filter_movies
 
 Nyní potřebujeme přečíst z požadavku parametr a použít jej:
 
-.. literalinclude:: ../code/movies_filter.py
+.. literalinclude:: ../code/server/07_params/index.py
     :language: python
     :emphasize-lines: 26-34, 40-41
 
 Pokud se na náš nový endpoint dotážeme bez parametrů, měl by fungovat stejně jako předtím. Jestliže ale přidáme ``?name=`` do adresy, měla by hodnota parametru filtrovat filmy.
 
-.. literalinclude:: ../code/movies_filter_test.txt
+.. literalinclude:: ../code/server/07_params/test.txt
     :language: text
 
 Vidíme, že tentokrát jsme dostali v těle odpovědi jen dva filmy místo čtyř.
@@ -208,28 +208,28 @@ Když něco evidujeme, zpravidla tomu přiřadíme nějaké evidenční číslo,
 
 Kromě ``id`` přidáme každému filmu ještě ``name_cs`` s českým názvem (``cs`` je mezinárodní standardní kód pro `Češtinu <https://cs.wikipedia.org/wiki/Seznam_k%C3%B3d%C5%AF_ISO_639-2>`__), ``imdb_url`` s odkazem na `IMDb <https://www.imdb.com/>`__ a ``csfd_url`` s odkazem na `ČSFD.cz <https://www.csfd.cz/>`__.
 
-.. literalinclude:: ../code/movies_db.py
+.. literalinclude:: ../code/server/08_db/index.py
     :language: python
     :lines: 18-51
 
 Když se podíváme, co nyní vrací naše API, uvidíme o dost více dat:
 
-.. literalinclude:: ../code/movies_db_test.txt
+.. literalinclude:: ../code/server/08_db/test.txt
     :language: text
 
 Pokud bychom přidali ještě více údajů a měli v seznamu větší množství filmů, byla by odpověď na endpointu ``/movies`` už možná příliš velká a pro některé uživatele našeho API by tam mohlo být možná až příliš mnoho zbytečných informací. Kdybychom tvořili webové stránky, seznam filmů by nejspíš obsahoval jen základní údaje a zbytek by byl na nějaké stránce s detailem filmu pro ty, které to zajímá. Při tvorbě API je praxe stejná.
 
 Pojďme tedy upravit API tak, aby v seznamu vypisovalo jen ``name`` a odkaz na detail filmu. Nejdříve ale vytvoříme ten, ať máme na co odkazovat. Jako obvykle se zamyslíme nad tím, jak by měl nový endpoint fungovat:
 
-.. literalinclude:: ../code/movies_detail_example.txt
+.. literalinclude:: ../code/server/09_movie/design.txt
     :language: text
-    :class: example
+    :class: design
 
 Chceme tedy, abychom mohli na adrese ``/movies/1`` zjistit informace o filmu s ID číslo jedna, na adrese ``/movies/2`` o filmu s ID číslo dvě, atd.
 
 Začneme funkcí ``get_movie_by_id()``, která dostane seznam filmů ``movies`` a identifikátor ``id``. Prohledá seznam a když v něm najde film s daným identifikátorem, vrátí tento film.
 
-.. literalinclude:: ../code/movies_detail.py
+.. literalinclude:: ../code/server/09_movie/index.py
     :language: python
     :pyobject: get_movie_by_id
 
@@ -244,7 +244,7 @@ Určitě se nám ale nechce přidávat každou zvlášť. Co kdybychom v seznamu
 
 Falcon nám dává řešení v podobě možnosti zapsat adresu jako "šablonu", podle které bude odchytávat odlišné adresy a směřovat na jeden a ten samý kód pro jejich obsluhu.
 
-.. literalinclude:: ../code/movies_detail.py
+.. literalinclude:: ../code/server/09_movie/index.py
     :language: python
     :lines: 78-87
 
@@ -252,7 +252,7 @@ Jak vidíme, pokud zadáme adresu jako ``/movies/{id:int}``, dostane naše metod
 
 Když nyní spustíme naše API a vyzkoušíme, co vrací na adrese ``/movies/1``, měli bychom dostat informace o prvním filmu v seznamu:
 
-.. literalinclude:: ../code/movies_detail_1_test.txt
+.. literalinclude:: ../code/server/09_movie/test_1.txt
     :language: text
 
 Zkuste si to i pro ostatní filmy.
@@ -262,35 +262,35 @@ Nenalezeno
 
 Naše API umí hezky odpovídat v případě, že se číslem trefíme do existujícího filmu. Co se ale stane pokud se dotážeme na nějakou hloupost?
 
-.. literalinclude:: ../code/movies_detail_hello_test.txt
+.. literalinclude:: ../code/server/09_movie/test_hello.txt
     :language: text
 
 Jistě, Falcon díky ``{id:int}`` obsluhuje jen adresy s čísly, takže se za nás postará o odpověď. Vrací :status:`404`, čímž dává uživateli najevo, že se asi spletl, protože na této adrese nic není. Co když se ale dotážeme s číslem, akorát na neexistující film, např. na ``/movies/42``?
 
-.. literalinclude:: ../code/movies_detail_42_test.txt
+.. literalinclude:: ../code/server/09_movie/test_42.txt
     :language: text
 
 Tady nám Falcon už nepomůže. Adresu obslouží naše metoda a ta, jak vidíme, nevrací zrovna nejlepší odpověď. Žádný film číslo 42 neexistuje, ale naše API se chová, jako by to nebyl žádný problém. Upravíme třídu ``MovieResource`` tak, aby s touto situací počítala. Pokud funkce ``get_movie_by_id()`` nic nenajde, odpovíme s chybovým status kódem. Tělo posílat žádné nemusíme.
 
-.. literalinclude:: ../code/movies_not_found.py
+.. literalinclude:: ../code/server/10_not_found/index.py
     :language: python
     :pyobject: MovieResource
 
 Pokud se po této změně dotážeme na neexistující film, měli bychom dostat chybu:
 
-.. literalinclude:: ../code/movies_not_found_42_test.txt
+.. literalinclude:: ../code/server/10_not_found/test_42.txt
     :language: text
 
 Získávání informací o existujícím filmu by mělo fungovat stejně jako předtím.
 
-.. literalinclude:: ../code/movies_not_found_1_test.txt
+.. literalinclude:: ../code/server/10_not_found/test_1.txt
     :language: text
 
 V tomto návodu s chybou neposíláme žádné tělo, ale je běžné nějaké poslat a poskytnout v něm uživateli našeho API více informací o tom, co se stalo, např. takto:
 
-.. literalinclude:: ../code/movies_not_found_example.txt
+.. literalinclude:: ../code/server/10_not_found/design_proposal.txt
     :language: text
-    :class: example
+    :class: design
 
 Zatímco status kód :status:`404` je záležitost standardu protokolu :ref:`HTTP`, strukturu těla chybové zprávy jsme si v tomto případě vymysleli. Aby uživatel našeho API věděl, že se má při chybě podívat na její důvod právě do ``message``, nesmíme to potom zapomenout :ref:`popsat v dokumentaci <dokumentace>`.
 
@@ -311,19 +311,19 @@ Detail filmu máme připravený, takže se můžeme pustit do úprav seznamu fil
 
 Doteď bylo to, co jsme poslali v odpovědi, vždy shodné s tím, jak máme data uložena interně v naší aplikaci. Nyní ale nastává situace, kdy chceme v odpovědi poslat něco trochu jiného, než jak data vypadají ve skutečnosti. Chceme poslat jen určitou *reprezentaci* těchto dat. Začneme tedy funkcí, která vezme seznam filmů a poskytne nám jeho reprezentaci tak, jak jsme si ji vymysleli:
 
-.. literalinclude:: ../code/movies_repr.py
+.. literalinclude:: ../code/server/11_repr/index.py
     :language: python
     :pyobject: represent_movies
 
 Nyní pojďme upravit ``MoviesResource``. Víme, že adresa našeho API je teď http://0.0.0.0:8080, ale jakmile budeme chtít aplikaci :ref:`uveřejnit někam na internet <nowsh>`, bude zase jiná. Proto je lepší si ji vytáhnout z objektu ``request``. Falcon nám ji poskytuje jako `request.prefix <https://falcon.readthedocs.io/en/stable/api/request_and_response.html#falcon.Request.prefix>`__.
 
-.. literalinclude:: ../code/movies_repr.py
+.. literalinclude:: ../code/server/11_repr/index.py
     :language: python
     :pyobject: MoviesResource
 
-Zbytek úprav by měl být celkem srozumitelný. Nejdříve filmy filtrujeme podle parametrů, poté vytvoříme JSON reprezentaci výsledného seznamu a tu pošleme jako tělo odpovědi. Když aplikaci spustíme a vyzkoušíme požadavkem např. na ``/movies/?name=shark``, měla by nám vracet správně filtrovaný seznam filmů v nové podobě:
+Zbytek úprav by měl být celkem srozumitelný. Nejdříve filmy filtrujeme podle parametrů, poté vytvoříme JSON reprezentaci výsledného seznamu a tu pošleme jako tělo odpovědi. Když aplikaci spustíme a vyzkoušíme požadavkem např. na ``/movies?name=shark``, měla by nám vracet správně filtrovaný seznam filmů v nové podobě:
 
-.. literalinclude:: ../code/movies_repr_movies_test.txt
+.. literalinclude:: ../code/server/11_repr/test_movies.txt
     :language: text
 
 Reprezentace a resource
@@ -333,11 +333,11 @@ V hantýrce API návrhářů a vývojářů bychom řekli, že film, nebo v tomt
 
 Je důležité rozlišit, že *resource* je pomyslný, nehmatatelný model světa, zatímco reprezentace už je jeho konkrétní zobrazení. Jak jsme si vyzkoušeli u ``PersonalDetailsResource``, lze mít více různých reprezentací pro tutéž pomyslnou věc - čistě textovou, nebo jako JSON, nebo úplně jinou:
 
-.. literalinclude:: ../code/base_test.txt
+.. literalinclude:: ../code/server/01_base/test.txt
     :language: text
     :emphasize-lines: 4, 8-10
 
-.. literalinclude:: ../code/json_response_test.txt
+.. literalinclude:: ../code/server/04_json/test.txt
     :language: text
     :emphasize-lines: 4, 8
 
@@ -346,13 +346,13 @@ Odkazování mezi reprezentacemi
 
 Když už jsme u toho našeho prvního endpointu, z jeho odpovědi s osobními informacemi nelze nijak zjistit, že v API zpřístupňujeme ještě i seznam filmů, které chceme vidět. Pojďme to napravit a přidat na seznam filmů odkaz:
 
-.. literalinclude:: ../code/movies_repr.py
+.. literalinclude:: ../code/server/11_repr/index.py
     :language: python
     :pyobject: PersonalDetailsResource
 
 Voláme ``dict(personal_details)``, abychom dostali kopii původního slovníku, kterou můžeme upravovat, aniž bychom ovlivnili obsah proměnné ``personal_details``. Odkaz jsme pojmenovali ``movies_watchlist_url``, protože kdyby to bylo pouze ``movies_url``, nebylo by úplně zřejmé, o jaký přesně seznam filmů se jedná. Samozřejmě i tak by to mělo být :ref:`popsáno v dokumentaci <dokumentace>`, ale proč neusnadnit druhé straně práci a nenazvat věci zřejmějším jménem?
 
-.. literalinclude:: ../code/movies_repr_root_test.txt
+.. literalinclude:: ../code/server/11_repr/test_root.txt
     :language: text
 
 Pokud bychom odkaz nepřidali, uživatel našeho API, který by dostal pouze jeho výchozí adresu, např. ``http://api.example.com``, by neměl bez :ref:`dokumentace <dokumentace>` jak zjistit, že nějaký seznam filmů existuje. Je to jako kdybyste měli web, např. https://denikn.cz, který sice má stránku https://denikn.cz/kontakt/, ale nevede na ni žádný odkaz. Denník N by ovšem uveřejnil návod, kde by bylo napsáno, že pokud do prohlížeče napíšete https://denikn.cz/kontakt/, najdete tam kontaktní informace. Ač to zní absurdně, takto se bohužel spousta skutečných API chová.
@@ -366,21 +366,21 @@ Odkazy na sebe sama
 
 Pokud v API používáte odkazy, je dobrým zvykem v odpovědích posílat i odkazy na sebe sama. Každá jednotlivá odpověď by mohla mít ``url``, aby i po stažení klientem v sobě nesla informaci o tom, co byla její původní adresa. Navíc je takové ``url`` unikátní, takže by šlo navenek identifikovat filmy jím místo nějakých z kontextu vytržených čísel:
 
-.. literalinclude:: ../code/movies_repr_movie_example.txt
+.. literalinclude:: ../code/server/11_repr/design.txt
     :language: text
-    :class: example
+    :class: design
     :emphasize-lines: 6
 
 Ostatně, v seznamu filmů na ``/movies`` už to tak děláme pro každou položku zvlášť. Pojďme upravit detail filmu, aby se choval podobně:
 
-.. literalinclude:: ../code/movies_repr.py
+.. literalinclude:: ../code/server/11_repr/index.py
     :language: python
     :pyobject: MovieResource
     :emphasize-lines: 8-14
 
 Nyní v reprezentaci už není ``id``, nahradilo jej ``url``:
 
-.. literalinclude:: ../code/movies_repr_movie_test.txt
+.. literalinclude:: ../code/server/11_repr/test_movie.txt
     :language: text
 
 Kvůli způsobu, jakým jsme naprogramovali tvoření reprezentace se ``url`` oproti původnímu návrhu objevuje sice až na konci naší JSON odpovědi, ale na pořadí položek většinou nezáleží, takže si s tím nebudeme lámat hlavu.
@@ -392,9 +392,9 @@ Přidáváme filmy
 
 Nyní máme API, které je pouze ke čtení. Řekněme, že bychom chtěli, aby nám někdo mohl doporučit film na zhlédnutí tím, že jej přidá do našeho seznamu. Opět si nejdříve navrhněme, jak by věc mohla fungovat:
 
-.. literalinclude:: ../code/movies_post_example.txt
+.. literalinclude:: ../code/server/12_post/design.txt
     :language: text
-    :class: example
+    :class: design
 
 Jak vidíme, jde trochu do tuhého. Předáváme několik parametrů, postupně pro jednotlivé části :ref:`HTTP požadavku <http-request>`. Metodu měníme z výchozího :method:`get`, které se psát nemuselo, na :method:`post`. Přidáváme hlavičku :header:`Content-Type` pro tělo požadavku a pak samotné tělo.
 
@@ -435,13 +435,13 @@ S těmito znalostmi by už neměl být velký problém nový film přečíst a p
 
 Jediný zbývající zádrhel je snad v ``id``, které filmu musíme přiřadit. Jak bylo několikrát zmíněno, běžně by jej za nás vymyslela databáze. Žádnou databázi nemáme, takže si vypomůžeme trikem - podíváme se, jaké je nejvyšší ID mezi našimi filmy a tomu novému přiřadíme o jedna větší. Ostatně, reálná databáze by většinou udělala totéž. Přidáme funkci ``create_movie_id()``, která bude ID pro nové filmy vymýšlet:
 
-.. literalinclude:: ../code/movies_post.py
+.. literalinclude:: ../code/server/12_post/index.py
     :language: python
     :pyobject: create_movie_id
 
 Nyní vše poskládáme dohromady:
 
-.. literalinclude:: ../code/movies_post.py
+.. literalinclude:: ../code/server/12_post/index.py
     :language: python
     :pyobject: MoviesResource
     :emphasize-lines: 11-14
@@ -453,17 +453,17 @@ Hotovo! Teď si můžeme vyzkoušet přidání nového filmu.
 
 Naše API by nám mělo odpovědět s kódem :status:`200` a bez těla:
 
-.. literalinclude:: ../code/movies_post_movies_post_test.txt
+.. literalinclude:: ../code/server/12_post/test1_post.txt
     :language: text
 
 Když se podíváme na seznam filmů, na konci odpovědi vidíme, že nový film dostal ID číslo 5 a jeho adresa je tedy ``http://0.0.0.0:8080/movies/5``:
 
-.. literalinclude:: ../code/movies_post_movies_get_test.txt
+.. literalinclude:: ../code/server/12_post/test2_get.txt
     :language: text
 
 Když se podíváme na adresu filmu, měli bychom dostat všechny informace o filmu:
 
-.. literalinclude:: ../code/movies_post_movie_test.txt
+.. literalinclude:: ../code/server/12_post/test3_movie.txt
     :language: text
 
 Ukládání natrvalo
@@ -494,23 +494,23 @@ MDN nám radí, že v těle odpovědi bychom spolu s :status:`201` měli poslat 
 
 Toto znamená, že bychom ideálně ještě měli přidat do odpovědi hlavičku :header:`Location`, jejíž hodnotou bude odkaz na vytvořený film. Druhá možnost je, že přímo adresa, kam se dělá požadavek, je adresou nově vytvořeného filmu, ale to není náš případ. Celé by to tedy mělo vypadat asi nějak takto:
 
-.. literalinclude:: ../code/movies_created_example.txt
+.. literalinclude:: ../code/server/13_created/design.txt
     :language: text
-    :class: example
+    :class: design
 
 .. note::
     Nebojte se dívat přímo do standardů nebo do jejich kvalitního přepisu, jako je na `MDN <https://developer.mozilla.org/en-US/docs/Web/HTTP>`__. Ze začátku to může být tuhé čtení, ale dlouhodobě se to vyplácí. V některých případech není nejlepší se spoléhat na náhodné informace, které lze najít na internetu, jelikož mohou být zatíženy různými nepřesnostmi nebo mýty.
 
 Zpět od čtení k programování. Změníme status kód a přidáme hlavičku. Po tom, co vložíme film do naší "databáze", si uděláme jeho reprezentaci s ``url`` místo ``id`` a následně ji nastavíme jako tělo odpovědi:
 
-.. literalinclude:: ../code/movies_created.py
+.. literalinclude:: ../code/server/13_created/index.py
     :language: python
     :pyobject: MoviesResource
     :emphasize-lines: 16-24
 
 Když nyní restartujeme Waitress a zkusíme opět přidat nový film, měli bychom dostat :status:`201` s ``Location`` hlavičkou a tělem, v němž jsou všechny detaily. Díky ``url`` máme adresu na nový film nejen v hlavičce, ale i přímo v těle zprávy.
 
-.. literalinclude:: ../code/movies_created_test.txt
+.. literalinclude:: ../code/server/13_created/test.txt
     :language: text
 
 V hlavičce i v ``url`` rovnou vidíme, že nový film dostal ID číslo 5 a jeho adresa je tedy ``http://0.0.0.0:8080/movies/5``.
@@ -567,31 +567,31 @@ Pokud bychom chtěli umožnit filmy ze seznamu mazat, můžeme k tomu použít m
 
 Jenže co vrátit za odpověď? Pokud něco smažeme a ono už to neexistuje, asi to nebudeme chtít vracet v těle odpovědi. Pokud nemáme co do těla odpovědi dát, můžeme v HTTP použít tzv. prázdnou odpověď. Má kód :status:`204` a dává klientovi najevo, že nemá v odpovědi už očekávat žádné tělo. Ostatně, `doporučuje nám ji pro metodu DELETE i MDN <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE#Responses>`__.
 
-.. literalinclude:: ../code/movies_delete_example.txt
+.. literalinclude:: ../code/server/14_delete/design.txt
     :language: text
-    :class: example
+    :class: design
 
 Pojďme si mazání naprogramovat. Začneme opět pomocnou funkcí, která bude hledat film podle jeho ID a pokud jej najde, z naší "databáze" jej smaže. Funkce bude vracet ``True`` nebo ``False`` podle toho, jestli se jí povedlo film najít nebo ne.
 
-.. literalinclude:: ../code/movies_delete.py
+.. literalinclude:: ../code/server/14_delete/index.py
     :language: python
     :pyobject: remove_movie_by_id
 
 Informace o tom, jestli film v seznamu byl nebo ne se nám bude hodit. Opět bychom totiž měli pamatovat na to, že klient může poslat požadavek na smazání filmu s ID číslo 42, ačkoli žádný takový neexistuje. Asi by se moc nestalo, kdybychom odpověděli, že se neexistující film povedlo smazat, ale bude lepší, když druhou stranu informujeme o tom, že se pokouší dělat něco, co nejde.
 
-.. literalinclude:: ../code/movies_delete.py
+.. literalinclude:: ../code/server/14_delete/index.py
     :language: python
     :pyobject: MovieResource
     :emphasize-lines: 16-21
 
 Když se podíváme na *Žralokonádo* a budeme ho chtít smazat ze seznamu, měli bychom dostat prázdnou odpověď s kódem :status:`204`.
 
-.. literalinclude:: ../code/movies_delete_3_test.txt
+.. literalinclude:: ../code/server/14_delete/test1_3.txt
     :language: text
 
 Jestliže to zkusíme znovu, měli bychom dostat chybu, protože film s ID číslo 3 už nebude existovat. Stejně tak dostaneme chybu, pokud zkusíme nějaké nesmyslné ID:
 
-.. literalinclude:: ../code/movies_delete_42_test.txt
+.. literalinclude:: ../code/server/14_delete/test3_42.txt
     :language: text
 
 Zabezpečujeme
@@ -599,21 +599,21 @@ Zabezpečujeme
 
 Už od osmdesátých let `víme <https://www.csfd.cz/film/6642-smrtonosna-past/>`__, že `Bruce Willis <https://www.csfd.cz/tvurce/3-bruce-willis/>`__ se jen tak smazat nenechá. Pojďme tuto nezpochybnitelnou pravdu odrazit v našem API. Pokud se někdo pokusí odebrat ze seznamu film s Brucem v hlavní roli, bude mu tento požadavek odepřen. Abychom to mohli udělat, potřebujeme pro každý film údaje o hercích v hlavních rolích:
 
-.. literalinclude:: ../code/movies_forbidden.py
+.. literalinclude:: ../code/server/15_forbidden/index.py
     :language: python
     :lines: 23-60
     :emphasize-lines: 7, 16, 25, 34
 
 Nyní můžeme vrátit chybu :status:`403`, pokud klient se svým požadavkem narazí na Bruce:
 
-.. literalinclude:: ../code/movies_forbidden.py
+.. literalinclude:: ../code/server/15_forbidden/index.py
     :language: python
     :pyobject: MovieResource
     :emphasize-lines: 17-24
 
 Nejdříve využijeme funkce ``get_movie_by_id()``, která nám vrátí film podle ID. Pokud jej nenajde, rovnou skončíme s chybou :status:`404`. Potom se podíváme, jestli ve filmu hraje Bruce. Pokud ano, skončíme s chybou :status:`403`. Jinak použijeme funkci ``remove_movie_by_id()`` pro smazání filmu a vracíme :status:`204`. Návratovou hodnotu ``remove_movie_by_id()`` nyní již nepotřebujeme, protože v této fázi již víme, že film určitě existuje.
 
-.. literalinclude:: ../code/movies_forbidden_test.txt
+.. literalinclude:: ../code/server/15_forbidden/test.txt
     :language: text
 
 .. note::
@@ -672,12 +672,12 @@ Abychom mohli naše API někomu ukázat, musíme jej nejdříve uveřejnit na in
 #.  Otevřeme si příkazovou řádku a zkusíme spustit ``now --version``, abychom ověřili, zda vše funguje, jak má
 #.  V témže adresáři, ve kterém máme ``index.py``, vytvoříme nový soubor ``now.json`` s následujícím obsahem:
 
-    .. literalinclude:: ../code/now.json
+    .. literalinclude:: ../code/server/16_deploy/now.json
         :language: json
 
 #.  V témže adresáři, ve kterém máme ``index.py``, vytvoříme nový soubor ``requirements.txt`` s následujícím obsahem:
 
-    .. literalinclude:: ../code/requirements.txt
+    .. literalinclude:: ../code/server/16_deploy/requirements.txt
         :language: text
 
     Tím říkáme, že aby naše API fungovalo, bude potřeba nejdříve nainstalovat Falcon. Waitress do souboru psát nebudeme, tu potřebujeme jen pro spuštění na našem počítači, `now.sh <https://zeit.co/now>`__ si poradí i bez ní.
