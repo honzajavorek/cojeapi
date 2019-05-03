@@ -1,4 +1,4 @@
-$ curl -i 'http://0.0.0.0:8080/movies/hello'
+$ curl -i "http://0.0.0.0:8080/movies/hello"
 HTTP/1.1 404 Not Found
 Content-Length: 0
 Content-Type: application/json; charset=UTF-8

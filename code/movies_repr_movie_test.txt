@@ -1,4 +1,4 @@
-$ curl -i 'http://0.0.0.0:8080/movies/1'
+$ curl -i "http://0.0.0.0:8080/movies/1"
 HTTP/1.1 200 OK
 Content-Length: 231
 Content-Type: application/json; charset=UTF-8

@@ -134,7 +134,7 @@ Posílat základní požadavky přes prohlížeč nebo curl už umíme. Z odpov�
 .. code-block:: text
     :emphasize-lines: 3-10
 
-    $ curl -i 'http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt'
+    $ curl -i "http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt"
     HTTP/1.1 200 OK
     Date: Fri, 02 Nov 2018 18:40:42 GMT
     Server: Apache-Coyote/1.1
@@ -205,7 +205,7 @@ Na hlavičku se můžeme snadno podívat s pomocí ``curl -i``, které :ref:`už
 .. code-block:: text
     :emphasize-lines: 8
 
-    $ curl -I 'http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt'
+    $ curl -I "http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt"
     HTTP/1.1 200 OK
     Date: Fri, 09 Nov 2018 15:31:46 GMT
     Server: Apache-Coyote/1.1

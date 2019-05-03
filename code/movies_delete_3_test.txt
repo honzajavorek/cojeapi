@@ -1,4 +1,4 @@
-$ curl -i 'http://0.0.0.0:8080/movies/3' --request DELETE
+$ curl -i "http://0.0.0.0:8080/movies/3" --request DELETE
 HTTP/1.1 204 No Content
 Connection: close
 Date: Thu, 02 May 2019 20:58:43 GMT
