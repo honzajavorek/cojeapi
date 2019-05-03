@@ -26,6 +26,7 @@ movies = [
         'name': 'The Last Boy Scout',
         'name_cs': 'Poslední skaut',
         'year': 1991,
+        'stars': ['Bruce Willis', 'Damon Wayans', 'Chelsea Field'],
         'imdb_url': 'https://www.imdb.com/title/tt0102266/',
         'csfd_url': 'https://www.csfd.cz/film/8283-posledni-skaut/',
     },
@@ -34,6 +35,7 @@ movies = [
         'name': 'Mies vailla menneisyyttä',
         'name_cs': 'Muž bez minulosti',
         'year': 2002,
+        'stars': ['Markku Peltola', 'Kati Outinen', 'Juhani Niemelä'],
         'imdb_url': 'https://www.imdb.com/title/tt0311519/',
         'csfd_url': 'https://www.csfd.cz/film/35366-muz-bez-minulosti/',
     },
@@ -42,6 +44,7 @@ movies = [
         'name': 'Sharknado',
         'name_cs': 'Žralokonádo',
         'year': 2013,
+        'stars': ['Ian Ziering', 'Tara Reid', 'John Heard'],
         'imdb_url': 'https://www.imdb.com/title/tt2724064/',
         'csfd_url': 'https://www.csfd.cz/film/343017-zralokonado/',
     },
@@ -50,6 +53,7 @@ movies = [
         'name': 'Mega Shark vs. Giant Octopus',
         'name_cs': 'Megažralok vs. obří chobotnice',
         'year': 2009,
+        'stars': ['Debbie Gibson', 'Lorenzo Lamas', 'Vic Chao'],
         'imdb_url': 'https://www.imdb.com/title/tt1350498/',
         'csfd_url': 'https://www.csfd.cz/film/258268-megazralok-vs-obri-chobotnice/',
     },
@@ -116,6 +120,14 @@ def get_movie_by_id(movies, id):
             return movie
 
 
+def remove_movie_by_id(movies, id):
+    for i, movie in enumerate(movies):
+        if movie['id'] == id:
+            del movies[i]
+            return True
+    return False
+
+
 class MovieResource():
 
     def on_get(self, request, response, id):
@@ -130,6 +142,16 @@ class MovieResource():
             del movie_repr['id']
 
             response.body = json.dumps(movie_repr)
+
+    def on_delete(self, request, response, id):
+        movie = get_movie_by_id(movies, id)
+        if movie is None:
+            response.status = '404 Not Found'
+        elif 'Bruce Willis' in movie['stars']:
+            response.status = '403 Forbidden'
+        else:
+            remove_movie_by_id(movies, id)
+            response.status = '204 No Content'
 
 
 app = falcon.API()

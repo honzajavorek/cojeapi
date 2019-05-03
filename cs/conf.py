@@ -181,8 +181,13 @@ epub_exclude_files = ['search.html']
 # -- External links check -------------------------------------------------
 
 linkcheck_ignore = [
-    # localhost
+    # Sphinx (contributing docs)
     'http://127.0.0.1:8000',
+
+    # Waitress & Falcon
+    'http://0.0.0.0:8080',
+    'http://127.0.0.1:8080',
+    'http://localhost:8080',
 
     # heureka.cz blocks requests from CI
     'https://www.heureka.cz',

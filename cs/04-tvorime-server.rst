@@ -72,9 +72,9 @@ Nyní můžeme spustit naše API. Stačí spustit ``waitress-serve`` s nápověd
     (venv)$ waitress-serve index:app
     Serving on http://0.0.0.0:8080
 
-Waitress nám píše, že na adrese ``http://0.0.0.0:8080`` teď najdeme spuštěné naše API. Bude tam čekat na :ref:`požadavky <http-request>` tak dlouho, dokud v programu nenastane chyba (potom "spadne"), nebo dokud jej v terminálu neukončíme pomocí :kbd:`Ctrl+C`.
+Waitress nám píše, že na adrese http://0.0.0.0:8080 teď najdeme spuštěné naše API. Bude tam čekat na :ref:`požadavky <http-request>` tak dlouho, dokud v programu nenastane chyba (potom "spadne"), nebo dokud jej v terminálu neukončíme pomocí :kbd:`Ctrl+C`.
 
-Když nyní v prohlížeči půjdeme na adresu ``http://0.0.0.0:8080``, měli bychom vidět očekávanou :ref:`odpověď <http-response>`:
+Když nyní v prohlížeči půjdeme na adresu http://0.0.0.0:8080, měli bychom vidět očekávanou :ref:`odpověď <http-response>`:
 
 .. image:: ../_static/images/me-api-text.png
     :alt: Odpověď v textovém formátu
@@ -315,7 +315,7 @@ Doteď bylo to, co jsme poslali v odpovědi, vždy shodné s tím, jak máme dat
     :language: python
     :pyobject: represent_movies
 
-Nyní pojďme upravit ``MoviesResource``. Víme, že adresa našeho API je teď ``http://0.0.0.0:8080``, ale jakmile budeme chtít aplikaci :ref:`uveřejnit někam na internet <nowsh>`, bude zase jiná. Proto je lepší si ji vytáhnout z objektu ``request``. Falcon nám ji poskytuje jako `request.prefix <https://falcon.readthedocs.io/en/stable/api/request_and_response.html#falcon.Request.prefix>`__.
+Nyní pojďme upravit ``MoviesResource``. Víme, že adresa našeho API je teď http://0.0.0.0:8080, ale jakmile budeme chtít aplikaci :ref:`uveřejnit někam na internet <nowsh>`, bude zase jiná. Proto je lepší si ji vytáhnout z objektu ``request``. Falcon nám ji poskytuje jako `request.prefix <https://falcon.readthedocs.io/en/stable/api/request_and_response.html#falcon.Request.prefix>`__.
 
 .. literalinclude:: ../code/movies_repr.py
     :language: python
@@ -643,16 +643,33 @@ Jediným rozdílem je to, že v jejich API byl použit kód :status:`401`. Ten s
 Uveřejňujeme API
 ----------------
 
-.. warning::
+Pokaždé, když jsme spustili Waitress, mohli jsme své API zkoušet na adrese http://0.0.0.0:8080. Možná jste si všimli, že když Waitress v terminálu nejela, adresu nešlo použít.
 
-    Tato kapitola je právě přepisována, aby co nejlépe odrážela současný stav věcí a plně podporovala now 2.0.
+.. code-block:: text
 
-Zatím jsme naši aplikaci spouštěli pouze na svém počítači a neměl k ní přístup nikdo jiný, než my sami. Nebylo by lepší, kdyby naše API bylo veřejné a mohli by jej používat naši kamarádi?
+    $ curl -i http://0.0.0.0:8080/
+    curl: (7) Failed to connect to 0.0.0.0 port 8080: Connection refused
 
-Můžeme k tomu využít službu `now.sh <https://zeit.co/now>`__. Ta nám umožní uveřejnit aplikaci tak, aby nebyla jen na našem počítači, ale mohl na ni přistupovat kdokoliv. Nejdříve nainstalujeme program ``now``:
+.. image:: ../_static/images/localhost-error.png
+    :alt: Adresu http://0.0.0.0:8080 nelze použít ani v prohlížeči
+    :align: center
+
+Tato adresa je totiž spjata s tím, jestli Waitress zrovna jede nebo ne. Také tato adresa funguje jen pro nás. I když spustíme Waitress a na adrese http://0.0.0.0:8080 uvidíme naše API, nikdo jiný jej na té samé adrese nenajde. Je to proto, že adresa ``0.0.0.0`` znamená "na tomto počítači". Pokud bychom tedy někomu poslali http://0.0.0.0:8080/movies jako odkaz na seznam našich oblíbených filmů, je to podobné, jako bychom posílali ``C:\\Users\Honza\Documents\filmy.xlsx``.
+
+.. note::
+    Adres, které znamenají "na tomto počítači" je více. Ekvivalentně k http://0.0.0.0:8080 funguje i http://127.0.0.1:8080 nebo http://localhost:8080. Můžete si to klidně vyzkoušet. Když zapnete Waitress, všechny uvedené adresy by měly mířit na vaše API.
+
+Now
+^^^
+
+Abychom mohli naše API někomu ukázat, musíme jej nejdříve uveřejnit na internet. Můžeme k tomu využít službu `Now <https://zeit.co/now>`__  od společnosti `Zeit <https://zeit.co/>`__. Nejdříve nainstalujeme program ``now``:
 
 #.  Půjdeme na https://zeit.co/download a nainstalujeme si ``now`` pro náš systém
-#.  Otevřeme si příkazovou řádku a zkusíme napsat ``now --version``, abychom ověřili, zda vše funguje, jak má
+
+    .. note::
+        Pokud používáme **Windows**, stáhne se nám archiv ``now-win.exe.gz``. Po rozbalení dostaneme spustitelný soubor ``now-win.exe``. Ten přejmenujeme na ``now.exe`` a přidáme jej do systémové cesty. Pokud přidávat programy do systémové cesty neumíme, pro účely tohoto návodu postačí, pokud soubor ``now.exe`` dáme do složky s naším projektem (tzn. do té složky, kde máme ``index.py``).
+
+#.  Otevřeme si příkazovou řádku a zkusíme spustit ``now --version``, abychom ověřili, zda vše funguje, jak má
 #.  V témže adresáři, ve kterém máme ``index.py``, vytvoříme nový soubor ``now.json`` s následujícím obsahem:
 
     .. literalinclude:: ../code/now.json
@@ -663,34 +680,58 @@ Můžeme k tomu využít službu `now.sh <https://zeit.co/now>`__. Ta nám umož
     .. literalinclude:: ../code/requirements.txt
         :language: text
 
-    Tím říkáme, že aby naše API fungovalo, bude potřeba nejdříve nainstalovat Falcon. Waitress do souboru psát nebudeme, ten potřebujeme jen pro spuštění na našem počítači, `now.sh <https://zeit.co/now>`__ si poradí i bez něj.
+    Tím říkáme, že aby naše API fungovalo, bude potřeba nejdříve nainstalovat Falcon. Waitress do souboru psát nebudeme, tu potřebujeme jen pro spuštění na našem počítači, `now.sh <https://zeit.co/now>`__ si poradí i bez ní.
 
-#.  Nyní zkusíme na příkazové řádce, v našem adresáři s aplikací, spustit příkaz ``now``
-#.  Je pravděpodobné, že ``now`` po nás bude chtít e-mailovou adresu. Zadáme ji a ověříme v naší e-mailové schránce
-#.  Když nyní znova spustíme ``now``, nahraje se naše aplikace na internet (bude to nejspíše chvíli trvat)
+#.  Nyní zkusíme na příkazové řádce, v našem adresáři s aplikací, spustit příkaz ``now login``
+#.  Now po nás bude chtít e-mailovou adresu. Zadáme ji a ověříme v naší e-mailové schránce
+#.  Když nyní spustíme ``now``, nahraje se naše aplikace na internet (bude to nejspíše chvíli trvat)
 #.  Po nějaké době bychom měli dostat adresu, na které můžeme naše API najít - něco ve tvaru https://cojeapi.honzajavorek.now.sh/
 
-Když na tuto adresu půjdeme v prohlížeči, měli bychom vidět HTTP odpověď na endpoint ``/``:
+Pokud na tuto adresu půjdeme v prohlížeči, měli bychom vidět naše API:
 
 .. image:: ../_static/images/now.png
     :alt: now.sh v prohlížeči
     :align: center
 
-Můžeme na naše API posílat požadavky samozřejmě i pomocí curl:
+Samozřejmě můžeme na naše API posílat požadavky i pomocí curl:
 
 .. code-block:: text
 
-    $ curl -i 'https://cojeapi.honzajavorek.now.sh/'
     HTTP/2 200
-    date: Sat, 10 Nov 2018 11:12:32 GMT
-    ...
     content-type: application/json
+    content-length: 129
+    ...
+    server: now
 
-    {"eyes_color":"brown","eyes_count":2,"hair_color":"brown","hands_count":2,"legs_count":2,"mood":"grumpy","name":"Honza","surname":"Javorek"}
+    {"name": "Honza", "surname": "Javorek", "socks_size": "42", "movies_watchlist_url": "https://cojeapi.honzajavorek.now.sh/movies"}
 
-A co je ještě lepší, na rozdíl od všech předchozích případů, nyní může na naše API posílat požadavky i někdo jiný! Pošlete tuto adresu kamarádce/kamarádovi nebo kolegyni/kolegovi, ať zkusí se svým prohlížečem a s curl posílat požadavky na vaše API. Vy zase můžete zkoušet jejich API. Nebojme se experimentovat, třeba přidat oblečení, nebo nějaké smazat.
+A co je ještě lepší, na rozdíl od všech předchozích případů, nyní může na naše API posílat požadavky i někdo jiný!
 
-Pokud budeme chtít udělat v našem API změny a ty opět promítnout veřejně, budeme muset znova spustit příkaz ``now``.
+.. tabs::
+
+    .. tab:: Cvičení
+
+        Pokud procházíte tento návod v rámci workshopu, například PyWorking, pošlete tuto adresu někomu jinému z účastníků, ať zkusí se svým prohlížečem a s curl posílat požadavky na vaše API. Vy zase můžete zkoušet jejich API. Zkuste do jejich seznamu přidat svůj oblíbený film, nebo film z jejich seznamu smazat.
+
+        **Pozor na lomítka na konci adres** - tak jak jsme naprogramovali naše API a nastavili jej na Now vyústí v citlivé dodržování rozdílu mezi
+
+        -   ``/movies`` - :status:`200`
+        -   ``/movies/`` - :status:`404`
+
+Aktualizujeme Now
+^^^^^^^^^^^^^^^^^
+
+Naše API má teď dva životy. Zaprvé existuje jako tzv. "vývojová verze" (anglicky *development*, někdy *dev environment*, počeštěně *dev prostředí*), která se nachází pouze na našem počítači a kterou můžeme snadno změnit a poté spustit přes Waitress.
+
+Zadruhé existuje jako tzv. "produkce" (anglicky *production*, *production environment*, tedy *produkční prostředí*), kde k našemu API mohou přistupovat jeho uživatelé.
+
+Když změníme zdrojový kód souborů na našem počítači, projeví se to ve vývojové verzi na adrese http://0.0.0.0:8080, ale už ne na https://cojeapi.honzajavorek.now.sh. Aby se to projevilo i tam, musíme říct Now, aby znovu nahrálo naše soubory a aktualizovalo produkci s tím, co zrovna máme na počítači:
+
+.. code-block:: text
+
+    $ now
+
+Ano, pokud budeme chtít udělat v našem API změny a ty opět promítnout veřejně, stačí jen znova spustit příkaz ``now`` v téže složce, kde máme ``index.py``, ``requirements.txt`` a ``now.json``.
 
 .. _dokumentace:
 

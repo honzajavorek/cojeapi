@@ -100,7 +100,7 @@ Instalace curl
 
             $ choco install curl
 
-        Jinak musíme curl stáhnout a nainstalovat ručně. Na `stránkách programu <https://curl.haxx.se/dlwiz/?type=bin&os=Win64&flav=-&ver=*&cpu=x86_64>`__ vybereme tu verzi, která má v popisku *SSL enabled* a *file is packaged using zip*. Klikneme na :kbd:`Download`. Rozbalíme stáhnutý zip, najdeme ``curl.exe`` a přidáme jej do systémové cesty.
+        Jinak musíme curl stáhnout a nainstalovat ručně. Na `stránkách programu <https://curl.haxx.se/>`__ najdeme `verzi pro Windows <https://curl.haxx.se/windows/>`__ a podle typu našich Windows (`Jak zjistit, zda máme 32bitové, nebo 64bitové? <https://www.wikihow.cz/Jak-zjistit,-zda-m%C3%A1te-32bitov%C3%A9,-nebo-64-bitov%C3%A9-Windows>`__) vybereme odpovídající verzi. Po rozbalení dostaneme spustitelný soubor ``curl.exe``, který přidáme do systémové cesty. Pokud přidávat programy do systémové cesty neumíme, pro účely tohoto návodu postačí, pokud soubor ``curl.exe`` dáme do té složky, ze které jej budeme chtít spouštět.
 
         Nakonec necháme program vypsat svou verzi, čímž ověříme, jestli funguje:
 
@@ -110,10 +110,6 @@ Instalace curl
             curl x.x.x (...) ...
             Protocols: ...
             Features: ...
-
-        .. note::
-
-            Tento instalační návod je pro úplné začátečníky příliš stručný, ale snad si většina lidí nějak poradí. Můžete také :ref:`pomoci návod rozšířit <jak-prispivat>`.
 
 Příklady s curl
 ^^^^^^^^^^^^^^^
