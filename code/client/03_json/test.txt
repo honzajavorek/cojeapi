@@ -1,0 +1,4 @@
+$ python client.py
+200
+{'Date': 'Sat, 04 May 2019 12:15:59 GMT', 'Content-Type': 'application/json', 'Connection': 'keep-alive', 'content-length': '129', 'cache-control': 'public, max-age=0, must-revalidate', 'x-now-cache': 'MISS', 'x-now-trace': 'zrh1', 'server': 'now', 'x-now-id': 'xdnnz-1556972159138-9eb3b82b14895f7f03b76b8c336b6ca1', 'strict-transport-security': 'max-age=63072000'}
+{'name': 'Honza', 'surname': 'Javorek', 'socks_size': '42', 'movies_watchlist_url': 'https://cojeapi.honzajavorek.now.sh/movies'}

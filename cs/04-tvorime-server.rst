@@ -412,6 +412,8 @@ Je důležité rozlišit, že *resource* je pomyslný, nehmatatelný model svět
     :language: text
     :emphasize-lines: 4, 8
 
+.. _apidesign:
+
 Návrh API
 ^^^^^^^^^
 
@@ -852,7 +854,7 @@ A co je ještě lepší, na rozdíl od všech předchozích případů, nyní m�
 
     .. tab:: Cvičení
 
-        Pokud procházíte tento návod v rámci workshopu, například PyWorking, pošlete tuto adresu někomu jinému z účastníků, ať zkusí se svým prohlížečem a s curl posílat požadavky na vaše API. Vy zase můžete zkoušet jejich API. Zkuste do jejich seznamu přidat svůj oblíbený film, nebo film z jejich seznamu smazat.
+        Pokud procházíte tento návod v rámci workshopu, například `PyWorking <https://pyworking.cz/>`__, pošlete tuto adresu někomu jinému z účastníků, ať zkusí se svým prohlížečem a s curl posílat požadavky na vaše API. Vy zase můžete zkoušet jejich API. Zkuste do jejich seznamu přidat svůj oblíbený film, nebo film z jejich seznamu smazat.
 
         **Pozor na lomítka na konci adres** - tak jak jsme naprogramovali naše API a nastavili jej na Now vyústí v citlivé dodržování rozdílu mezi
 

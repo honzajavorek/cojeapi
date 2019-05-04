@@ -1,0 +1,7 @@
+$ python client.py
+200
+{'Date': 'Sat, 04 May 2019 12:19:48 GMT', 'Content-Type': 'application/json', 'Connection': 'keep-alive', 'content-length': '129', 'cache-control': 'public, max-age=0, must-revalidate', 'x-now-cache': 'MISS', 'x-now-trace': 'zrh1', 'server': 'now', 'x-now-id': 'mmxqr-1556972388219-44d1b59d32681aa7074f73fcc1182fbd', 'strict-transport-security': 'max-age=63072000'}
+Traceback (most recent call last):
+  File "client.py", line 7, in <module>
+    print(response.text['surname'])
+TypeError: string indices must be integers

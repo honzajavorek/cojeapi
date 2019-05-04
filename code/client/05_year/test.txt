@@ -1,0 +1,5 @@
+$ python client.py
+The Last Boy Scout 1991
+Mies vailla menneisyyttä 2002
+Sharknado 2013
+Mega Shark vs. Giant Octopus 2009
