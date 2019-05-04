@@ -903,7 +903,7 @@ Občas stačí, když napíšeme dokument, kde vysvětlíme, co se na jakém end
 Dokumentovat se dá klidně v `Google Docs <https://docs.google.com/>`__, ale většinou se spíše používá `Markdown <https://www.markdownguide.org/>`__ nebo jiný značkovací jazyk. Pokud je však API velké, je lepší si pomoci přímo nějakým formátem určeným k dokumentaci API. Nejpoužívanější jsou `OpenAPI <https://www.openapis.org/>`__ a `API Blueprint <https://apiblueprint.org/>`__. Například popis našeho API v druhém jmenovaném by mohl začínat následovně:
 
 .. literalinclude:: ../code/server/16_deploy/mojeapi.md
-    :language: markdown
+    :language: text
 
 Protože je API Blueprint založený na Markdownu, můžeme soubor uložit jako ``mojeapi.md`` a takto nám jej `hezky zobrazí i GitHub <https://github.com/honzajavorek/cojeapi/blob/master/code/server/16_deploy/mojeapi.md>`__. Pokud soubor nahrajeme do služby `Apiary <https://apiary.io/>`__, vygeneruje nám z něj profesionální dokumentaci.
 
