@@ -412,6 +412,18 @@ Je důležité rozlišit, že *resource* je pomyslný, nehmatatelný model svět
     :language: text
     :emphasize-lines: 4, 8
 
+Návrh API
+^^^^^^^^^
+
+Je běžnou praxí, že reprezentace nevypadá nutně přesně jako to, co reprezentuje. V datech o filmech žádné odkazy nemáme, ale v API samotném je chceme. To je v pořádku. Ideálně by návrh API měl co nejvíce odpovídat tomu, jak jej bude používat klient. Náš návrh je dobrý, pokud bude klientům většinou stačit jen jméno filmu a nebude jim vadit, pokud se na zbytek informací doptají zvlášť, podle potřeby.
+
+Každý požadavek totiž něco stojí. Kdyby většina klientů chtěla vypsat seznam filmů s oběma názvy, původním i českým, nebo třeba i rokem, byl by návrh našeho API mizerný. Aby totiž klient mohl takový seznam vypsat, musel by udělat ještě dotaz na detail každého filmu, kde by tyto doplňující informace zjistil. To znamená, že by potřeboval ne jeden dotaz, ale navíc ještě tolik dotazů, kolik je v seznamu filmů. To není zrovna efektivní. Je tedy dobré při navrhování API vždy přemýšlet nad tím, jak bude používáno.
+
+.. note::
+    **Velké životní moudro:** Při navrhování úplně čehokoli je vždy dobré přemýšlet nad tím, jak to bude používáno.
+
+.. _linking:
+
 Odkazování mezi reprezentacemi
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -867,14 +879,35 @@ Ano, pokud budeme chtít udělat v našem API změny a ty opět promítnout veř
 Dokumentujeme API
 -----------------
 
-.. warning::
-    Tato kapitola zatím chybí https://github.com/honzajavorek/cojeapi/issues/76
+Jak se uživatel našeho API doví, co z API dostane? Status kódy a hlavičky jsou pevně dané protokolem :ref:`HTTP`, ale asi jste si všimli, že strukturu těl odpovědí jsme si v zásadě vymýšleli. Sice jsme je posílali jako :ref:`JSON`, ale to je obecný formát, který nic neříká o *významu* dat. Pokud by někdo psal :ref:`program, který s naším API pracuje <creating-client>`, bude muset nejdříve nějak zjistit, co má očekávat v odpovědích.
 
-Návrh API
----------
+Už jsme zmiňovali, že :ref:`pro chyby nějaké standardy existují <problem>`. Pro zbytek odpovědí také (např. `JSON:API <https://jsonapi.org/>`__ nebo `HAL <http://stateless.co/hal_specification.html>`__). Pokud je použijeme, může tvůrce klienta dosáhnout nebeské nirvány:
 
-.. warning::
-    Tato kapitola zatím chybí https://github.com/honzajavorek/cojeapi/issues/77
+1. **Program se může sám v API zorientovat** díky :ref:`odkazům <linking>`. Takto fungují jen nefalšovaná :ref:`REST` API. Pokud je API tímto způsobem "samonosné", označuje se tato vlastnost jako `HATEOS <https://cs.wikipedia.org/wiki/HATEOAS>`__ (nebo jen *hypermedia*, což je písmeno H z oné zkratky).
+
+Nefalšovaných REST API je však velmi málo. Většinou si bohužel každý vymyslí odpovědi tak, jak se mu zrovna hodí, a s odkazy se nezatěžuje. Zbývají tedy dva způsoby:
+
+2.  **Reverse engineering**, tzn. metoda pokus a omyl. Tvůrce klienta strukturu API luští jako šifru. Zkouší posílat různé věci a podle toho, co dostává zpět, usuzuje jak API nejspíš funguje. Nevýhodou je, že je to pracné, zdlouhavé, a vede to k chybným předpokladům o API a tedy i mnoha chybám.
+
+3.  **Čtení dokumentace**. Tato varianta se jeví jako zřejmá, ale často se stane, že dokumentace se rozchází s realitou, je neúplná, nebo zcela chybí.
+
+Jak vidíte, jako tvůrci serverové části API máme tedy velmi důležitý úkol. Musíme napsat dokumentaci, aby jej mohl někdo bez újmy na vlastním zdraví použít. Potom pokaždé, když v API něco změníme, bychom měli dokumentaci aktualizovat.
+
+Formáty na dokumentaci API
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Občas stačí, když napíšeme dokument, kde vysvětlíme, co se na jakém endpointu nachází. Podívejte se, jak je zdokumentováno například `Yelp API <https://www.yelp.com/developers/documentation/v3/get_started>`__, `GitHub API <https://developer.github.com/v3/>`__, nebo `Slack API <https://api.slack.com/web>`__. Snad nejlépe zdokumentované API vůbec je `Stripe API <https://stripe.com/docs/api>`__.
+
+Dokumentovat se dá klidně v `Google Docs <https://docs.google.com/>`__, ale většinou se spíše používá `Markdown <https://www.markdownguide.org/>`__ nebo jiný značkovací jazyk. Pokud je však API velké, je lepší si pomoci přímo nějakým formátem určeným k dokumentaci API. Nejpoužívanější jsou `OpenAPI <https://www.openapis.org/>`__ a `API Blueprint <https://apiblueprint.org/>`__. Například popis našeho API v druhém jmenovaném by mohl začínat následovně:
+
+.. literalinclude:: ../code/server/16_deploy/mojeapi.md
+    :language: markdown
+
+Protože je API Blueprint založený na Markdownu, můžeme soubor uložit jako ``mojeapi.md`` a takto nám jej `hezky zobrazí i GitHub <https://github.com/honzajavorek/cojeapi/blob/master/code/server/16_deploy/mojeapi.md>`__. Pokud soubor nahrajeme do služby `Apiary <https://apiary.io/>`__, vygeneruje nám z něj profesionální dokumentaci.
+
+.. note::
+
+    Pokud by vás dokumentování bavilo, mrkněte na stránky `Write the Docs <https://www.writethedocs.org/>`__, kde je i návod, `jak s dokumentováním začít <https://www.writethedocs.org/guide/>`__. Kdyby vás dokumentování bavilo hodně, WTD každoročně `organizují konferenci v Praze <https://www.writethedocs.org/about/events-activities/>`__.
 
 .. _frameworky:
 

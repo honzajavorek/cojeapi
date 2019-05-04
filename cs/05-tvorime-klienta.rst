@@ -1,3 +1,5 @@
+.. _creating-client:
+
 Tvoříme klienta
 ===============
 
