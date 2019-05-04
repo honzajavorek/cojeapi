@@ -907,7 +907,7 @@ Protože je API Blueprint založený na Markdownu, můžeme soubor uložit jako 
 
 .. note::
 
-    Pokud by vás dokumentování bavilo, mrkněte na stránky `Write the Docs <https://www.writethedocs.org/>`__, kde je i návod, `jak s dokumentováním začít <https://www.writethedocs.org/guide/>`__. Kdyby vás dokumentování bavilo hodně, WTD každoročně `organizují konferenci v Praze <https://www.writethedocs.org/about/events-activities/>`__.
+    Pokud by vás dokumentování bavilo, mrkněte na stránky `Write the Docs <https://www.writethedocs.org/>`__, kde je i návod, `jak s dokumentováním začít <https://www.writethedocs.org/guide/>`__. Kdyby vás dokumentování bavilo hodně, WTD každoročně `v Praze organizují skvělou konferenci <https://www.writethedocs.org/about/events-activities/>`__.
 
 .. _frameworky:
 
