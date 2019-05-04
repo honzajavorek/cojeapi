@@ -1,23 +1,16 @@
 import requests
 
 response = requests.get("https://cojeapi.honzajavorek.now.sh/movies")
-movies_list = response.json()
+movies = response.json()
 
-movies = []
-for movie_item in movies_list:
-    response = requests.get(movie_item['url'])
-    movie = response.json()
-    movies.append(movie)
-
-print('Seznam filmů:')
+newest_movie = None
 for movie in movies:
-    print(movie['name'])
+    response = requests.get(movie['url'])
+    movie_details = response.json()
 
-print('')
+    if newest_movie is None:
+        newest_movie = movie_details
+    elif newest_movie['year'] < movie_details['year']:
+        newest_movie = movie_details
 
-print('Nejnovější film:')
-newest_movie = movies[0]
-for movie in movies:
-    if movie['year'] > newest_movie['year']:
-        newest_movie = movie
-print(newest_movie['name'], newest_movie['year'])
+print('Nejnovější film:', newest_movie['name'], newest_movie['year'])

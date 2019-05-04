@@ -1,9 +1,2 @@
 $ python client.py
-Seznam filmů:
-The Last Boy Scout
-Mies vailla menneisyyttä
-Sharknado
-Mega Shark vs. Giant Octopus
-
-Nejnovější film:
-Sharknado 2013
+Nejnovější film: Sharknado 2013

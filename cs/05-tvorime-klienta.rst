@@ -91,8 +91,8 @@ Pokud program spustíme, měl by vypsat všechny filmy z dotazovaného API:
 
         Jestliže procházíte tento návod v rámci workshopu, například `PyWorking <https://pyworking.cz/>`__, použijte ve vašem programu místo https://cojeapi.honzajavorek.now.sh adresu API někoho jiného z účastníků. Pokud tam má i jiné filmy než byly v návodu, měl by je program vypsat.
 
-Zjišťujeme nejnovější film
---------------------------
+Získáváme doplňující data
+-------------------------
 
 Co kdybychom chtěli ke každému filmu vypsat i rok, kdy byl uveden? Rok není v seznamu filmů k dispozici, nachází se na detailu každého filmu. Budeme tedy muset udělat jeden  požadavek na seznam filmů a poté ještě požadavek na každý film ze seznamu, abychom zjistili rok.
 
@@ -105,6 +105,21 @@ Vidíme, že pro každý film děláme další požadavek na API a teprve z jeho
     :language: text
 
 To, že musíme posílat požadavek na každý film zvlášť je buď důsledkem toho, že se snažíme z API zjistit kombinaci informací, která není úplně obvyklá, nebo důsledkem toho, že někdo API špatně navrhl. Narazili jsme přesně na tu situaci, která byla popsána v sekci :ref:`apidesign` při tvorbě serveru.
+
+Agregované informace
+--------------------
+
+Data z API nemusíme jen číst a vypisovat. Zajímavější je, když je využijeme ke zjištění nových, dříve netušených informací. Pojďme například zjistit, který z filmů v seznamu je nejnovější.
+
+.. literalinclude:: ../code/client/06_newest/client.py
+    :language: python
+
+Uvedený kód upravuje předchozí příklad, ale místo vypisování názvů filmů a jejich roků vydání rovnou zjišťuje, který z nich má rok s největší hodnotou. Takový film potom na konci vypíše.
+
+.. literalinclude:: ../code/client/06_newest/test.txt
+    :language: text
+
+Toto je jen malá ukázka toho, jak lze data z API agregovat, tzn. zjišťovat informace, jejichž výpočet protíná několik odpovědí.
 
 Chyby
 -----
