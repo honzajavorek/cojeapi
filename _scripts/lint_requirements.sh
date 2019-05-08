@@ -1,12 +1,18 @@
 #!/bin/bash
+# Make sure requirements.txt are in sync with Pipfile.lock
+
 set -e
 
-# Make sure requirements.txt are in sync with Pipfile.lock
-pipenv lock --requirements | sed -e 's#pypi.org/simple$#pypi.org/simple/#' > ci-requirements.txt
-if ! diff requirements.txt ci-requirements.txt > /dev/null
+add_slash_re='s#pypi.org/simple/?$#pypi.org/simple/#'
+remove_comment_re='s# *;.*##'
+
+cat requirements.txt | sed -e "$add_slash_re" | sed -e "$remove_comment_re" > normalized-requirements.txt
+pipenv lock --requirements | sed -e "$add_slash_re" | sed -e "$remove_comment_re" > just-locked-requirements.txt
+
+if ! diff normalized-requirements.txt just-locked-requirements.txt
 then
-  rm ci-requirements.txt
-  help_url='https://cojeapi.readthedocs.io/cs/latest/contributing.html#zavislosti'
+  rm *-requirements.txt
+  help_url='https://pyvec-guide.readthedocs.io/CONTRIBUTING.html#zavislosti'
   echo ""
   echo ""
   echo "The requirements.txt file is not up to date. Run" \
@@ -14,5 +20,5 @@ then
     "See ${help_url} for more info."
   exit 1
 else
-  rm ci-requirements.txt
+  rm *-requirements.txt
 fi

@@ -103,5 +103,5 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# scripts/lint.sh
-ci-requirements.txt
+# scripts/lint_requirements.sh
+*-requirements.txt
