@@ -7,7 +7,7 @@ Když si jako laik na Wikipedii najdete [článek o API](https://cs.wikipedia.or
 
 #### 🚧 Upozornění
 
-Materiály nejsou dokončené a jejich čtení je zatím na vlastní nebezpečí. Zatím se podle nich konal jeden [PyWorking workshop](https://pyworking.cz/workshops/20181110_Webova_API) a v rámci něj vznikla [spousta připomínek a nápadů na vylepšení](https://github.com/honzajavorek/cojeapi/issues). Jakákoliv pomoc v dokončování materiálů nebo řešení připomínek je vítána.
+Materiály nejsou dokončené a jejich čtení je zatím na vlastní nebezpečí. Zatím se podle nich konaly dva [PyWorking workshopy](https://pyworking.cz/) a v rámci nich vznikla [spousta připomínek a nápadů na vylepšení](https://github.com/honzajavorek/cojeapi/issues). Jakákoliv pomoc v dokončování materiálů nebo řešení připomínek je vítána.
 
 #### 🇦🇺 Překlad
 
