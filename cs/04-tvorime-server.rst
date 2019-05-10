@@ -230,7 +230,7 @@ Nyní potřebujeme přečíst z požadavku parametr a použít jej:
 
 .. literalinclude:: ../code/server/07_params/index.py
     :language: python
-    :pyobject: MoviesResource
+    :pyobject: MovieListResource
     :emphasize-lines: 4-5
 
 Pokud se na náš nový endpoint dotážeme bez parametrů, měl by fungovat stejně jako předtím. Jestliže ale přidáme ``?name=`` do adresy, měla by hodnota parametru filtrovat filmy.
@@ -335,13 +335,13 @@ Tady nám Falcon už nepomůže. Adresu obslouží naše metoda a ta, jak vidím
 
     .. tab:: Cvičení
 
-        Upravte třídu ``MovieResource`` tak, aby s touto situací počítala. Pokud funkce ``get_movie_by_id()`` nic nenajde, odpovíme s chybovým status kódem. Tělo posílat žádné nemusíme.
+        Upravte třídu ``MovieDetailResource`` tak, aby s touto situací počítala. Pokud funkce ``get_movie_by_id()`` nic nenajde, odpovíme s chybovým status kódem. Tělo posílat žádné nemusíme.
 
     .. tab:: Řešení
 
         .. literalinclude:: ../code/server/10_not_found/index.py
             :language: python
-            :pyobject: MovieResource
+            :pyobject: MovieDetailResource
 
 Pokud se po této změně dotážeme na neexistující film, měli bychom dostat chybu:
 
@@ -378,7 +378,7 @@ Zatímco status kód :status:`404` je záležitost standardu protokolu :ref:`HTT
 Reprezentace filmu
 ------------------
 
-Detail filmu máme připravený, takže se můžeme pustit do úprav seznamu filmů, tedy třídy ``MoviesResource``. Jak již bylo zmíněno, budeme v seznamu chtít jen ``name`` a odkaz na detail filmu.
+Detail filmu máme připravený, takže se můžeme pustit do úprav seznamu filmů, tedy třídy ``MovieListResource``. Jak již bylo zmíněno, budeme v seznamu chtít jen ``name`` a odkaz na detail filmu.
 
 Doteď bylo to, co jsme poslali v odpovědi, vždy shodné s tím, jak máme data uložena interně v naší aplikaci. Nyní ale nastává situace, kdy chceme v odpovědi poslat něco trochu jiného, než jak data vypadají ve skutečnosti. Chceme poslat jen určitou *reprezentaci* těchto dat. Začneme tedy funkcí, která vezme seznam filmů a poskytne nám jeho reprezentaci tak, jak jsme si ji vymysleli:
 
@@ -386,11 +386,11 @@ Doteď bylo to, co jsme poslali v odpovědi, vždy shodné s tím, jak máme dat
     :language: python
     :pyobject: represent_movies
 
-Nyní pojďme upravit ``MoviesResource``. Víme, že adresa našeho API je teď http://0.0.0.0:8080, ale jakmile budeme chtít aplikaci :ref:`uveřejnit někam na internet <nowsh>`, bude zase jiná. Proto je lepší si ji vytáhnout z objektu ``request``. Falcon nám ji poskytuje jako `request.prefix <https://falcon.readthedocs.io/en/stable/api/request_and_response.html#falcon.Request.prefix>`__.
+Nyní pojďme upravit ``MovieListResource``. Víme, že adresa našeho API je teď http://0.0.0.0:8080, ale jakmile budeme chtít aplikaci :ref:`uveřejnit někam na internet <nowsh>`, bude zase jiná. Proto je lepší si ji vytáhnout z objektu ``request``. Falcon nám ji poskytuje jako `request.prefix <https://falcon.readthedocs.io/en/stable/api/request_and_response.html#falcon.Request.prefix>`__.
 
 .. literalinclude:: ../code/server/11_repr/index.py
     :language: python
-    :pyobject: MoviesResource
+    :pyobject: MovieListResource
 
 Zbytek úprav by měl být celkem srozumitelný. Nejdříve filmy filtrujeme podle parametrů, poté vytvoříme JSON reprezentaci výsledného seznamu a tu pošleme jako tělo odpovědi. Když aplikaci spustíme a vyzkoušíme požadavkem např. na ``/movies?name=shark``, měla by nám vracet správně filtrovaný seznam filmů v nové podobě:
 
@@ -400,7 +400,7 @@ Zbytek úprav by měl být celkem srozumitelný. Nejdříve filmy filtrujeme pod
 Reprezentace a resource
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-V hantýrce API návrhářů a vývojářů bychom řekli, že film, nebo v tomto případě seznam filmů, je nějaký *resource*, který zpřístupňujeme uživatelům našeho API na adrese ``/movies``. Je reprezentován jako JSON, v němž má každý film název a odkaz k dalším podrobnostem. Proto má ``MoviesResource`` v názvu slovo resource.
+V hantýrce API návrhářů a vývojářů bychom řekli, že film, nebo v tomto případě seznam filmů, je nějaký *resource*, který zpřístupňujeme uživatelům našeho API na adrese ``/movies``. Je reprezentován jako JSON, v němž má každý film název a odkaz k dalším podrobnostem. Proto má ``MovieListResource`` v názvu slovo resource.
 
 Je důležité rozlišit, že *resource* je pomyslný, nehmatatelný model světa, zatímco reprezentace už je jeho konkrétní zobrazení. Jak jsme si vyzkoušeli u ``PersonalDetailsResource``, lze mít více různých reprezentací pro tutéž pomyslnou věc - čistě textovou, nebo jako JSON, nebo úplně jinou:
 
@@ -460,7 +460,7 @@ Ostatně, v seznamu filmů na ``/movies`` už to tak děláme pro každou polož
 
 .. literalinclude:: ../code/server/11_repr/index.py
     :language: python
-    :pyobject: MovieResource
+    :pyobject: MovieDetailResource
     :emphasize-lines: 8-14
 
 Nyní v reprezentaci už není ``id``, nahradilo jej ``url``:
@@ -492,11 +492,11 @@ A co tedy chceme aby se stalo? Pokud metodou :method:`post` přijde :ref:`požad
 Obsluhujeme POST
 ^^^^^^^^^^^^^^^^
 
-Možná si domyslíte, že když budeme chtít na adrese ``/movies`` obsluhovat :method:`post`, bude potřeba do třídy ``MoviesResource`` přidat metodu ``on_post()``:
+Možná si domyslíte, že když budeme chtít na adrese ``/movies`` obsluhovat :method:`post`, bude potřeba do třídy ``MovieListResource`` přidat metodu ``on_post()``:
 
 .. code-block:: python
 
-    class MoviesResource():
+    class MovieListResource():
 
         def on_get(self, request, response):
             ...
@@ -540,7 +540,7 @@ Nyní vše poskládáme dohromady:
 
 .. literalinclude:: ../code/server/12_post/index.py
     :language: python
-    :pyobject: MoviesResource
+    :pyobject: MovieListResource
     :emphasize-lines: 11-14
 
 Hotovo! Teď si můžeme vyzkoušet přidání nového filmu.
@@ -617,7 +617,7 @@ Zpět od čtení k programování. Změníme status kód a přidáme hlavičku. 
 
 .. literalinclude:: ../code/server/13_created/index.py
     :language: python
-    :pyobject: MoviesResource
+    :pyobject: MovieListResource
     :emphasize-lines: 16-24
 
 Když nyní restartujeme Waitress a zkusíme opět přidat nový film, měli bychom dostat :status:`201` s ``Location`` hlavičkou a tělem, v němž jsou všechny detaily. Díky ``url`` máme adresu na nový film nejen v hlavičce, ale i přímo v těle zprávy.
@@ -650,7 +650,7 @@ V hlavičce i v ``url`` rovnou vidíme, že nový film dostal ID číslo 5 a jeh
         def get_movie_url(movie, base_url):
             return '{0}/movies/{1}'.format(base_url, movie['id'])
 
-    Řádky, které vytvářejí reprezentaci filmu jsou téměř totožné s těmi, jež se nacházejí v ``MovieResource``. Mohli bychom vytvořit funkci ``represent_movie()``, kterou by oba endpointy mohly využívat a díky ní bychom mohli oba o několik řádků zkrátit.
+    Řádky, které vytvářejí reprezentaci filmu jsou téměř totožné s těmi, jež se nacházejí v ``MovieDetailResource``. Mohli bychom vytvořit funkci ``represent_movie()``, kterou by oba endpointy mohly využívat a díky ní bychom mohli oba o několik řádků zkrátit.
 
     .. code-block:: python
 
@@ -716,7 +716,7 @@ Informace o tom, jestli film v seznamu byl nebo ne se nám bude hodit. Opět byc
 
 .. literalinclude:: ../code/server/14_delete/index.py
     :language: python
-    :pyobject: MovieResource
+    :pyobject: MovieDetailResource
     :emphasize-lines: 16-21
 
 Když se podíváme na `Žralokonádo <https://www.csfd.cz/film/343017-zralokonado/>`__ a budeme ho chtít smazat ze seznamu, měli bychom dostat prázdnou odpověď s kódem :status:`204`.
@@ -747,7 +747,7 @@ Nyní můžeme vrátit chybu :status:`403`, pokud klient se svým požadavkem na
 
 .. literalinclude:: ../code/server/15_forbidden/index.py
     :language: python
-    :pyobject: MovieResource
+    :pyobject: MovieDetailResource
     :emphasize-lines: 17-24
 
 Nejdříve využijeme funkce ``get_movie_by_id()``, která nám vrátí film podle ID. Pokud jej nenajde, rovnou skončíme s chybou :status:`404`. Potom se podíváme, jestli ve filmu hraje Bruce. Pokud ano, skončíme s chybou :status:`403`. Jinak použijeme funkci ``remove_movie_by_id()`` pro smazání filmu a vracíme :status:`204`. Návratovou hodnotu ``remove_movie_by_id()`` nyní již nepotřebujeme, protože v této fázi již víme, že film určitě existuje.

@@ -23,7 +23,7 @@ movies = [
 ]
 
 
-class MoviesResource():
+class MovieListResource():
 
     def on_get(self, request, response):
         response.body = json.dumps(movies)
@@ -31,4 +31,4 @@ class MoviesResource():
 
 app = falcon.API()
 app.add_route('/', PersonalDetailsResource())
-app.add_route('/movies', MoviesResource())
+app.add_route('/movies', MovieListResource())

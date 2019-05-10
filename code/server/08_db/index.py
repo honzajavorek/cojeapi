@@ -62,7 +62,7 @@ def filter_movies(movies, name):
         return movies
 
 
-class MoviesResource():
+class MovieListResource():
 
     def on_get(self, request, response):
         name = request.get_param('name')
@@ -71,4 +71,4 @@ class MoviesResource():
 
 app = falcon.API()
 app.add_route('/', PersonalDetailsResource())
-app.add_route('/movies', MoviesResource())
+app.add_route('/movies', MovieListResource())

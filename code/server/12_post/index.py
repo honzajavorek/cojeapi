@@ -84,7 +84,7 @@ def create_movie_id(movies):
     return max(ids) + 1
 
 
-class MoviesResource():
+class MovieListResource():
 
     def on_get(self, request, response):
         name = request.get_param('name')
@@ -106,7 +106,7 @@ def get_movie_by_id(movies, id):
             return movie
 
 
-class MovieResource():
+class MovieDetailResource():
 
     def on_get(self, request, response, id):
         movie = get_movie_by_id(movies, id)
@@ -124,5 +124,5 @@ class MovieResource():
 
 app = falcon.API()
 app.add_route('/', PersonalDetailsResource())
-app.add_route('/movies', MoviesResource())
-app.add_route('/movies/{id:int}', MovieResource())
+app.add_route('/movies', MovieListResource())
+app.add_route('/movies/{id:int}', MovieDetailResource())
