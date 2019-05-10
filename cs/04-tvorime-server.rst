@@ -74,6 +74,9 @@ Nyní můžeme spustit naše API. Stačí spustit ``waitress-serve`` s nápověd
 
 Waitress nám píše, že na adrese http://0.0.0.0:8080 teď najdeme spuštěné naše API. Bude tam čekat na :ref:`požadavky <http-request>` tak dlouho, dokud v programu nenastane chyba (potom "spadne"), nebo dokud jej v příkazové řádce neukončíme pomocí :kbd:`Ctrl+C`.
 
+.. note::
+    Používáte-li Windows, uvidíte jinou adresu, která bude obsahovat název vašeho počítače v síti.
+
 Když nyní v prohlížeči půjdeme na adresu http://0.0.0.0:8080, měli bychom vidět očekávanou :ref:`odpověď <http-response>`:
 
 .. image:: ../_static/images/me-api-text.png
@@ -802,7 +805,7 @@ Pokaždé, když jsme spustili Waitress, mohli jsme své API zkoušet na adrese 
 Tato adresa je totiž spjata s tím, jestli Waitress zrovna jede nebo ne. Také tato adresa funguje jen pro nás. I když spustíme Waitress a na adrese http://0.0.0.0:8080 uvidíme naše API, nikdo jiný jej na té samé adrese nenajde. Je to proto, že adresa ``0.0.0.0`` znamená "na tomto počítači". Pokud bychom tedy někomu poslali http://0.0.0.0:8080/movies jako odkaz na seznam našich oblíbených filmů, je to podobné, jako bychom posílali ``C:\\Users\Honza\Documents\filmy.xlsx``.
 
 .. note::
-    Adres, které znamenají "na tomto počítači" je více. Ekvivalentně k http://0.0.0.0:8080 funguje i http://127.0.0.1:8080 nebo http://localhost:8080. Můžete si to klidně vyzkoušet. Když zapnete Waitress, všechny uvedené adresy by měly mířit na vaše API.
+    Adres, které znamenají "na tomto počítači" je více. Ekvivalentně k http://0.0.0.0:8080 funguje i http://127.0.0.1:8080 nebo http://localhost:8080. Používáte-li Windows, vypíše vám Waitress dokonce úplně jinou adresu, která bude obsahovat název vašeho počítače v síti. Můžete si vyzkoušet, které z uvedených adres vám budou fungovat, když zapnete Waitress.
 
 Now
 ^^^
