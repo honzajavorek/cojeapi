@@ -51,8 +51,8 @@ Místo ``abcd123`` má být samozřejmě tajný API klíč, který nám přišel
 Smyslem API je vracet odpovědi pro stroje, takže dostaneme změť písmenek, která se člověku nečte zrovna nejlépe. Něco v ní ale vidět lze - není těžké rozluštit, že seriál je drama a hraje v něm `Evan Rachel Wood <https://www.csfd.cz/tvurce/5264-evan-rachel-wood/>`__.
 
 
-Obecný klient v terminálu: curl
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Obecný klient v příkazové řádce: curl
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Pokud se k API budeme potřebovat přihlásit nebo s ním zkoušet dělat složitější věci než jen čtení, nebude nám prohlížeč stačit.
 
@@ -98,7 +98,7 @@ Vypíše-li se verze programu curl, jak je na příkladu výše, máme hotovo. P
 
             $ curl --version
 
-        Vypíše-li se verze programu curl, máme hotovo a můžeme přeskočit rovnou na :ref:`curl-examples`. Pokud se ale místo verze vypíše něco v tom smyslu, že příkaz ani program curl neexistuje, pak je potřeba curl doinstalovat. Máme-li `Chocolatey <https://chocolatey.org/>`__, mělo by stačit v terminálu spustit následující:
+        Vypíše-li se verze programu curl, máme hotovo a můžeme přeskočit rovnou na :ref:`curl-examples`. Pokud se ale místo verze vypíše něco v tom smyslu, že příkaz ani program curl neexistuje, pak je potřeba curl doinstalovat. Máme-li `Chocolatey <https://chocolatey.org/>`__, mělo by stačit v příkazové řádce spustit následující:
 
         .. code-block:: text
 

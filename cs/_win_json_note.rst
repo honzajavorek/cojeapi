@@ -1,6 +1,6 @@
 .. note::
 
-   JSON se musí psát vždy s dvojitými uvozovkami. Na Linuxu nebo macOS to není problém, protože v terminálu fungují na ohraničení i jednoduché uvozovky a lze udělat následující:
+   JSON se musí psát vždy s dvojitými uvozovkami. Na Linuxu nebo macOS to není problém, protože v příkazové řádce fungují na ohraničení i jednoduché uvozovky a lze udělat následující:
 
    .. code-block:: text
 

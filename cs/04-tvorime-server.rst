@@ -72,7 +72,7 @@ Nyní můžeme spustit naše API. Stačí spustit ``waitress-serve`` s nápověd
     (venv)$ waitress-serve index:app
     Serving on http://0.0.0.0:8080
 
-Waitress nám píše, že na adrese http://0.0.0.0:8080 teď najdeme spuštěné naše API. Bude tam čekat na :ref:`požadavky <http-request>` tak dlouho, dokud v programu nenastane chyba (potom "spadne"), nebo dokud jej v terminálu neukončíme pomocí :kbd:`Ctrl+C`.
+Waitress nám píše, že na adrese http://0.0.0.0:8080 teď najdeme spuštěné naše API. Bude tam čekat na :ref:`požadavky <http-request>` tak dlouho, dokud v programu nenastane chyba (potom "spadne"), nebo dokud jej v příkazové řádce neukončíme pomocí :kbd:`Ctrl+C`.
 
 Když nyní v prohlížeči půjdeme na adresu http://0.0.0.0:8080, měli bychom vidět očekávanou :ref:`odpověď <http-response>`:
 
@@ -80,10 +80,10 @@ Když nyní v prohlížeči půjdeme na adresu http://0.0.0.0:8080, měli bychom
     :alt: Odpověď v textovém formátu
     :align: center
 
-Co když zkusíme curl? Protože nám spuštěné API blokuje terminál, spustíme si další terminál v novém okně. Z něj nyní můžeme spustit curl:
+Co když zkusíme curl? Protože nám spuštěné API blokuje aktuální příkazovou řádku, spustíme si další příkazovou řádku v novém okně. Z ní nyní můžeme spustit curl:
 
 .. image:: ../_static/images/me-api-curl.png
-    :alt: Spouštění curl v dalším terminálu
+    :alt: Spouštění curl v další příkazové řádce
     :align: center
 
 Vidíme, že API se chová tak, jak jsme původně chtěli. Odpověď má status kód :status:`200`, formát těla odpovědi je v hlavičce :header:`Content-Type` nastaven na obyčejný text, a v těle zprávy vidíme jméno, příjmení, i velikost ponožek. Kromě toho Falcon s Waitress přidali i nějaké další hlavičky.
@@ -91,7 +91,7 @@ Vidíme, že API se chová tak, jak jsme původně chtěli. Odpověď má status
 .. literalinclude:: ../code/server/01_base/test.txt
     :language: text
 
-Server nyní můžeme v terminálu ukončit pomocí :kbd:`Ctrl+C` a budeme API rozšiřovat o další funkce. Pokaždé, když změníme kód a budeme chtít naše API vyzkoušet, budeme muset Waitress nejdřív restartovat.
+Server nyní můžeme v příkazové řádce ukončit pomocí :kbd:`Ctrl+C` a budeme API rozšiřovat o další funkce. Pokaždé, když změníme kód a budeme chtít naše API vyzkoušet, budeme muset Waitress nejdřív restartovat.
 
 Uchováváme data jako slovník
 ----------------------------
@@ -786,7 +786,7 @@ Jediným rozdílem je to, že v jejich API byl použit kód :status:`401`. Ten s
 Uveřejňujeme API
 ----------------
 
-Pokaždé, když jsme spustili Waitress, mohli jsme své API zkoušet na adrese http://0.0.0.0:8080. Možná jste si všimli, že když Waitress v terminálu nejela, adresu nešlo použít.
+Pokaždé, když jsme spustili Waitress, mohli jsme své API zkoušet na adrese http://0.0.0.0:8080. Možná jste si všimli, že když Waitress v příkazové řádce nejela, adresu nešlo použít.
 
 .. code-block:: text
 
@@ -805,18 +805,17 @@ Tato adresa je totiž spjata s tím, jestli Waitress zrovna jede nebo ne. Také 
 Now
 ^^^
 
-Abychom mohli naše API někomu ukázat, musíme jej nejdříve uveřejnit na internet. Můžeme k tomu využít službu `Now <https://zeit.co/now>`__  od společnosti `Zeit <https://zeit.co/>`__. Nejdříve nainstalujeme program ``now``:
+Abychom mohli naše API někomu ukázat, musíme jej nejdříve uveřejnit na internet. Můžeme k tomu využít službu `Now <https://zeit.co/now>`__  od společnosti `Zeit <https://zeit.co/>`__.
 
-#.  Půjdeme na https://zeit.co/download a nainstalujeme si ``now`` pro náš systém
+Příprava
+^^^^^^^^
 
-    .. note::
-        Pokud používáme **Windows**, stáhne se nám archiv ``now-win.exe.gz``. Po rozbalení dostaneme spustitelný soubor ``now-win.exe``. Ten přejmenujeme na ``now.exe`` a přidáme jej do systémové cesty. Pokud přidávat programy do systémové cesty neumíme, pro účely tohoto návodu postačí, pokud soubor ``now.exe`` dáme do složky s naším projektem (tzn. do té složky, kde máme ``index.py``).
-
-#.  Otevřeme si příkazovou řádku a zkusíme spustit ``now --version``, abychom ověřili, zda vše funguje, jak má
 #.  V témže adresáři, ve kterém máme ``index.py``, vytvoříme nový soubor ``now.json`` s následujícím obsahem:
 
     .. literalinclude:: ../code/server/16_deploy/now.json
         :language: json
+
+    Je to konfigurační soubor pro službu Now, který jí říká, jak má s naším projektem pracovat.
 
 #.  V témže adresáři, ve kterém máme ``index.py``, vytvoříme nový soubor ``requirements.txt`` s následujícím obsahem:
 
@@ -825,12 +824,55 @@ Abychom mohli naše API někomu ukázat, musíme jej nejdříve uveřejnit na in
 
     Tím říkáme, že aby naše API fungovalo, bude potřeba nejdříve nainstalovat Falcon. Waitress do souboru psát nebudeme, tu potřebujeme jen pro spuštění na našem počítači, `now.sh <https://zeit.co/now>`__ si poradí i bez ní.
 
-#.  Nyní zkusíme na příkazové řádce, v našem adresáři s aplikací, spustit příkaz ``now login``
-#.  Now po nás bude chtít e-mailovou adresu. Zadáme ji a ověříme v naší e-mailové schránce
-#.  Když nyní spustíme ``now``, nahraje se naše aplikace na internet (bude to nejspíše chvíli trvat)
-#.  Po nějaké době bychom měli dostat adresu, na které můžeme naše API najít - něco ve tvaru https://cojeapi.honzajavorek.now.sh/
+#.  V témže adresáři, ve kterém máme ``index.py``, vytvoříme nový soubor ``.nowignore`` (ano, název souboru začíná tečkou) s následujícím obsahem:
 
-Pokud na tuto adresu půjdeme v prohlížeči, měli bychom vidět naše API:
+    .. literalinclude:: ../code/server/16_deploy/.nowignore
+        :language: text
+
+    Tímto souborem dáváme Now instrukci, že má ignorovat všechno ostatní kromě naší aplikace a souborů, které jsme právě vytvořili.
+
+Instalace Now
+^^^^^^^^^^^^^
+
+Nejdříve ověříme, zda náhodou už nemáme nainstalovaný program now, kterým se služba Now ovládá. V příkazové řádce necháme program vypsat svou verzi, čímž ověříme, jestli funguje:
+
+.. code-block:: text
+
+    $ now --version
+    > UPDATE AVAILABLE The latest version of Now CLI is X.Y.Z
+    > Read more about how to update here: https://zeit.co/update-cli
+    > Changelog: https://github.com/zeit/now-cli/releases/tag/X.Y.Z
+    X.Y.Z
+
+Vypíše-li se verze programu now, jak je na příkladu výše, máme hotovo. Program now je funkční a nemusíme jej už instalovat. Přeskočíme na :ref:`now-upload`.
+
+Pokud se místo verze vypíše něco v tom smyslu, že příkaz ani program now neexistuje, pak je potřeba jej doinstalovat. Půjdeme na https://zeit.co/download a nainstalujeme si now pro náš systém. Po instalaci opět v příkazové řádce necháme program now vypsat svou verzi, abychom ověřili, zda funguje:
+
+.. code-block:: text
+
+    $ now --version
+
+.. _now-upload:
+
+Nahráváme pomocí Now
+^^^^^^^^^^^^^^^^^^^^
+
+Nyní zkusíme na příkazové řádce, v našem adresáři s aplikací, spustit příkaz pro přihlášení:
+
+.. code-block:: text
+
+    $ now login
+
+Now po nás bude chtít e-mailovou adresu. Zadáme ji a ověříme v naší e-mailové schránce. Když nyní spustíme now, nahraje se naše aplikace na internet (bude to nejspíše chvíli trvat):
+
+.. code-block:: text
+
+    $ now
+
+.. note::
+    Pokud nahrávání skončí chybou, ujistíme se, že jsme ve správné složce a že máme správně soubor ``.nowignore``.
+
+Po nějaké době bychom měli dostat adresu, na které můžeme naše API najít - něco ve tvaru https://cojeapi.honzajavorek.now.sh. Pokud na tuto adresu půjdeme v prohlížeči, měli bychom vidět naše API:
 
 .. image:: ../_static/images/now.png
     :alt: now.sh v prohlížeči
@@ -840,6 +882,7 @@ Samozřejmě můžeme na naše API posílat požadavky i pomocí curl:
 
 .. code-block:: text
 
+    $ curl -i "https://cojeapi.honzajavorek.now.sh"
     HTTP/2 200
     content-type: application/json
     content-length: 129
@@ -861,8 +904,8 @@ A co je ještě lepší, na rozdíl od všech předchozích případů, nyní m�
         -   ``/movies`` - :status:`200`
         -   ``/movies/`` - :status:`404`
 
-Aktualizujeme Now
-^^^^^^^^^^^^^^^^^
+Aktualizujeme pomocí Now
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Naše API má teď dva životy. Zaprvé existuje jako tzv. "vývojová verze" (anglicky *development*, někdy *dev environment*, počeštěně *dev prostředí*), která se nachází pouze na našem počítači a kterou můžeme snadno změnit a poté spustit přes Waitress.
 
@@ -874,7 +917,7 @@ Když změníme zdrojový kód souborů na našem počítači, projeví se to ve
 
     $ now
 
-Ano, pokud budeme chtít udělat v našem API změny a ty opět promítnout veřejně, stačí jen znova spustit příkaz ``now`` v téže složce, kde máme ``index.py``, ``requirements.txt`` a ``now.json``.
+Ano, pokud budeme chtít udělat v našem API změny a ty opět promítnout veřejně, stačí jen znova spustit příkaz now v téže složce, kde máme ``index.py``, ``requirements.txt``, ``now.json`` a ``.nowignore``.
 
 .. _dokumentace:
 
