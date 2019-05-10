@@ -108,7 +108,13 @@ Termín API je ve skutečnosti obecnější. Původně označuje dohodu o tom, j
 
 Webové API je také takovou dohodou, akorát ne mezi kusy jednoho programu, spíše mezi celými samostatnými programy a celými informačními systémy (firmami, institucemi), zařízeními (mobil, počítač), apod.
 
-Když se tedy lidé baví o programování, je dobré myslet i na onen širší význam a nenechat se vyvést z míry, pokud někdo jako API označí i jiné věci, než jsou webová API. Mezi běžnými smrtelníky a všude v tomto textu však platí to, že API vždy znamená webové API.
+Když se tedy lidé baví o programování, je dobré myslet i na onen širší význam a nenechat se vyvést z míry, pokud někdo jako API označí i jiné věci, než jsou webová API. Všude v tomto textu však platí to, že API vždy znamená webové API.
+
+.. figure:: ../_static/images/non-web-api.png
+    :align: center
+    :width: 60%
+
+    Dokumentace všech veřejných rozhraní frameworku `Flask <http://flask.pocoo.org/>`__ také používá zkratku API
 
 
 Kam dál?
