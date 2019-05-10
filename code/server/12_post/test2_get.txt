@@ -1,8 +1,8 @@
 $ curl -i "http://0.0.0.0:8080/movies"
 HTTP/1.1 200 OK
-Content-Length: 360
+Content-Length: 363
 Content-Type: application/json; charset=UTF-8
 Date: Wed, 01 May 2019 15:30:27 GMT
 Server: waitress
 
-[{"name": "The Last Boy Scout", "url": "http://0.0.0.0:8080/movies/1"}, {"name": "Mies vailla menneisyytt\u00e4", "url": "http://0.0.0.0:8080/movies/2"}, {"name": "Sharknado", "url": "http://0.0.0.0:8080/movies/3"}, {"name": "Mega Shark vs. Giant Octopus", "url": "http://0.0.0.0:8080/movies/4"}, {"name": "Under Siege", "url": "http://0.0.0.0:8080/movies/5"}]
+[{"name": "The Last Boy Scout", "url": "http://0.0.0.0:8080/movies/1"}, {"name": "Mies vailla menneisyytt\u00e4", "url": "http://0.0.0.0:8080/movies/2"}, {"name": "Sharknado", "url": "http://0.0.0.0:8080/movies/3"}, {"name": "Mega Shark vs. Giant Octopus", "url": "http://0.0.0.0:8080/movies/4"}, {"name": "New Kids Turbo", "url": "http://0.0.0.0:8080/movies/5"}]

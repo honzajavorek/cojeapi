@@ -11,3 +11,15 @@
    .. code-block:: text
 
          --data "{\"message\": \"Ahoj\"}"
+
+   Další nepříjemností je skutečnost, že kvůli specifickému kódování textu v příkazové řádce na Windows není jednoduché posílat data, která budou obsahovat diakritiku. Následující tedy nebude fungovat:
+
+   .. code-block:: text
+
+         --data "{\"message\": \"Čauky mňauky\"}"
+
+   V tomto návodu přidáme před uvozovky lomítka a diakritice se vyhneme. V praxi se dají oba problémy řešit tím, že data nebudeme psát přímo do příkazové řádky, ale uložíme si je vedle do souboru a řekneme programu curl, aby je z něj načetl:
+
+   .. code-block:: text
+
+         --data @new-movie.json
