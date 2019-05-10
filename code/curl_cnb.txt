@@ -1,0 +1,36 @@
+$ curl "https://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt"
+10.05.2019 #89
+země|měna|množství|kód|kurz
+Austrálie|dolar|1|AUD|16,023
+Brazílie|real|1|BRL|5,796
+Bulharsko|lev|1|BGN|13,157
+Čína|žen-min-pi|1|CNY|3,359
+Dánsko|koruna|1|DKK|3,446
+EMU|euro|1|EUR|25,730
+Filipíny|peso|100|PHP|43,823
+Hongkong|dolar|1|HKD|2,920
+Chorvatsko|kuna|1|HRK|3,473
+Indie|rupie|100|INR|32,737
+Indonesie|rupie|1000|IDR|1,600
+Island|koruna|100|ISK|18,781
+Izrael|nový šekel|1|ILS|6,433
+Japonsko|jen|100|JPY|20,876
+Jižní Afrika|rand|1|ZAR|1,610
+Kanada|dolar|1|CAD|17,005
+Korejská republika|won|100|KRW|1,942
+Maďarsko|forint|100|HUF|7,953
+Malajsie|ringgit|1|MYR|5,510
+Mexiko|peso|1|MXN|1,194
+MMF|ZPČ|1|XDR|31,708
+Norsko|koruna|1|NOK|2,620
+Nový Zéland|dolar|1|NZD|15,112
+Polsko|zlotý|1|PLN|5,990
+Rumunsko|leu|1|RON|5,406
+Rusko|rubl|100|RUB|35,081
+Singapur|dolar|1|SGD|16,812
+Švédsko|koruna|1|SEK|2,379
+Švýcarsko|frank|1|CHF|22,619
+Thajsko|baht|100|THB|72,557
+Turecko|lira|1|TRY|3,738
+USA|dolar|1|USD|22,915
+Velká Británie|libra|1|GBP|29,835

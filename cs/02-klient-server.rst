@@ -61,20 +61,18 @@ Proto je dobré se naučit používat program `curl <https://curl.haxx.se/>`__. 
 Instalace curl
 ^^^^^^^^^^^^^^
 
+Je dost možné, že curl je již přímo ve vašem systému (většina Linuxů, macOS, Windows 10) a není potřeba nic instalovat. Necháme program vypsat svou verzi, čímž ověříme, jestli funguje:
+
+.. literalinclude:: ../code/curl_version.txt
+    :language: text
+
+Vypíše-li se verze programu curl, jak je na příkladu výše, máme hotovo. Program curl je v systému a je funkční. Můžeme přeskočit rovnou na :ref:`curl-examples`. Pokud se ale místo verze vypíše něco v tom smyslu, že příkaz ani program curl neexistuje, pak je potřeba curl doinstalovat.
+
 .. tabs::
 
     .. group-tab:: Linux
 
-        Je dost možné, že curl je již přímo v systému a není potřeba nic instalovat. Zkusíme nechat program vypsat svou verzi, čímž ověříme, jestli je k dispozici:
-
-        .. code-block:: text
-
-            $ curl --version
-            curl x.x.x (...) ...
-            Protocols: ...
-            Features: ...
-
-        Pokud se místo verze vypíše něco v tom smyslu, že příkaz ani program toho jména neexistuje, nainstalujeme curl standardní cestou přes svého správce balíčků. V distribucích Debian nebo Ubuntu takto:
+        Instalujeme standardní cestou přes správce balíčků. V distribucích Debian nebo Ubuntu takto:
 
         .. code-block:: text
 
@@ -86,49 +84,60 @@ Instalace curl
 
             $ sudo dnf install curl
 
-    .. group-tab:: macOS
-
-        Program curl je k dispozici přímo v systému, není potřeba nic instalovat.
-
-    .. group-tab:: Windows
-
-        Pokud používáme *Git for Windows* nebo *Cygwin*, je velká šance, že curl už máme, jen jej musíme spouštět ze speciálního terminálu poskytovaného těmito nástroji.
-
-        Pokud používáme `Chocolatey <https://chocolatey.org/>`__, mělo by stačit v terminálu spustit následující:
-
-        .. code-block:: text
-
-            $ choco install curl
-
-        Jinak musíme curl stáhnout a nainstalovat ručně. Na `stránkách programu <https://curl.haxx.se/>`__ najdeme `verzi pro Windows <https://curl.haxx.se/windows/>`__ a podle typu našich Windows (`Jak zjistit, zda máme 32bitové, nebo 64bitové? <https://www.wikihow.cz/Jak-zjistit,-zda-m%C3%A1te-32bitov%C3%A9,-nebo-64-bitov%C3%A9-Windows>`__) vybereme odpovídající verzi. Po rozbalení dostaneme spustitelný soubor ``curl.exe``, který přidáme do systémové cesty. Pokud přidávat programy do systémové cesty neumíme, pro účely tohoto návodu postačí, pokud soubor ``curl.exe`` dáme do té složky, ze které jej budeme chtít spouštět.
-
         Nakonec necháme program vypsat svou verzi, čímž ověříme, jestli funguje:
 
         .. code-block:: text
 
             $ curl --version
-            curl x.x.x (...) ...
-            Protocols: ...
-            Features: ...
+
+    .. group-tab:: Windows < 10
+
+        Pokud máme *Git for Windows* nebo *Cygwin*, je velká šance, že curl už máme, jen jej musíme spouštět ze speciálního terminálu poskytovaného těmito nástroji. Otevřeme tento speciální terminál a necháme program vypsat verzi:
+
+        .. code-block:: text
+
+            $ curl --version
+
+        Vypíše-li se verze programu curl, máme hotovo a můžeme přeskočit rovnou na :ref:`curl-examples`. Pokud se ale místo verze vypíše něco v tom smyslu, že příkaz ani program curl neexistuje, pak je potřeba curl doinstalovat. Máme-li `Chocolatey <https://chocolatey.org/>`__, mělo by stačit v terminálu spustit následující:
+
+        .. code-block:: text
+
+            $ choco install curl
+
+        Poté necháme curl vypsat svou verzi:
+
+        .. code-block:: text
+
+            $ curl --version
+
+        Vypíše-li se verze programu curl, máme hotovo a můžeme přeskočit rovnou na :ref:`curl-examples`. Pokud se ale místo verze vypíše něco v tom smyslu, že choco nebo curl neexistují, musíme curl stáhnout a nainstalovat ručně.
+
+        Na `stránkách programu najdeme verzi pro Windows <https://curl.haxx.se/windows/>`__ a podle typu našich Windows (`Jak zjistit, zda máme 32bitové, nebo 64bitové? <https://www.wikihow.cz/Jak-zjistit,-zda-m%C3%A1te-32bitov%C3%A9,-nebo-64-bitov%C3%A9-Windows>`__) vybereme odpovídající verzi. Po rozbalení dostaneme spustitelný soubor ``curl.exe``, který přidáme do systémové cesty. Pokud přidávat programy do systémové cesty neumíme, pro účely tohoto návodu postačí, pokud soubor ``curl.exe`` dáme do té složky, ze které jej budeme chtít spouštět. Nakonec necháme program vypsat svou verzi, čímž ověříme, jestli funguje:
+
+        .. code-block:: text
+
+            $ curl --version
+
+.. _curl-examples:
 
 Příklady s curl
 ^^^^^^^^^^^^^^^
 
-Nyní můžeme curl vyzkoušet::
+Nyní můžeme curl vyzkoušet:
 
-    $ curl "https://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt"
+.. literalinclude:: ../code/curl_cnb.txt
+    :language: text
+    :lines: 1
 
 Když příkaz zadáme a spustíme, říkáme tím programu curl, že má poslat požadavek na uvedenou adresu a vypsat to, co mu ČNB pošle zpět.
 
-.. image:: ../_static/images/cnb-api-curl.png
-    :alt: ČNB - kurzovní lístek v příkazové řádce
-    :align: center
+.. literalinclude:: ../code/curl_cnb.txt
+    :language: text
 
-Totéž můžeme udělat i s adresou, která nám vracela informace z OMDb.
+Totéž můžeme udělat i s adresou, která nám vracela informace z OMDb:
 
-.. image:: ../_static/images/omdb-westworld-curl.png
-    :alt: OMDb - Westworld v příkazové řádce
-    :align: center
+.. literalinclude:: ../code/curl_omdb.txt
+    :language: text
 
 Program curl toho samozřejmě umí více a proto je tak užitečný, ale to si ukážeme později.
 
