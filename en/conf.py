@@ -196,6 +196,8 @@ linkcheck_ignore = [
 
 sphinx_tabs_valid_builders = ['linkcheck']
 
+sphinx_tabs_nowarn = True
+
 
 # -- Options for todo extension ----------------------------------------------
 
