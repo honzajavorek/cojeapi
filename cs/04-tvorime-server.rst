@@ -161,7 +161,7 @@ A je to, máme své první JSON API! Už teď jsme se dostali dál, než kam se 
 
     .. code-block:: python
 
-        response.body = json.dumps(get_personal_details(), ensure_ascii=False)
+        response.body = json.dumps(personal_details, ensure_ascii=False)
 
     Pozor, v příkazové řádce na Windows, která má jiné kódování textu než zbytek světa, uvidíte diakritiku nejspíš stejně rozbitou. To není vada vysílače (vašeho API), ale přijímače (Windows).
 
@@ -169,7 +169,7 @@ A je to, máme své první JSON API! Už teď jsme se dostali dál, než kam se 
 
     .. code-block:: python
 
-        response.body = json.dumps(get_personal_details(), ensure_ascii=False, indent=2)
+        response.body = json.dumps(personal_details, ensure_ascii=False, indent=2)
 
     Zbytek příkladů nebude tyto možnosti využívat, aby byl kód v ukázkách stručnější.
 
