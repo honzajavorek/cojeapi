@@ -134,6 +134,9 @@ Když příkaz zadáme a spustíme, říkáme tím programu curl, že má poslat
 .. literalinclude:: ../code/curl_cnb.txt
     :language: text
 
+.. note::
+    Pokud používáte Windows, je velká šance, že se vám při zkoušení příkladu výše zobrazí špatně diakritika. Nic si z toho nedělejte, příkazová řádka na Windows má jiné kódování textu než zbytek světa. Důležité je, pokud vidíte seznam kurzů měn.
+
 Totéž můžeme udělat i s adresou, která nám vracela informace z OMDb:
 
 .. literalinclude:: ../code/curl_omdb.txt

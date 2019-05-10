@@ -163,7 +163,9 @@ A je to, máme své první JSON API! Už teď jsme se dostali dál, než kam se 
 
         response.body = json.dumps(get_personal_details(), ensure_ascii=False)
 
-    Stejně tak je strojům jedno, jestli jsou, nebo nejsou jednotlivé části JSONu hezky odsazené. Pokud chcete, aby vaše API odsazovalo, nastavte parametr ``indent`` na počet mezer (používá se 2 nebo 4):
+    Pozor, v příkazové řádce na Windows, která má jiné kódování textu než zbytek světa, uvidíte diakritiku nejspíš stejně rozbitou. To není vada vysílače (vašeho API), ale přijímače (Windows).
+
+    Stejně jako je strojům jedno, jestli čtou ``\u0159`` nebo ``ř``, je jim také jedno, jestli jsou, nebo nejsou jednotlivé části JSONu hezky odsazené. Pokud chcete, aby vaše API odsazovalo, nastavte parametr ``indent`` na počet mezer (používá se 2 nebo 4):
 
     .. code-block:: python
 
