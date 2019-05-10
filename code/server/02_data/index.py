@@ -2,8 +2,8 @@ import falcon
 
 
 personal_details = (
-    'name: Honza\n' +
-    'surname: Javorek\n' +
+    'name: Honza\n'
+    'surname: Javorek\n'
     'socks_size: 42\n'
 )
 
