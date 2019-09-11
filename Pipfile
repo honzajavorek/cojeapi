@@ -7,7 +7,7 @@ name = "pypi"
 # Pinning packages with ~= unless their version starts with 0.,
 # then pinning each version strictly with ==
 sphinx = "~=2.2.0"
-sphinx-tabs = "~=1.1.12"
+sphinx-tabs = "~=1.1.13"
 falcon = "~=2.0.0"  # used in Sphinx extensions to get status codes names
 
 [dev-packages]
