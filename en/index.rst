@@ -30,7 +30,7 @@ Author
     :align: left
     :width: 120px
 
-`Honza Javorek <http://honzajavorek.cz/>`__ is a software engineer. Since 2011 he has been helping to drive the grow and success of the `Czech Python User Group <https://python.cz/>`__. In `Apiary <https://apiary.io/>`__ he takes care of the `Dredd <https://github.com/apiaryio/dredd>`__, a tool to test web APIs.
+`Honza Javorek <http://honzajavorek.cz/>`__ is a software engineer. Since 2011 he has been helping to drive the grow and success of the `Czech Python User Group <https://python.cz/>`__. In `Apiary <https://apiary.io/>`__ he used to take care of the `Dredd <https://github.com/apiaryio/dredd>`__, a tool to test web APIs. He founded `junior.guru <https://junior.guru/>`__, a project helping people to learn to code and to get their first job in tech.
 
 `LinkedIn <https://www.linkedin.com/in/honzajavorek/>`_
 ・ `GitHub <https://github.com/honzajavorek/>`_
