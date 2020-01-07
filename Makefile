@@ -1,22 +1,27 @@
+install:
+	rm -r ./venv
+	python3 -m venv ./venv
+	./venv/bin/pip install -r requirements.txt
+
 build-en:
-	sphinx-build -nW -b html en _build
+	./venv/bin/sphinx-build -nW -b html en _build
 
 serve-en:
-	sphinx-autobuild en _build
+	./venv/bin/sphinx-autobuild en _build
 
 build-cs:
-	sphinx-build -nW -b html cs _build
+	./venv/bin/sphinx-build -nW -b html cs _build
 
 serve-cs:
-	sphinx-autobuild cs _build
+	./venv/bin/sphinx-autobuild cs _build
 
 # shortcuts for -cs
 build: build-cs
 serve: serve-cs
 
 test:
-	pytest
+	./venv/bin/pytest
 
 linkcheck:
-	sphinx-build -nW -b linkcheck en _build
-	sphinx-build -nW -b linkcheck cs _build
+	./venv/bin/sphinx-build -nW -b linkcheck en _build
+	./venv/bin/sphinx-build -nW -b linkcheck cs _build
