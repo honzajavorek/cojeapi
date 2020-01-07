@@ -7,7 +7,7 @@ common:
       ./venv/bin/pip install -r requirements.txt
 
 jobs:
-  test:
+  test-linux:
     docker:
       - image: "circleci/python:3.8"
     working_directory: "~/repo"
@@ -60,11 +60,11 @@ workflows:
   version: 2
   build:
     jobs:
-      - test
+      - test-linux
       - linkcheck
       - deploy:
           requires:
-            - test
+            - test-linux
           filters:
             branches:
               only: master
