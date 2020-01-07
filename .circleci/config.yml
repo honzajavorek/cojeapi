@@ -21,8 +21,8 @@ jobs:
     steps:
       - checkout
       - run:
-      name: "Installing dependencies"
-      command: "pip install -r requirements.txt"
+          name: "Installing dependencies"
+          command: "pip install -r requirements.txt"
       - run:
           name: "Checking external links"
           command: "pipenv run linkcheck"
