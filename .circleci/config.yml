@@ -1,96 +1,70 @@
-version: 2
+version: 2.1
 
-steps:
-  chown: &chown
-    run:
-      name: "Fix ownership of directories with Python packages"
-      command: |
-        sudo chown -R circleci:circleci /usr/local/bin
-        sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages
-
-  restore_cache: &restore_cache
-    restore_cache:
-      key: 'deps-{{ .Branch }}-{{ checksum "Pipfile.lock" }}'
-
-  pip_install: &pip_install
-    run:
-      name: "Installing dependencies"
-      command: |
-        sudo pip install pip pipenv --upgrade
-        pipenv install --dev
-
-  save_cache: &save_cache
-    save_cache:
-      key: 'deps-{{ .Branch }}-{{ checksum "Pipfile.lock" }}'
-      paths:
-        - ".venv"
-        - "/usr/local/bin"
-        - "/usr/local/lib/python3.6/site-packages"
+common:
+  install: &install
+    run: |
+      python -m venv ./venv
+      ./venv/bin/pip install -r requirements.txt
 
 jobs:
-  test:
+  test-linux:
     docker:
-      - image: "circleci/python:3.6"
+      - image: "circleci/python:3.8"
     working_directory: "~/repo"
     steps:
       - checkout
-      - *chown
-      - *restore_cache
-      - *pip_install
-      - *save_cache
-      - run:
-          name: "Running tests"
-          command: "pipenv run test"
-
-  requirements-vs-pipfile:
-    docker:
-      - image: "circleci/python:3.6"
-    working_directory: "~/repo"
-    steps:
-      - checkout
-      - *chown
-      - *restore_cache
-      - *pip_install
-      - *save_cache
-      - run:
-          name: "Checking whether requirements.txt and Pipfile are in sync"
-          command: "pipenv run lint-requirements"
+      - *install
+      - run: |
+          source ./venv/bin/activate
+          make test
 
   linkcheck:
     docker:
-      - image: "circleci/python:3.6"
+      - image: "circleci/python:3.8"
     working_directory: "~/repo"
     steps:
       - checkout
-      - *chown
-      - *restore_cache
-      - *pip_install
-      - *save_cache
-      - run:
-          name: "Checking external links"
-          command: "pipenv run linkcheck"
+      - *install
+      - run: |
+          source ./venv/bin/activate
+          make linkcheck
 
-  deploy-server:
+  # NOW_TOKEN needs to be set in CircleCI project settings
+  deploy:
     docker:
-      - image: "circleci/node:10"
+      - image: "circleci/python:3.8-node"
     working_directory: "~/repo"
     steps:
       - checkout
+      - *install
       - run:
           name: "Installing now.sh"
           command: "sudo npm install --global --unsafe-perm now"
       - run:
-          # NOW_TOKEN needs to be set in CircleCI project settings
-          name: "Deploying"
+          name: "Building & Deploying cojeapi.cz"
+          command: |
+            source ./venv/bin/activate
+            make build-cs
+            now ./_build --name=cojeapi-docs-cs --prod --token=$NOW_TOKEN
+      - run:
+          name: "Building & Deploying whatisapi.org"
+          command: |
+            source ./venv/bin/activate
+            make build-en
+            now ./_build --name=cojeapi-docs-en --prod --token=$NOW_TOKEN
+      - run:
+          name: "Deploying Server"
           command: "now ./code/server/16_deploy --name=cojeapi --token=$NOW_TOKEN"
 
 workflows:
   version: 2
   build:
     jobs:
-      - test
-      - requirements-vs-pipfile
+      - test-linux
       - linkcheck
-      - deploy-server:
+      - deploy:
           requires:
-            - test
+            - test-linux
+          filters:
+            branches:
+              only: master
