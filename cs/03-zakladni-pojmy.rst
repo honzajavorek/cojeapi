@@ -393,7 +393,7 @@ Naopak slovníky a seznamy se hodí při programování, ale zase je nemůžeme 
 XML
 ~~~
 
-XML vzniklo kolem roku 1997. Mnoho lidí nad ním dnes ohrnuje nos, protože si jej spojuje s velkými korporacemi, jazykem Java, :ref:`SOAP`, apod., ale v době vzniku bylo XML přelomovou technologií a dodnes se na spoustě míst využívá ke spokojenosti všech zúčastněných. Je například základem pro populární formáty jako jsou `GPX <https://en.wikipedia.org/wiki/GPS_Exchange_Format>`__, `KML <https://en.wikipedia.org/wiki/Keyhole_Markup_Language>`__, `SVG <https://en.wikipedia.org/wiki/Scalable_Vector_Graphics>`__, `DocBook <https://en.wikipedia.org/wiki/DocBook>`__, a další. Zajímavostí také je, že jedna z nejvýznamnějších XML konferencí na světě se každoročně koná u nás: `XML Prague <http://www.xmlprague.cz/>`__
+XML vzniklo kolem roku 1997. Mnoho lidí nad ním dnes ohrnuje nos, protože si jej spojuje s velkými korporacemi, jazykem Java, :ref:`SOAP`, apod., ale v době vzniku bylo XML přelomovou technologií a dodnes se na spoustě míst využívá ke spokojenosti všech zúčastněných. Je například základem pro populární formáty jako jsou `GPX <https://en.wikipedia.org/wiki/GPS_Exchange_Format>`__, `KML <https://en.wikipedia.org/wiki/Keyhole_Markup_Language>`__, `SVG <https://en.wikipedia.org/wiki/Scalable_Vector_Graphics>`__, `DocBook <https://en.wikipedia.org/wiki/DocBook>`__, a další. Zajímavostí také je, že jedna z nejvýznamnějších XML konferencí na světě se každoročně koná u nás: `XML Prague <https://www.xmlprague.cz/>`__
 
 XML vypadá podobně jako HTML, ale je obecnější a přísnější. Na rozdíl od HTML, které přímo popisuje význam značek (např. že ``<p>Ahoj!</p>`` má prohlížeč interpretovat jako odstavec s textem ``Ahoj!``), XML určuje pouze obecná pravidla o tvaru značek samotných a zbytek je plně na nás. :ref:`Náš příklad <struktura>` s adresami by v XML mohl vypadat třeba takto:
 
@@ -493,7 +493,7 @@ Podle odborníků to ale nevypadá, že by GraphQL mělo REST nahradit. Spíše 
 Čtení pro pokročilé
 ^^^^^^^^^^^^^^^^^^^
 
-- `Phil Sturgeon: GraphQL vs REST: Overview <https://blog.apisyouwonthate.com/graphql-vs-rest-overview-2f06ab1c1d86>`__
+- `Phil Sturgeon: GraphQL vs REST: Overview <https://apisyouwonthate.com/blog/graphql-vs-rest-overview/>`__
 - `Zdeněk Němec: REST vs. GraphQL: A Critical Review <https://goodapi.co/blog/rest-vs-graphql>`__
 
 

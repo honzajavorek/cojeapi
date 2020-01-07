@@ -49,7 +49,7 @@ Jenže zatímco se takovýto lístek čte velmi pěkně lidem, strojově je čit
     :align: center
     :width: 80%
 
-ČNB proto poskytuje jednoduché API. Pod tabulkou je odkaz `Stažení v textovém formátu <https://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt>`__, který vede na tu samou tabulku, ale ve formátu, který lze snadněji a především spolehlivě strojově přečíst.
+ČNB proto poskytuje jednoduché API. Pod tabulkou je odkaz `Stažení v textovém formátu <https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt>`__, který vede na tu samou tabulku, ale ve formátu, který lze snadněji a především spolehlivě strojově přečíst.
 
 .. image:: ../_static/images/cnb-api.png
     :alt: ČNB - kurzovní lístek v textovém formátu
@@ -114,7 +114,7 @@ Když se tedy lidé baví o programování, je dobré myslet i na onen širší 
     :align: center
     :width: 60%
 
-    Dokumentace všech veřejných rozhraní frameworku `Flask <http://flask.pocoo.org/>`__ také používá zkratku API
+    Dokumentace všech veřejných rozhraní frameworku `Flask <https://palletsprojects.com/p/flask/>`__ také používá zkratku API
 
 
 Kam dál?

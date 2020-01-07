@@ -1,4 +1,4 @@
-$ curl "https://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt"
+$ curl "https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt"
 10.05.2019 #89
 země|měna|množství|kód|kurz
 Austrálie|dolar|1|AUD|16,023
