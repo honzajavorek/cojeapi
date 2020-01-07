@@ -4,21 +4,17 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-# Pinning packages with ~= unless their version starts with 0.,
-# then pinning each version strictly with ==
-sphinx = "~=2.2.1"
-sphinx-tabs = "~=1.1.13"
-falcon = "~=2.0.0"  # used in Sphinx extensions to get status codes names
+sphinx = "*"
+sphinx-tabs = "*"
+falcon = "*"  # used in Sphinx extensions to get status codes names
 
 [dev-packages]
-# Pinning packages with ~= unless their version starts with 0.,
-# then pinning each version strictly with ==
-sphinx-autobuild = "==0.7.1"
-sphinx-rtd-theme = "==0.4.3"
-pylama = "~=7.7.1"
-pytest = "~=5.3.1"
-waitress = "~=1.3.1"
-requests = "~=2.22.0"
+sphinx-autobuild = "*"
+sphinx-rtd-theme = "*"
+pylama = "*"
+pytest = "*"
+waitress = "*"
+requests = "*"
 
 [requires]
 python_version = "3.6"  # ReadTheDocs runtime
