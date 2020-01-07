@@ -3,7 +3,7 @@ What is an API?
 
 .. warning::
 
-    This is an attempt to translate the materials to English. It is a very early edition and there's almost nothing done yet. If you want to help, please coordinate `here <https://github.com/honzajavorek/cojeapi/issues/52>`__.
+    This is an attempt to translate `Co je API? <https://cojeapi.cz>`__ materials to English. It is a very early edition and there's almost nothing done yet. If you want to help, please coordinate `here <https://github.com/honzajavorek/cojeapi/issues/52>`__.
 
 
 Contents
