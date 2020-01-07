@@ -1,5 +1,5 @@
-What is an API?
-===============
+What is API?
+============
 
 .. warning::
 
