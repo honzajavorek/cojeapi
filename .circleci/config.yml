@@ -1,5 +1,12 @@
 version: 2.1
 
+common:
+  install: &install
+    run: |
+      python -m venv ./venv
+      source ./venv/bin/activate
+      pip install -r requirements.txt
+
 jobs:
   test:
     docker:
@@ -7,7 +14,7 @@ jobs:
     working_directory: "~/repo"
     steps:
       - checkout
-      - run: make install
+      - *install
       - run: make test
 
   linkcheck:
@@ -16,7 +23,7 @@ jobs:
     working_directory: "~/repo"
     steps:
       - checkout
-      - run: make install
+      - *install
       - run: make linkcheck
 
   # NOW_TOKEN needs to be set in CircleCI project settings
@@ -26,7 +33,7 @@ jobs:
     working_directory: "~/repo"
     steps:
       - checkout
-      - run: make install
+      - *install
       - run:
           name: "Installing now.sh"
           command: "sudo npm install --global --unsafe-perm now"
