@@ -810,7 +810,7 @@ Tato adresa je totiž spjata s tím, jestli Waitress zrovna jede nebo ne. Také 
 Now
 ^^^
 
-Abychom mohli naše API někomu ukázat, musíme jej nejdříve uveřejnit na internet. Můžeme k tomu využít službu Now od společnosti `Zeit <https://zeit.co/>`__.
+Abychom mohli naše API někomu ukázat, musíme jej nejdříve uveřejnit na internet. Můžeme k tomu využít službu Now od společnosti `ZEIT <https://zeit.co/>`__.
 
 Příprava
 ^^^^^^^^
