@@ -6,8 +6,6 @@ import sys
 
 # -- Environment -------------------------------------------------------------
 
-IS_READTHEDOCS = os.environ.get('READTHEDOCS') == 'True'
-
 # Explicitly put the extensions directory to Python path
 sys.path.append(os.path.abspath('../_extensions'))
 
@@ -73,12 +71,7 @@ pygments_style = 'monokai'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-if IS_READTHEDOCS:
-    # equals to default RTD theme
-    html_theme = 'default'
-else:
-    # emulates the default RTD theme for local development
-    html_theme = 'sphinx_rtd_theme'
+html_theme = 'sphinx_rtd_theme'
 
 html_logo = '../_static/images/api-i.svg'
 

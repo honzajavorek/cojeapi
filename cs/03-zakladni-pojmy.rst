@@ -31,7 +31,7 @@ Přesně takové požadavky jsme posílali v předchozích příkladech v prohl�
 
     POST http://api.example.com/movies
 
-    User-Agent: cojeapi/1.0 (+http://cojeapi.cz)
+    User-Agent: cojeapi/1.0 (+https://cojeapi.cz)
     Authorization: c630c64829efbd162eeb5f9e9f878e9ef3fcf757
     Content-Type: application/json
 
