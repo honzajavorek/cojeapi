@@ -15,8 +15,8 @@ jobs:
       - checkout
       - *install
       - run: |
-        . ./venv/bin/activate
-        make test
+          source ./venv/bin/activate
+          make test
 
   linkcheck:
     docker:
@@ -26,8 +26,8 @@ jobs:
       - checkout
       - *install
       - run: |
-        . ./venv/bin/activate
-        make linkcheck
+          source ./venv/bin/activate
+          make linkcheck
 
   # NOW_TOKEN needs to be set in CircleCI project settings
   deploy:
@@ -43,13 +43,13 @@ jobs:
       - run:
           name: "Building & Deploying cojeapi.cz"
           command: |
-            . ./venv/bin/activate
+            source ./venv/bin/activate
             make build-cs
             now ./_build --name=cojeapi-docs-cs --prod --token=$NOW_TOKEN
       - run:
           name: "Building & Deploying whatisapi.org"
           command: |
-            . ./venv/bin/activate
+            source ./venv/bin/activate
             make build-en
             now ./_build --name=cojeapi-docs-en --prod --token=$NOW_TOKEN
       - run:
