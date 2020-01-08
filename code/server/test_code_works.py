@@ -10,6 +10,13 @@ from operator import itemgetter
 import pytest
 
 
+WIN = platform.system() == 'Windows'
+HOST = f"{platform.node() if WIN else '0.0.0.0'}:8080"
+
+SYSTEM_SUFFIXES = ('_win.txt', '_unix.txt')
+CURRENT_SYSTEM_SUFFIX = '_win.txt' if WIN else '_unix.txt'
+
+
 def parse_response(text):
     text = text.replace('\r\n', '\n')
     head, body = text.split('\n\n') if '\n\n' in text else (text, None)
@@ -28,16 +35,21 @@ def parse_response(text):
 
 def parse_test(text):
     lines = text.splitlines()
-    command = lines[0][2:].replace('api.example.com', '0.0.0.0:8080')
+    command = replace_host(lines[0][2:])
     response = parse_response('\n'.join(lines[1:]))
     return dict(command=command, response=response)
 
 
+def replace_host(command):
+    return (command.replace('0.0.0.0:8080', HOST)
+                   .replace('MY-COMPUTER:8080', HOST)
+                   .replace('api.example.com', HOST))
+
+
 def is_test(basename):
     if basename.startswith(('test', 'example')):
-        if basename.endswith(('_win.txt', '_unix.txt')):
-            system = '_win' if platform.system() == 'Windows' else '_unix'
-            return basename.endswith(system + '.txt')
+        if basename.endswith(SYSTEM_SUFFIXES):
+            return basename.endswith(CURRENT_SYSTEM_SUFFIX)
         return True
     return False
 
