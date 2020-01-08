@@ -43,7 +43,7 @@ def parse_test(text, filename=None):
     headers = dict([header.split(': ') for header in response['headers']])
 
     # Replace host in the Location header which usually contains a link
-    if 'location' in headers:
+    if 'Location' in headers:
         headers['Location'] = replace_host(headers['Location'])
 
     # Because we'll be altering body and the Content-Length header a few lines
