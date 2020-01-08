@@ -56,6 +56,10 @@ def parse_test(text, filename=None):
         response['body'] = replace_host(response['body'])
         headers['Content-Length'] = len(response['body'])
 
+        # We must update the parsed JSON body as well
+        if response['body_json'] is not None:
+            response['body_json'] = json.loads(response['body'])
+
     # Squash headers back
     response['headers'] = [f'{name}: {value}' for name, value
                            in headers.items()]
