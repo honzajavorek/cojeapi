@@ -810,7 +810,7 @@ Tato adresa je totiž spjata s tím, jestli Waitress zrovna jede nebo ne. Také 
 Now
 ^^^
 
-Abychom mohli naše API někomu ukázat, musíme jej nejdříve uveřejnit na internet. Můžeme k tomu využít službu Now od společnosti `ZEIT <https://zeit.co/>`__.
+Abychom mohli naše API někomu ukázat, musíme jej nejdříve uveřejnit na internet. Můžeme k tomu využít službu Now od společnosti `ZEIT <https://zeit.co/>`__. Ta dokáže vzít náš adresář s aplikací a přenést jej na internet. Naše aplikace dostane přidělenou adresu, například https://cojeapi.honzajavorek.now.sh, a na té ji bude moci používat kdokoliv na světě, 24 hodin denně.
 
 Příprava
 ^^^^^^^^
@@ -827,20 +827,45 @@ Příprava
     .. literalinclude:: ../code/server/16_deploy/requirements.txt
         :language: text
 
-    Tím říkáme, že aby naše API fungovalo, bude potřeba nejdříve nainstalovat Falcon. Waitress do souboru psát nebudeme, tu potřebujeme jen pro spuštění na našem počítači, `now.sh <https://zeit.co/>`__ si poradí i bez ní.
+    Tím říkáme, že aby naše API fungovalo, bude potřeba nejdříve nainstalovat Falcon. Waitress do souboru psát nebudeme. Potřebujeme ji jen pro spuštění na našem počítači, `now.sh <https://zeit.co/>`__ si poradí i bez ní.
 
-#.  V témže adresáři, ve kterém máme ``index.py``, vytvoříme nový soubor ``.nowignore`` (ano, název souboru začíná tečkou) s následujícím obsahem:
+#.  Aby Now správně fungovalo, nesmíme mít v adresáři nic jiného, než naši aplikaci a soubory, které jsme právě vytvořili.
+
+    Pokud se v našem adresáři nachází cokoliv jiného (podadresáře nebo soubory), než ``index.py``, ``now.json`` a ``requirements.txt``, musíme se toho nějak zbavit, jinak by se to Now snažilo nahrát na internet. Řekněme, že obsah našeho adresáře vypadá takto:
+
+    .. code-block:: text
+
+        venv
+        index.py
+        index-pokus1.py
+        index-pokus2.py
+        now.json
+        requirements.txt
+
+    Máme tam navíc nějaké předešlé pokusy v souborech ``index-pokus1.py`` a ``index-pokus2.py``, a virtuální prostředí v adresáři ``venv``. Pokusy přemístíme na jiné místo v počítači. Obsah našeho adresáře bude nyní takovýto:
+
+    .. code-block:: text
+
+        venv
+        index.py
+        now.json
+        requirements.txt
+
+    Zbývá podadresář ``venv`` s virtuálním prostředím, který bude Now překážet, ale my bychom jej rádi zachovali. Naštěstí existuje způsob, jak Now říct, že má něco ignorovat. Vytvoříme soubor ``.nowignore`` (ano, název souboru začíná tečkou) a do něj napíšeme, co máme v adresáři navíc:
 
     .. literalinclude:: ../code/server/16_deploy/.nowignore
         :language: text
 
-    Tímto souborem dáváme Now instrukci, že má ignorovat všechno ostatní kromě naší aplikace a souborů, které jsme právě vytvořili.
+    Nyní bude Now vědět, že má na internet nahrát vše v našem adresáři kromě ``venv``.
+
+    .. note::
+        Pokud materiály procházíte v rámci :ref:`workshopu <workshop>` a tato část vám přijde matoucí, nebojte se poradit s kouči.
 
 Instalace Now
 ^^^^^^^^^^^^^
 
 .. warning::
-    Pokud materiály procházíte v rámci :ref:`workshopu <workshop>` a now jste si už :ref:`nainstalovali v rámci přípravy <workshop-now>`, můžete tuto sekci přeskočit.
+    Pokud materiály procházíte v rámci :ref:`workshopu <workshop>` a program now jste si už :ref:`nainstalovali v rámci přípravy <workshop-now>`, můžete tuto sekci přeskočit.
 
 .. include:: _install_now.rst
 
