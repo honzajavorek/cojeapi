@@ -20,7 +20,7 @@ Výhody
 ^^^^^^
 
 -   doma se k tomu nedokopeš a toto je čas určený jenom na to
--   skupinová dynamika
+-   skupinová dynamika, společné jásání na konci
 -   koučové ochotní ti s čímkoliv pomoci nebo ti cokoliv zodpovědět
 
 Obsah workshopu
@@ -38,7 +38,7 @@ Co budeš potřebovat
 
 Potřebuješ už mít za sebou základní kurz z `naucse.python.cz <https://naucse.python.cz/>`_ (tzn. začátečnický PyLadies kurz).
 
-Je dobré mít už před workshopem nainstalované programy :ref:`curl <workshop-curl>` a :ref:`Now <workshop-now>`. Pokud by byl s instalací problém, napiš organizátorkám workshopu, aby o tobě věděly, a přijď dřív - pomocní koučové ti ještě před začátkem pomůžou.
+Je dobré mít už před workshopem nainstalované programy :ref:`curl <workshop-curl>` a :ref:`Now <workshop-now>`. Pokud by byl s instalací problém, napiš organizátorkám workshopu, aby o tobě věděly, a přijď dřív - koučové ti ještě před začátkem pomůžou.
 
 .. _workshop-curl:
 

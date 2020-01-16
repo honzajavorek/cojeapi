@@ -1,4 +1,4 @@
-Je dost možné, že curl je již přímo ve vašem systému (většina Linuxů, macOS, Windows 10) a není potřeba nic instalovat. Necháme program vypsat svou verzi, čímž ověříme, jestli funguje:
+Je dost možné, že curl je již přímo v našem systému (většina Linuxů, macOS, Windows 10) a není potřeba nic instalovat. Necháme program vypsat svou verzi, čímž ověříme, jestli funguje:
 
 .. literalinclude:: ../code/curl_version.txt
     :language: text

@@ -8,7 +8,7 @@ Nejdříve ověříme, zda náhodou už nemáme nainstalovaný program now, kter
     > Changelog: https://github.com/zeit/now-cli/releases/tag/X.Y.Z
     X.Y.Z
 
-Vypíše-li se verze programu now, jak je na příkladu výše, máme hotovo. Program now je funkční a nemusíme jej už instalovat. Přeskočíme instalaci.
+Vypíše-li se verze programu now, jak je na příkladu výše, máme hotovo. Program now je funkční a instalaci můžeme přeskočit.
 
 Pokud se místo verze vypíše něco v tom smyslu, že příkaz ani program now neexistuje, pak je potřeba jej doinstalovat. Půjdeme na https://zeit.co/download a nainstalujeme si now pro náš systém. Po instalaci opět v příkazové řádce necháme program now vypsat svou verzi, abychom ověřili, zda funguje:
 
