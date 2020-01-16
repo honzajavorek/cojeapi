@@ -35,7 +35,7 @@ Vypíše-li se verze programu curl, jak je na příkladu výše, máme hotovo. P
 
             $ curl --version
 
-        Vypíše-li se verze programu curl, máme hotovo a můžeme přeskočit rovnou na :ref:`curl-examples`. Pokud se ale místo verze vypíše něco v tom smyslu, že příkaz ani program curl neexistuje, pak je potřeba curl doinstalovat. Máme-li `Chocolatey <https://chocolatey.org/>`__, mělo by stačit v příkazové řádce spustit následující:
+        Vypíše-li se verze programu curl, máme hotovo a můžeme instalaci přeskočit. Pokud se ale místo verze vypíše něco v tom smyslu, že příkaz ani program curl neexistuje, pak je potřeba curl doinstalovat. Máme-li `Chocolatey <https://chocolatey.org/>`__, mělo by stačit v příkazové řádce spustit následující:
 
         .. code-block:: text
 
@@ -47,7 +47,7 @@ Vypíše-li se verze programu curl, jak je na příkladu výše, máme hotovo. P
 
             $ curl --version
 
-        Vypíše-li se verze programu curl, máme hotovo a můžeme přeskočit rovnou na :ref:`curl-examples`. Pokud se ale místo verze vypíše něco v tom smyslu, že choco nebo curl neexistují, musíme curl stáhnout a nainstalovat ručně.
+        Vypíše-li se verze programu curl, máme hotovo a můžeme instalaci přeskočit. Pokud se ale místo verze vypíše něco v tom smyslu, že choco nebo curl neexistují, musíme curl stáhnout a nainstalovat ručně.
 
         Na `stránkách programu najdeme verzi pro Windows <https://curl.haxx.se/windows/>`__ a podle typu našich Windows (`Jak zjistit, zda máme 32bitové, nebo 64bitové? <https://www.wikihow.cz/Jak-zjistit,-zda-m%C3%A1te-32bitov%C3%A9,-nebo-64-bitov%C3%A9-Windows>`__) vybereme odpovídající verzi. Po rozbalení dostaneme spustitelný soubor ``curl.exe``, který přidáme do systémové cesty. Pokud přidávat programy do systémové cesty neumíme, pro účely tohoto návodu postačí, pokud soubor ``curl.exe`` dáme do té složky, ze které jej budeme chtít spouštět. Nakonec necháme program vypsat svou verzi, čímž ověříme, jestli funguje:
 

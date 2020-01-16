@@ -831,7 +831,7 @@ Příprava
 
 #.  Aby Now správně fungovalo, nesmíme mít v adresáři nic jiného, než naši aplikaci a soubory, které jsme právě vytvořili.
 
-    Pokud se v našem adresáři nachází cokoliv jiného (podadresáře nebo soubory), než ``index.py``, ``now.json`` a ``requirements.txt``, musíme se toho nějak zbavit, jinak by se to Now snažilo nahrát na internet. Řekněme, že obsah našeho adresáře vypadá takto:
+    Pokud se v našem adresáři nachází cokoliv jiného (podadresáře nebo soubory), než ``index.py``, ``now.json`` a ``requirements.txt``, musíme se toho nějak zbavit, jinak by se to Now snažilo nahrát na internet. Řekněme, že obsah našeho adresáře vypadá například takto:
 
     .. code-block:: text
 
@@ -839,10 +839,11 @@ Příprava
         index.py
         index-pokus1.py
         index-pokus2.py
+        curl.exe
         now.json
         requirements.txt
 
-    Máme tam navíc nějaké předešlé pokusy v souborech ``index-pokus1.py`` a ``index-pokus2.py``, a virtuální prostředí v adresáři ``venv``. Pokusy přemístíme na jiné místo v počítači. Obsah našeho adresáře bude nyní takovýto:
+    Máme tam navíc program curl, nějaké předešlé pokusy v souborech ``index-pokus1.py`` a ``index-pokus2.py``, a virtuální prostředí v adresáři ``venv``. Pokusy i curl přemístíme na jiné místo v počítači. Obsah našeho adresáře bude nyní takovýto:
 
     .. code-block:: text
 
