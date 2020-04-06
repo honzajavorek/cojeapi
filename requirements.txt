@@ -1,7 +1,7 @@
 -i https://pypi.org/simple
 
 # dependencies
-sphinx==2.4.4
+sphinx==3.0.0
 sphinx-tabs==1.1.13
 falcon==2.0.0  # used in Sphinx extensions to get status codes names
 
