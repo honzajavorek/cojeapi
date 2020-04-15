@@ -13,7 +13,7 @@ sys.path.append(os.path.abspath('../_extensions'))
 # -- Project information -----------------------------------------------------
 
 project = 'What is API?'
-copyright = '2018, Honza Javorek'
+copyright = '2020, Honza Javorek'
 author = 'Honza Javorek'
 
 # The short X.Y version
