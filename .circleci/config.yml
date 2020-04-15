@@ -56,7 +56,7 @@ jobs:
       - *install
       - run:
           name: "Installing now.sh"
-          command: "sudo npm install --global --unsafe-perm now"
+          command: "sudo npm install --global --unsafe-perm now@16"
       - run:
           name: "Building & Deploying cojeapi.cz"
           command: |

@@ -105,3 +105,6 @@ venv.bak/
 
 # scripts/lint_requirements.sh
 *-requirements.txt
+
+# ZEIT Now
+.now
