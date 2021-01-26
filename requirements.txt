@@ -9,6 +9,6 @@ falcon==2.0.0  # used in Sphinx extensions to get status codes names
 sphinx-autobuild==2020.9.1
 sphinx-rtd-theme==0.5.0
 pylama==7.7.1
-pytest==5.4.3
+pytest==6.2.2
 waitress==1.4.4
 requests==2.25.0
